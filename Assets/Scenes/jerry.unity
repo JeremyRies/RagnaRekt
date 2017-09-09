@@ -156,10 +156,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 1
+  TeamId: 0
   MaxJumpHeight: 4
   MinJumpHeight: 1
   MoveSpeed: 6
   TimeToJumpApex: 0.4
+  Attack: {fileID: 0}
+  Skill: {fileID: 0}
+  _playerLifeSystem: {fileID: 0}
 --- !u!61 &48888411
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -385,10 +389,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 2
+  TeamId: 0
   MaxJumpHeight: 4
   MinJumpHeight: 1
   MoveSpeed: 6
   TimeToJumpApex: 0.4
+  Attack: {fileID: 0}
+  Skill: {fileID: 0}
+  _playerLifeSystem: {fileID: 0}
 --- !u!61 &205698100
 BoxCollider2D:
   m_ObjectHideFlags: 0
