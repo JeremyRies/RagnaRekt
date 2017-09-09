@@ -47,7 +47,7 @@ namespace LifeSystem
             {
                 _team1.AddPlayer(player);
             }
-            player.Color = Random.ColorHSV();
+            // player.Color = Random.ColorHSV();
             player.TeamPointSystem = _teamPointSystem;
             PositionRandomly(playerId, player);
         }
