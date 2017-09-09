@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections;
 using Assets.Scripts.Util;
+using Entities;
 using UnityEngine;
 
 namespace Control.Actions
 {
     public class HammerThrow : Action
     {
-        [SerializeField] private Transform _player;
+        [SerializeField] private Transform _playerTransform;
         [SerializeField] private HammerConfig _conf;
 
         [SerializeField] public PlayerControllerBase PlayerController;
+        [SerializeField] private Player _player;
 
 
         private Vector2 _dir;
@@ -41,7 +43,7 @@ namespace Control.Actions
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
             var hammer = _hammerInstance.AddComponent<Hammer>();
-            hammer.TeamId = PlayerController.TeamId;
+            hammer.TeamId = _player.TeamId;
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
             _hammerInstance.GetComponent<Collider2D>();

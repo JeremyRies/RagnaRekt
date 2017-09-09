@@ -1,10 +1,12 @@
-﻿namespace Control
+﻿using Entities;
+
+namespace Control
 {
     class UnityPlayerController : PlayerControllerBase
     {
-        protected override IInputProvider GetInputProvider()
+        protected override IInputProvider GetInputProvider(int playerId)
         {
-            return new UnityInputProvider(PlayerId);
+            return new UnityInputProvider(playerId);
         }
     }
 }

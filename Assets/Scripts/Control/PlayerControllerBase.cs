@@ -1,5 +1,6 @@
 ﻿using System;
 using Control.Actions;
+using Entities;
 using UniRx;
 using UnityEngine;
 using Action = Control.Actions.Action;
@@ -9,10 +10,10 @@ namespace Control
     [RequireComponent(typeof (CollisionController))]
     public abstract class PlayerControllerBase : MonoBehaviour
     {
-        [SerializeField] public int PlayerId;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private PlayerMovementConfig _conf;
         [SerializeField] private PlayerAnimation _animation;
+        [SerializeField] private Player _player;
 
         [SerializeField] public Action Attack;
         [SerializeField] public Action Skill;
@@ -34,7 +35,7 @@ namespace Control
 
         protected virtual void Start()
         {
-            InputProvider = GetInputProvider();
+            InputProvider = GetInputProvider(_player.PlayerId);
             Controller = GetComponent<CollisionController>();
 
             _gravity = -(2* _conf.MaxJumpHeight) /Mathf.Pow(_conf.TimeToJumpApex, 2);
@@ -42,7 +43,7 @@ namespace Control
             MinJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(_gravity)* _conf.MinJumpHeight);
         }
 
-        protected abstract IInputProvider GetInputProvider();
+        protected abstract IInputProvider GetInputProvider(int playerPlayerId);
 
         protected virtual Vector2 GetHorizontalInput()
         {
@@ -51,9 +52,9 @@ namespace Control
 
         private void Update()
         {
-            HandleAttack();
-            HandleSkill();
             HandleJump();
+            HandleSkill();
+            HandleAttack();
 
             var horizontalInput = GetHorizontalInput();
 
@@ -67,7 +68,6 @@ namespace Control
             if (IsHittingCeiling || IsOnGround)
             {
                 Velocity.y = 0;
-                _animation.HitGround();
             }
         }
 
@@ -188,12 +188,6 @@ namespace Control
         public Vector2 Size
         {
             get { return Controller.Collider.size; }
-        }
-
-        //todo player id is not correctly set from start pls fix 
-        public int TeamId
-        {
-            get { return (PlayerId + 1 % 2) + 1; }
         }
     }
 }

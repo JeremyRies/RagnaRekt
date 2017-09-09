@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Entities;
+﻿using System.Runtime.InteropServices;
+using Assets.Scripts.Entities;
+using Entities;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -10,14 +12,20 @@ namespace LifeSystem
         [SerializeField] private GameConfig _gameConfig;
         [SerializeField] private LevelConfig _levelConfig;
 
+        private TeamPointSystem _teamPointSystem;
+
         private void Start()
         {
             var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
+            _teamPointSystem = Instantiate(_gameConfig.TeamPointSystemPrefab);
+
             if (crossLevelDataTransfer != null)
             {
                 _gameConfig.CharactersSelected = crossLevelDataTransfer.GetSelectedCharacters();
             }
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
+
+
         }
 
         private void CreatePlayer(int playerId)
@@ -26,6 +34,7 @@ namespace LifeSystem
             var player = Instantiate(_gameConfig.PlayerPrefab[character - 1]);
             player.PlayerId = playerId;
             player.Color = Random.ColorHSV();
+            player.TeamPointSystem = _teamPointSystem;
             PositionRandomly(playerId, player);
         }
 

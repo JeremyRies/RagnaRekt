@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _sprite: {fileID: 212893768557047876}
+  PlayerId: 0
 --- !u!114 &114087861889933940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,10 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33832c40e59f421ba04d50d2c90d3205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 1
   _sprite: {fileID: 212893768557047876}
   _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
   _animation: {fileID: 114087861889933940}
+  _player: {fileID: 114049397316937804}
   Attack: {fileID: 114186842344561168}
   Skill: {fileID: 114303373183518000}
 --- !u!114 &114186842344561168
@@ -328,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldownTimeInSeconds: 0.3
-  _playerControllerBase: {fileID: 114100535086619882}
+  _player: {fileID: 114049397316937804}
   _weapon: {fileID: 58467128448474252}
   _animation: {fileID: 114087861889933940}
 --- !u!114 &114287236272938962
@@ -343,9 +344,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelConfig: {fileID: 11400000, guid: e8bae1b432a179f4798b6923e6f9d1ae, type: 2}
-  _player: {fileID: 4987802579821146}
+  _playerTransform: {fileID: 4987802579821146}
   _sprite: {fileID: 212893768557047876}
   _hitBox: {fileID: 61503345507171506}
+  _player: {fileID: 114049397316937804}
 --- !u!114 &114303373183518000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,9 +359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c3643b58e6c2540ae121b4890d60c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4987802579821146}
+  _playerTransform: {fileID: 4987802579821146}
   _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
   PlayerController: {fileID: 114100535086619882}
+  _player: {fileID: 114049397316937804}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,7 +377,7 @@ MonoBehaviour:
   _ignoredColliders:
   - {fileID: 58467128448474252}
   _life: {fileID: 114287236272938962}
-  _playerControllerBase: {fileID: 114100535086619882}
+  _player: {fileID: 114049397316937804}
 --- !u!114 &114873327137577674
 MonoBehaviour:
   m_ObjectHideFlags: 1

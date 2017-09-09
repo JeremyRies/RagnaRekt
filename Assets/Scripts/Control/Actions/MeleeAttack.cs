@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Timers;
-using Assets.Scripts.Entities;
 using Assets.Scripts.Util;
+using Entities;
 using UniRx;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace Control.Actions
     {
         [SerializeField] private float _cooldownTimeInSeconds = 2;
 
-        [SerializeField] private PlayerControllerBase _playerControllerBase;
+        [SerializeField] private Player _player;
 
         [SerializeField] private Collider2D _weapon;
         [SerializeField] private PlayerAnimation _animation;
@@ -38,8 +37,7 @@ namespace Control.Actions
 
         private void Attack()
         {
-            //todo team id is not correct from start pls fix 
-            _killable.TeamId = _playerControllerBase.TeamId;
+            _killable.TeamId = _player.TeamId;
             _animation.Attack();
             _weapon.gameObject.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(_animation.AttackDuration))

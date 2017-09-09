@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Entities;
 using UnityEngine;
 
 namespace LifeSystem
@@ -8,9 +9,12 @@ namespace LifeSystem
         private bool _invincible;
 
         [SerializeField] private LevelConfig _levelConfig;
-        [SerializeField] private Transform _player;
+        [SerializeField] private Transform _playerTransform;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private Collider2D _hitBox;
+
+        [SerializeField]
+        private Player _player;
 
         private float _invincibilityTime = 2f;
         private float _timeBetweenInvincibilityAnimation = 0.1f;
@@ -20,6 +24,8 @@ namespace LifeSystem
         {
             if(_invincible) Debug.LogError("Should not be able to hit when invincible");
             //audio
+
+           _player.TeamPointSystem.ScorePoint(_player.OtherTeamId);
             Die();
             Respawn();
         }
@@ -49,7 +55,7 @@ namespace LifeSystem
         {
             var xpos = Random.Range(_levelConfig.LevelLeftMaxPosition, _levelConfig.LevelRightMaxPosition);
             var pos = new Vector2(xpos,_levelConfig.LevelYMaxPosition);
-            _player.position = pos;
+            _playerTransform.position = pos;
         }
 
         private void Update()
