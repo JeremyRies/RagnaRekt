@@ -84,21 +84,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1821957272494974
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4931863195697434}
-  m_Layer: 0
-  m_Name: Hammer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1839361872294520
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +112,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4931863195697434}
   - {fileID: 4490016590078062}
   - {fileID: 4956830135506090}
   m_Father: {fileID: 4987802579821146}
@@ -157,19 +141,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4062215194652316}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4931863195697434
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1821957272494974}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.545, y: 0.008999974, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4062215194652316}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4956830135506090
@@ -179,11 +150,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229924678281714}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0, z: 0}
-  m_LocalScale: {x: 1.5000032, y: 0.19999915, z: 1}
+  m_LocalPosition: {x: 0.677, y: 0, z: 0}
+  m_LocalScale: {x: 1.3538406, y: 0.19999915, z: 1}
   m_Children: []
   m_Father: {fileID: 4062215194652316}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4987802579821146
 Transform:
@@ -193,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 1615896409057580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_Children:
   - {fileID: 4452028562940534}
   - {fileID: 4062215194652316}
@@ -257,7 +228,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.048720747, y: -0.08120155}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -268,7 +239,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9025585, y: 1.5196877}
   m_EdgeRadius: 0
 --- !u!61 &61767914639882830
 BoxCollider2D:
@@ -338,6 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _animator: {fileID: 95393400828925116}
+  AttackDuration: 0.5
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -350,14 +322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 1
-  MaxJumpHeight: 4
-  MinJumpHeight: 1
-  MoveSpeed: 6
-  TimeToJumpApex: 0.4
   _sprite: {fileID: 212893768557047876}
+  _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
   Attack: {fileID: 114186842344561168}
   Skill: {fileID: 114303373183518000}
-  Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &114135033152432088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,7 +350,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldownTimeInSeconds: 2
   _attackTimeInSeconds: 1
-  _weapon: {fileID: 114135033152432088}
+  _playerControllerBase: {fileID: 114100535086619882}
+  _weapon: {fileID: 61767914639882830}
+  _animation: {fileID: 114087861889933940}
 --- !u!114 &114287236272938962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,13 +379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c3643b58e6c2540ae121b4890d60c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTimeInSeconds: 2
-  Player: {fileID: 1615896409057580}
-  Velocity: 0.2
-  Range: 5
+  _player: {fileID: 4987802579821146}
+  _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
   PlayerController: {fileID: 114100535086619882}
-  _hammerPrefab: {fileID: 1400423861394630, guid: 8760671256b1bec47877c1ae1b496df1,
-    type: 2}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1

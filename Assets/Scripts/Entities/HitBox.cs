@@ -14,7 +14,6 @@ namespace Assets.Scripts.Entities
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log(other);
             if (_ignoredColliders.Contains(other)) return;
             if (!other.CompareTag("Weapon")) return;
             if (other.GetComponent<Killable>().TeamId == _playerControllerBase.TeamId)return;

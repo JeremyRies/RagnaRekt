@@ -7,11 +7,6 @@ namespace Assets.Scripts.Entities
     {
         public bool Visible { set { gameObject.SetActive(value); } }
 
-        private void Start()
-        {
-            Visible = false;
-        }
-
         public void Attack()
         {
             Visible = true;
