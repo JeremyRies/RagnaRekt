@@ -19,6 +19,7 @@ namespace Control
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private Animator _animator;
         [SerializeField] public double AttackDuration = 0.5F;
+        [SerializeField] public double JumpDuration = 0.5F;
 
         private ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
 
@@ -44,7 +45,17 @@ namespace Control
         public void Attack()
         {
             _state.Value = PlayerAnimationState.Attack;
-            Observable.Timer(TimeSpan.FromSeconds(AttackDuration)).Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+            Observable.Timer(TimeSpan.FromSeconds(AttackDuration))
+                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+        }
+
+        public void Jump()
+        {
+            if (_state.Value == PlayerAnimationState.Attack) return;
+
+            _state.Value = PlayerAnimationState.Jump;
+            Observable.Timer(TimeSpan.FromSeconds(JumpDuration))
+                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
         }
 
     }

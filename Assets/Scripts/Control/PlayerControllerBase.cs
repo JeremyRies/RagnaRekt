@@ -17,6 +17,7 @@ namespace Control
             TimeToJumpApex = .4f;
 
         [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private PlayerAnimation _animation;
 
         [SerializeField] public Action Attack;
         [SerializeField] public Action Skill;
@@ -151,7 +152,7 @@ namespace Control
                 if (IsOnGround)
                 {
                     Velocity.y = MaxJumpVelocity;
-
+                    _animation.Jump();
                 }
             }
 
