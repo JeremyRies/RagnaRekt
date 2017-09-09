@@ -1,110 +1,100 @@
-﻿using Control.Actions;
+﻿using System;
+using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
-using System.Collections;
-using System;
-using Control;
 
-
-public class HammerThrow : Control.Actions.Action
+namespace Control.Actions
 {
-    [SerializeField]
-    private float _cooldownTimeInSeconds;
-    [SerializeField]
-    public GameObject Player;
-    [SerializeField]
-    public float velocity;
-    [SerializeField]
-    public float range;
-    [SerializeField]
-    public PlayerControllerBase PlayerController;
-
-
-   
-    Vector2 Dir;
-    float distance;
-    bool flyBack;
-    private Cooldown _cooldown;
-    private Cooldown _hammerReturn;
-
-    private void Start()
+    public class HammerThrow : Action
     {
+        [SerializeField] private float _cooldownTimeInSeconds;
+        [SerializeField] public GameObject Player;
+        [SerializeField] public float Velocity;
+        [SerializeField] public float Range;
+        [SerializeField] public PlayerControllerBase PlayerController;
+        [SerializeField] private GameObject _hammerPrefab;
 
-        _cooldown = new Cooldown(_cooldownTimeInSeconds);
-        _hammerReturn = new Cooldown(_cooldownTimeInSeconds / 2);
-    }
+        private Vector2 _dir;
+        private float _distance;
+        private bool _flyBack;
+        private Cooldown _cooldown;
+        private Cooldown _hammerReturn;
+        private bool _active;
+        private GameObject _hammerInstance;
+        private SpriteRenderer _spriteRendererOfHammerInstance;
 
-    public override void TryToActivate(Direction direction)
-    {
-        if (_cooldown.IsOnCoolDown.Value==false)
+        private void Start()
         {
-            
-            updateVelocity();
+            _cooldown = new Cooldown(_cooldownTimeInSeconds);
+            _hammerReturn = new Cooldown(_cooldownTimeInSeconds / 2);
+        }
+
+        public override void TryToActivate(Direction direction)
+        {
+            if (_cooldown.IsOnCoolDown.Value) return;
+
             _cooldown.Start();
             _hammerReturn.Start();
-            StartCoroutine(Throw(direction));
+            StartCoroutine(Throw());
         }
 
-    }
-
- 
-
-   public  IEnumerator Throw(Direction direction)
-    {
-
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;
-
-        gameObject.transform.position = new Vector2(Player.transform.position.x + velocity*2, Player.transform.position.y);
-
-
-
-        while (gameObject.active==true)
+        private IEnumerator Throw()
         {
-            
-            Dir = ( gameObject.transform.position - Player.transform.position).normalized;
-            distance = Vector2.Distance(gameObject.transform.position, Player.transform.position);
+            _hammerInstance = Instantiate(_hammerPrefab);
+            _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
 
-            Debug.Log(distance);
+            UpdateVelocity();
 
-            if (distance >= range)
-            {
-                flyBack = true;
+            _hammerInstance.transform.position = Player.transform.position;
+            _hammerInstance.transform.position += Vector3.right * Velocity * 2;
+
+
+            _active = true;
+
+            while (_active)
+            {          
+                _dir = (_hammerInstance.transform.position - Player.transform.position).normalized;
+                _distance = Vector2.Distance(_hammerInstance.transform.position, Player.transform.position);
+
+                Debug.Log(_distance);
+
+                if (_distance >= Range)
+                {
+                    _flyBack = true;
+                }
+
+                if(_flyBack)
+                {
+                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(Velocity);
+                }else {
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + Velocity, _hammerInstance.transform.position.y);
+                }
+
+                if (_distance <= Math.Abs(Velocity))
+                {
+                    _flyBack = false;
+                    _active = false;
+                    Destroy(_hammerInstance);
+                }
+
+                yield return null;
             }
-
-            if(flyBack == false)
-            {
-
-                gameObject.transform.position = new Vector2(gameObject.transform.position.x  +  velocity, gameObject.transform.position.y);
-
-            }else {
-
-                gameObject.transform.position -= (Vector3)Dir *Math.Abs(velocity);
-            }
-
-            if (distance <= Math.Abs(velocity))
-            {
-                flyBack = false;
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
-
-            }
-
-
-            yield return null;
         }
 
-        
-    }
-   public void updateVelocity()
-    {
-        if(PlayerController.isLookingLeft)
-        { velocity = Math.Abs(velocity) * -1; }
+        private void UpdateVelocity()
+        {
+            if (PlayerController.isLookingLeft)
+            {
+                Velocity = Math.Abs(Velocity) * -1;
+                _spriteRendererOfHammerInstance.flipX = true;
+            }
 
-        if (!PlayerController.isLookingLeft)
-        { velocity = Math.Abs(velocity); }
-        
-        
+            if (!PlayerController.isLookingLeft)
+            {
+                Velocity = Math.Abs(Velocity);
+                _spriteRendererOfHammerInstance.flipX = false;
+            }    
+        }
     }
-    
-
 }
 
