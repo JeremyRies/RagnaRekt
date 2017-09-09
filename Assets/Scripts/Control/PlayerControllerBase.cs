@@ -31,7 +31,7 @@ namespace Control
         [NonSerialized] protected Vector3 Velocity;
         
         public ReactiveProperty<bool> IsMoving = new ReactiveProperty<bool>(false);
-        private const float MinHorizontalMovement = 0.01F;
+        private const float MinHorizontalMovement = 0.03F;
 
         protected virtual void Start()
         {
