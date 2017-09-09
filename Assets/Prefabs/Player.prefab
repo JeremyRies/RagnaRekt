@@ -131,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615896409057580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -1.79, z: 0}
+  m_LocalPosition: {x: -4.5, y: 1, z: 0}
   m_LocalScale: {x: 0.78953826, y: 1.7997577, z: 1}
   m_Children:
   - {fileID: 4062215194652316}
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33832c40e59f421ba04d50d2c90d3205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 2
+  PlayerId: 1
   MaxJumpHeight: 4
   MinJumpHeight: 1
   MoveSpeed: 6
@@ -275,7 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelConfig: {fileID: 11400000, guid: e8bae1b432a179f4798b6923e6f9d1ae, type: 2}
-  _spriteRenderer: {fileID: 212893768557047876}
+  _player: {fileID: 4987802579821146}
+  _sprite: {fileID: 212893768557047876}
   _hitBox: {fileID: 61503345507171506}
 --- !u!114 &114522263512032690
 MonoBehaviour:
@@ -397,7 +398,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5e55bba8e1f63e64e98748c7a6311646, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.74264705, b: 0.25096357, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
