@@ -14,18 +14,21 @@ namespace Control.Actions
 
 
         private Vector2 _dir;
-        private float _distance;
-        private bool _flyBack;
+        private float _distanceFromStartPoint;
+        private float _distanceToPlayer;
+
+
+        
+       private bool _isInHand;
+        private Hammer hammer;
         private Cooldown _cooldown;
-        private Cooldown _hammerReturn;
-        private bool _active;
         private GameObject _hammerInstance;
         private SpriteRenderer _spriteRendererOfHammerInstance;
 
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            _hammerReturn = new Cooldown(_conf.CooldownTimeInSeconds / 2);
+            
         }
 
         public override void TryToActivate(Direction direction)
@@ -33,49 +36,61 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
 
             _cooldown.Start();
-            _hammerReturn.Start();
             StartCoroutine(Throw());
         }
 
         private IEnumerator Throw()
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
+            _hammerInstance.transform.position = _player.transform.position;
+            _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
             var hammer = _hammerInstance.AddComponent<Hammer>();
+            hammer._hammerConfig = _conf;
             hammer.TeamId = PlayerController.TeamId;
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
             _hammerInstance.GetComponent<Collider2D>();
 
+            
             UpdateVelocity();
 
-            _hammerInstance.transform.position = _player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
+            _isInHand = false;
 
 
-            _active = true;
 
-            while (_active)
+            var playerStartPos = _player.transform.position;
+
+            while (_isInHand==false)
             {          
                 _dir = (_hammerInstance.transform.position - _player.transform.position).normalized;
-                _distance = Vector2.Distance(_hammerInstance.transform.position, _player.transform.position);
+                _distanceFromStartPoint = Vector2.Distance(_hammerInstance.transform.position, playerStartPos);
+                _distanceToPlayer = Vector2.Distance(_hammerInstance.transform.position, _player.transform.position);
 
-                if (_distance >= _conf.Range)
+                hammer.Update();
+
+                if (_distanceFromStartPoint >= _conf.Range)
                 {
-                    _flyBack = true;
+                    hammer._flyBack = true;
                 }
 
-                if(_flyBack)
+                if (_cooldown.IsOnCoolDown.Value==false)
+                {
+
+                    _isInHand = true;
+                }
+
+                if (hammer._flyBack)
                 {
                     _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(_conf.Velocity);
                 }else {
                     _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + _conf.Velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distance <= Math.Abs(_conf.Velocity))
+                if (_distanceToPlayer <= Math.Abs(_conf.Velocity) && hammer._flyBack )
                 {
-                    _flyBack = false;
-                    _active = false;
-                    Destroy(_hammerInstance);
+                    hammer._flyBack = false;
+                    _isInHand = true;
+
                 }
 
                 yield return null;
