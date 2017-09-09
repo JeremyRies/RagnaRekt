@@ -56,11 +56,6 @@ namespace LifeSystem
         { 
             Debug.Log("Team: " + teamIndex + " wins!");
 
-            foreach (var VARIABLE in COLLECTION)
-            {
-                
-            }
-
             LevelController.GetInstance().LoadMenuScene();
         }
 

@@ -39,13 +39,13 @@ namespace LifeSystem
             var character = _gameConfig.CharactersSelected[playerId - 1];
             var player = Instantiate(_gameConfig.PlayerPrefab[character - 1]);
             player.PlayerId = playerId;
-            if (playerId%1 == 0)
+            if (playerId%2 == 0)
             {
-                player.Team = _team2;
+                _team2.AddPlayer(player);
             }
             else
             {
-                player.Team = _team1;
+                _team1.AddPlayer(player);
             }
             player.Color = Random.ColorHSV();
             player.TeamPointSystem = _teamPointSystem;

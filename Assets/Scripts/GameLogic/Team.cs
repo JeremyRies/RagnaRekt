@@ -18,6 +18,7 @@ public class Team
     public void AddPlayer(Player player)
     {
         _players.Add(player);
+        player.Team = this;
     }
 
     public List<Player> GetPlayers()
