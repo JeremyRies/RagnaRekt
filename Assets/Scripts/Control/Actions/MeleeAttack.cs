@@ -12,12 +12,16 @@ namespace Control.Actions
         [SerializeField] private float _cooldownTimeInSeconds = 2;
         [SerializeField] private float _attackTimeInSeconds = 1;
         [SerializeField] private MeleeWeapon _weapon;
+        [SerializeField] private PlayerControllerBase _playerControllerBase;
 
         private Cooldown _cooldown;
 
         private void Start()
         { 
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
+            gameObject.AddComponent<Killable>().TeamId = _playerControllerBase.TeamId;
+
+            _weapon.Visible = false;
         }
 
         public override void TryToActivate(Direction direction)
