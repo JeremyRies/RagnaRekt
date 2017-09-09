@@ -25,11 +25,11 @@ namespace Control
         private float _velocityXSmoothing;
         private float _gravity;
 
-        protected IInputProvider InputProvider { get; private set; }
+        public IInputProvider InputProvider { get; private set; }
         protected CollisionController Controller { get; private set; }
         protected float MaxJumpVelocity { get; private set; }
         protected float MinJumpVelocity { get; private set; }
-        protected Vector3 Velocity;
+        public Vector3 Velocity;
         
         protected virtual void Start()
         {
