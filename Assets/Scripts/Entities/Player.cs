@@ -11,7 +11,8 @@ namespace Entities
         [SerializeField] private SpriteRenderer _sprite;
 
         public int PlayerId;
-        public int OtherTeamId { get { return TeamId == 1 ? 2 : 1; } }
+        public Team Team;
+        public int OtherTeamId { get { return Team.TeamId == 1 ? 2 : 1; } }
         public void LookLeft() { _controller.UpdateViewDirection(new Vector2(-1,0)); }
         public Color Color { set { _sprite.color = value; } }
 
@@ -20,15 +21,6 @@ namespace Entities
         void Start()
         {
             TeamPointSystem = FindObjectOfType<TeamPointSystem>();
-        }
-
-        public int TeamId
-        {
-            get
-            {
-                var teamId = ((PlayerId + 1) % 2) + 1;
-                return teamId;
-            }
         }
     }
 }
