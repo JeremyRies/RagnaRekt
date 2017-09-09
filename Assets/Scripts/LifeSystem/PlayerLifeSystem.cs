@@ -8,7 +8,8 @@ namespace LifeSystem
         private bool _invincible;
 
         [SerializeField] private LevelConfig _levelConfig;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Transform _player;
+        [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private Collider2D _hitBox;
 
         private float _invincibilityTime = 2f;
@@ -36,10 +37,10 @@ namespace LifeSystem
             while (_currentInvincibilityTime < _invincibilityTime)
             {
                 _currentInvincibilityTime += _timeBetweenInvincibilityAnimation;
-                _spriteRenderer.enabled = !_spriteRenderer.enabled;
+                _sprite.enabled = !_sprite.enabled;
                 yield return new WaitForSeconds(_timeBetweenInvincibilityAnimation);
             }
-            _spriteRenderer.enabled = true;
+            _sprite.enabled = true;
             _invincible = false;
             _hitBox.enabled = true;
         }
@@ -48,7 +49,8 @@ namespace LifeSystem
         {
             var xpos = Random.Range(_levelConfig.LevelLeftMaxPosition, _levelConfig.LevelRightMaxPosition);
             var pos = new Vector2(xpos,_levelConfig.LevelYMaxPosition);
-            transform.position = pos;
+            Debug.Log("Respawn at " + pos);
+            _player.position = pos;
         }
     }
 }
