@@ -10,14 +10,21 @@ namespace Control.Actions
     public class MeleeAttack : Action
     {
         [SerializeField] private float _cooldownTimeInSeconds = 2;
-        [SerializeField] private float _attackTimeInSeconds = 1;
-        [SerializeField] private MeleeWeapon _weapon;
+
+        [SerializeField] private PlayerControllerBase _playerControllerBase;
+
+        [SerializeField] private Collider2D _weapon;
+        [SerializeField] private PlayerAnimation _animation;
+
 
         private Cooldown _cooldown;
 
-        private void Start()
+        private void Awake()
         { 
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
+            gameObject.AddComponent<Killable>().TeamId = _playerControllerBase.TeamId;
+
+            _weapon.gameObject.SetActive(false);
         }
 
         public override void TryToActivate(Direction direction)
@@ -30,16 +37,10 @@ namespace Control.Actions
 
         private void Attack()
         {
-            _weapon.Visible = true;
-            _weapon.Attack();
-            PlayAttackAnimation();
-            Observable.Timer(TimeSpan.FromSeconds(_attackTimeInSeconds))
-                .Subscribe(_ => _weapon.Visible = false);
-        }
-
-        private void PlayAttackAnimation()
-        {
-
+            _weapon.gameObject.SetActive(true);
+            _animation.Attack();
+            Observable.Timer(TimeSpan.FromSeconds(_animation.AttackDuration))
+                .Subscribe(_ => _weapon.gameObject.SetActive(false));
         }
     }
 }

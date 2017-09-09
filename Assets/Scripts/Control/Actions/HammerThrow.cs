@@ -7,12 +7,11 @@ namespace Control.Actions
 {
     public class HammerThrow : Action
     {
-        [SerializeField] private float _cooldownTimeInSeconds;
-        [SerializeField] public GameObject Player;
-        [SerializeField] public float Velocity;
-        [SerializeField] public float Range;
+        [SerializeField] private Transform _player;
+        [SerializeField] private HammerConfig _conf;
+
         [SerializeField] public PlayerControllerBase PlayerController;
-        [SerializeField] private GameObject _hammerPrefab;
+
 
         private Vector2 _dir;
         private float _distance;
@@ -25,8 +24,8 @@ namespace Control.Actions
 
         private void Start()
         {
-            _cooldown = new Cooldown(_cooldownTimeInSeconds);
-            _hammerReturn = new Cooldown(_cooldownTimeInSeconds / 2);
+            _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
+            _hammerReturn = new Cooldown(_conf.CooldownTimeInSeconds / 2);
         }
 
         public override void TryToActivate(Direction direction)
@@ -40,37 +39,39 @@ namespace Control.Actions
 
         private IEnumerator Throw()
         {
-            _hammerInstance = Instantiate(_hammerPrefab);
+            _hammerInstance = Instantiate(_conf.HammerPrefab);
+            var hammer = _hammerInstance.AddComponent<Hammer>();
+            hammer.TeamId = PlayerController.TeamId;
+
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
+            _hammerInstance.GetComponent<Collider2D>();
 
             UpdateVelocity();
 
-            _hammerInstance.transform.position = Player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * Velocity * 2;
+            _hammerInstance.transform.position = _player.transform.position;
+            _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
 
 
             _active = true;
 
             while (_active)
             {          
-                _dir = (_hammerInstance.transform.position - Player.transform.position).normalized;
-                _distance = Vector2.Distance(_hammerInstance.transform.position, Player.transform.position);
+                _dir = (_hammerInstance.transform.position - _player.transform.position).normalized;
+                _distance = Vector2.Distance(_hammerInstance.transform.position, _player.transform.position);
 
-                Debug.Log(_distance);
-
-                if (_distance >= Range)
+                if (_distance >= _conf.Range)
                 {
                     _flyBack = true;
                 }
 
                 if(_flyBack)
                 {
-                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(Velocity);
+                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(_conf.Velocity);
                 }else {
-                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + Velocity, _hammerInstance.transform.position.y);
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + _conf.Velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distance <= Math.Abs(Velocity))
+                if (_distance <= Math.Abs(_conf.Velocity))
                 {
                     _flyBack = false;
                     _active = false;
@@ -85,13 +86,13 @@ namespace Control.Actions
         {
             if (PlayerController.isLookingLeft)
             {
-                Velocity = Math.Abs(Velocity) * -1;
+                _conf.Velocity = Math.Abs(_conf.Velocity) * -1;
                 _spriteRendererOfHammerInstance.flipX = true;
             }
 
             if (!PlayerController.isLookingLeft)
             {
-                Velocity = Math.Abs(Velocity);
+                _conf.Velocity = Math.Abs(_conf.Velocity);
                 _spriteRendererOfHammerInstance.flipX = false;
             }    
         }
