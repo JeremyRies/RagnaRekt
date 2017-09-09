@@ -99,6 +99,7 @@ namespace Control.Actions
 
                 yield return null;
             }
+            hammer.Reset();
         }
 
         private void UpdateVelocity()
