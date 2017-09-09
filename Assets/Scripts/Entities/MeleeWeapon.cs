@@ -2,12 +2,20 @@
 
 namespace Assets.Scripts.Entities
 {
+    [RequireComponent(typeof(Collider2D))]
     public class MeleeWeapon : MonoBehaviour
     {
-        private GameObject _gameObject;
+        public bool Visible { set { gameObject.SetActive(value); } }
 
-        public bool Visible { set { _gameObject.SetActive(value); } } 
+        private void Start()
+        {
+            Visible = false;
+        }
 
+        public void Attack()
+        {
+            Visible = true;
+        }
 
     }
 }

@@ -49,7 +49,8 @@ namespace Control
         private void Update()
         {
             var horizontalInput = GetHorizontalInput();
-            
+
+            UpdateViewDirection(horizontalInput);
             UpdateHorizontalVelocity(horizontalInput);
 
             HandleJump();
@@ -63,6 +64,16 @@ namespace Control
             if (IsHittingCeiling || IsOnGround)
             {
                 Velocity.y = 0;
+            }
+        }
+
+        private bool _looksLeft;
+        private void UpdateViewDirection(Vector2 horizontalInput)
+        {
+            if (!_looksLeft && horizontalInput.x < 0)
+            {
+                _looksLeft = true;
+
             }
         }
 

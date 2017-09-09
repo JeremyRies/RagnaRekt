@@ -1,7 +1,8 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 using Assets.Scripts.Entities;
 using Assets.Scripts.Util;
-using NUnit.Framework.Constraints;
+using UniRx;
 using UnityEngine;
 
 namespace Control.Actions
@@ -15,13 +16,13 @@ namespace Control.Actions
         private Cooldown _cooldown;
 
         private void Start()
-        {
+        { 
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
         }
 
         public override void TryToActivate(Direction direction)
         {
-            if (_cooldown.IsOnCoolDown) return;
+            if (_cooldown.IsOnCoolDown.Value) return;
 
             Attack();
             _cooldown.Start();
@@ -30,9 +31,15 @@ namespace Control.Actions
         private void Attack()
         {
             _weapon.Visible = true;
-            var timer = new Timer(_attackTimeInSeconds);
-            timer.Elapsed += (nil, args) => _weapon.Visible = false;
-            timer.Start();
+            _weapon.Attack();
+            PlayAttackAnimation();
+            Observable.Timer(TimeSpan.FromSeconds(_attackTimeInSeconds))
+                .Subscribe(_ => _weapon.Visible = false);
+        }
+
+        private void PlayAttackAnimation()
+        {
+
         }
     }
 }
