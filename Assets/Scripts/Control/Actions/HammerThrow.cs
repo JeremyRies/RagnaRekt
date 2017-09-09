@@ -2,12 +2,13 @@
 using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
+using Entities;
 
 namespace Control.Actions
 {
     public class HammerThrow : Action
     {
-        [SerializeField] private Transform _player;
+        [SerializeField] private Player _player  ;
         [SerializeField] private HammerConfig _conf;
 
         [SerializeField] public PlayerControllerBase PlayerController;
