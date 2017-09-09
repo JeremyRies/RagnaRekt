@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5e42b3b2e841b2b18c9fc87573f4e3, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  LevelLeftMaxPosition: -5
-  LevelRightMaxPosition: 5
-  LevelYMaxPosition: 2
+  LevelLeftMaxPosition: 0
+  LevelRightMaxPosition: 30
+  LevelYMaxPosition: 40
   LevelYDeathPosition: -20
