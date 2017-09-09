@@ -18,11 +18,12 @@ namespace Control.Actions
 
 
         private Cooldown _cooldown;
+        private Killable _killable;
 
         private void Awake()
         { 
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
-            gameObject.AddComponent<Killable>().TeamId = _playerControllerBase.TeamId;
+            _killable = gameObject.AddComponent<Killable>();
 
             _weapon.gameObject.SetActive(false);
         }
@@ -30,13 +31,15 @@ namespace Control.Actions
         public override void TryToActivate(Direction direction)
         {
             if (_cooldown.IsOnCoolDown.Value) return;
-
+            
             Attack();
             _cooldown.Start();
         }
 
         private void Attack()
         {
+            //todo team id is not correct from start pls fix 
+            _killable.TeamId = _playerControllerBase.TeamId;
             _weapon.gameObject.SetActive(true);
             _animation.Attack();
             Observable.Timer(TimeSpan.FromSeconds(_animation.AttackDuration))
