@@ -28,7 +28,7 @@ namespace Control
 
             _state.Subscribe(state =>
             {
-                Debug.Log("New state: " + state);
+                //Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
         }
@@ -45,6 +45,7 @@ namespace Control
 
         public void Attack()
         {
+            Debug.Log("Attack");
             _state.Value = PlayerAnimationState.Attack;
             Observable.Timer(TimeSpan.FromSeconds(AttackDuration))
                 .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
