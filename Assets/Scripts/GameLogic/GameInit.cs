@@ -14,8 +14,14 @@ namespace LifeSystem
 
         private TeamPointSystem _teamPointSystem;
 
+        private Team _team1;
+        private Team _team2;
+
         private void Start()
         {
+            _team1 = new Team(1);
+            _team2 = new Team(2);
+
             var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
             _teamPointSystem = Instantiate(_gameConfig.TeamPointSystemPrefab);
 
@@ -33,7 +39,15 @@ namespace LifeSystem
             var character = _gameConfig.CharactersSelected[playerId - 1];
             var player = Instantiate(_gameConfig.PlayerPrefab[character - 1]);
             player.PlayerId = playerId;
-            //player.Color = Random.ColorHSV();
+            if (playerId%2 == 0)
+            {
+                _team2.AddPlayer(player);
+            }
+            else
+            {
+                _team1.AddPlayer(player);
+            }
+            player.Color = Random.ColorHSV();
             player.TeamPointSystem = _teamPointSystem;
             PositionRandomly(playerId, player);
         }

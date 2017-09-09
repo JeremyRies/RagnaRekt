@@ -7,6 +7,6 @@ public class AppStarter : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-	    LevelController.GetLevelController().LoadMenuScene();
+	    LevelController.GetInstance().LoadMenuScene();
 	}
 }

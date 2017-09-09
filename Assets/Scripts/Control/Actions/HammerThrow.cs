@@ -43,7 +43,7 @@ namespace Control.Actions
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
             var hammer = _hammerInstance.AddComponent<Hammer>();
-            hammer.TeamId = _player.TeamId;
+            hammer.TeamId = _player.Team.TeamId;
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
             _hammerInstance.GetComponent<Collider2D>();
