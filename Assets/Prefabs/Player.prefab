@@ -309,6 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _animator: {fileID: 95393400828925116}
+  AttackDuration: 0.5
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,8 +350,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldownTimeInSeconds: 2
   _attackTimeInSeconds: 1
-  _weapon: {fileID: 114135033152432088}
   _playerControllerBase: {fileID: 114100535086619882}
+  _weapon: {fileID: 61767914639882830}
+  _animation: {fileID: 114087861889933940}
 --- !u!114 &114287236272938962
 MonoBehaviour:
   m_ObjectHideFlags: 1
