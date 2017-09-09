@@ -70,6 +70,7 @@ namespace Control
         }
 
         private bool _looksLeft;
+
         public void UpdateViewDirection(Vector2 horizontalInput)
         {
             if (!_looksLeft && horizontalInput.x < 0)
@@ -161,6 +162,12 @@ namespace Control
         {
             Velocity = Vector3.zero;
             _velocityXSmoothing = 0;
+        }
+
+        public bool isLookingLeft
+        {
+            get { return this._looksLeft; }
+
         }
 
         public float VelocityX
