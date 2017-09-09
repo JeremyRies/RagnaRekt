@@ -77,6 +77,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4062215194652316}
   - component: {fileID: 212893768557047876}
+  - component: {fileID: 114087861889933940}
+  - component: {fileID: 95393400828925116}
   m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
@@ -91,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1839361872294520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4490016590078062}
@@ -132,8 +134,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615896409057580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 1, z: 0}
-  m_LocalScale: {x: 0.78953826, y: 1.7997577, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4062215194652316}
   m_Father: {fileID: 0}
@@ -234,6 +236,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &95393400828925116
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839361872294520}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 835805eed16c808478f04f7c6e869605, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114049397316937804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -247,6 +266,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _sprite: {fileID: 212893768557047876}
+--- !u!114 &114087861889933940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839361872294520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f458c6ac5736d9d458d9ae94c396a4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 114100535086619882}
+  _animator: {fileID: 95393400828925116}
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,6 +298,7 @@ MonoBehaviour:
   _sprite: {fileID: 212893768557047876}
   Attack: {fileID: 114723621594261632}
   Skill: {fileID: 0}
+  Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &114135033152432088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -411,8 +444,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5e55bba8e1f63e64e98748c7a6311646, type: 3}
-  m_Color: {r: 0, g: 0.74264705, b: 0.25096357, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 32512234cdde0e14abaad41c21cd6d87, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
