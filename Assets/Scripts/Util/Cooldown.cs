@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Timers;
 using UniRx;
-using UnityEngine;
 
 namespace Assets.Scripts.Util
 {
