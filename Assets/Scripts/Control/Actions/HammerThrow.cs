@@ -64,8 +64,6 @@ public class HammerThrow : Control.Actions.Action
             Dir = ( gameObject.transform.position - Player.transform.position).normalized;
             distance = Vector2.Distance(gameObject.transform.position, Player.transform.position);
 
-            Debug.Log(distance);
-
             if (distance >= range)
             {
                 flyBack = true;

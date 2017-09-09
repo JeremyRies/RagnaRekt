@@ -1,45 +1,51 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UniRx;
 
 namespace Control
 {
+    internal enum PlayerAnimationState
+    {
+        Idle = 0,
+        Walk = 1,
+        Jump = 2,
+        Attack = 3,
+        Skill = 4,
+        Death = 5
+    } 
+
     public class PlayerAnimation : MonoBehaviour
     {
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private Animator _animator;
+        [SerializeField] public double AttackDuration = 0.5F;
 
-        private PlayerAnimationStateMachine _stateMachine = new PlayerAnimationStateMachine();
-
-        private const float MinWalkingVelocity = 0.01F;
+        private ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
 
         private void Start()
         {
-            _stateMachine.State.Subscribe(state =>
+            _controller.IsMoving.DistinctUntilChanged().Subscribe(UpdateWalking);
+
+            _state.Subscribe(state =>
             {
                 Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
         }
 
-        private void Update()
+        private void UpdateWalking(bool walking)
         {
-            if (CouldTriggerIdle()) _stateMachine.TriggerIdle();
-            if (CouldTriggerWalking()) _stateMachine.TriggerWalking();
+            if(walking && _state.Value == PlayerAnimationState.Idle)
+                _state.Value = PlayerAnimationState.Walk;
+            if(!walking && _state.Value == PlayerAnimationState.Walk)
+                _state.Value = PlayerAnimationState.Idle;
         }
 
-        private bool CouldTriggerIdle()
+        public void Attack()
         {
-            return _stateMachine.State.Value != PlayerAnimationState.Idle 
-                && Mathf.Abs(_controller.InputProvider.GetAxis("Horizontal")) < MinWalkingVelocity;
+            _state.Value = PlayerAnimationState.Attack;
+            Observable.Timer(TimeSpan.FromSeconds(AttackDuration)).Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
         }
-
-        private bool CouldTriggerWalking()
-        {
-            return _stateMachine.State.Value != PlayerAnimationState.Walk 
-                && Mathf.Abs(_controller.InputProvider.GetAxis("Horizontal")) > MinWalkingVelocity;
-        }
-
-
 
     }
 }

@@ -60,7 +60,6 @@ namespace LifeSystem
         private void CheckFallingOff()
         {
             var positionY = transform.position.y;
-            Debug.Log(positionY);
             if (positionY < _levelConfig.LevelYDeathPosition)
             {
                 ReceiveHit();
