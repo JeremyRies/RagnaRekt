@@ -190,6 +190,7 @@ namespace Control
             get { return Controller.Collider.size; }
         }
 
+        //todo player id is not correctly set from start pls fix 
         public int TeamId
         {
             get { return (PlayerId + 1 % 2) + 1; }
