@@ -20,10 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4956830135506090}
   - component: {fileID: 212330257132151100}
-  - component: {fileID: 61767914639882830}
-  - component: {fileID: 114135033152432088}
   - component: {fileID: 50385869856852290}
   - component: {fileID: 114186842344561168}
+  - component: {fileID: 58467128448474252}
   m_Layer: 8
   m_Name: Sword
   m_TagString: Weapon
@@ -150,8 +149,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229924678281714}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.677, y: 0, z: 0}
-  m_LocalScale: {x: 1.3538406, y: 0.19999915, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 9, y: 9, z: 1}
   m_Children: []
   m_Father: {fileID: 4062215194652316}
   m_RootOrder: 1
@@ -191,6 +190,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
+--- !u!58 &58467128448474252
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1229924678281714}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.00000011920929}
+  serializedVersion: 2
+  m_Radius: 0.09
 --- !u!61 &61072768704276714
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -241,31 +255,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9025585, y: 1.5196877}
   m_EdgeRadius: 0
---- !u!61 &61767914639882830
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1229924678281714}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!95 &95393400828925116
 Animator:
   serializedVersion: 3
@@ -309,7 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _animator: {fileID: 95393400828925116}
-  AttackDuration: 0.5
+  AttackDuration: 0.2
+  JumpDuration: 0.5
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,19 +314,9 @@ MonoBehaviour:
   PlayerId: 1
   _sprite: {fileID: 212893768557047876}
   _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
+  _animation: {fileID: 114087861889933940}
   Attack: {fileID: 114186842344561168}
   Skill: {fileID: 114303373183518000}
---- !u!114 &114135033152432088
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1229924678281714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64cd390dd7f0ebc4596c0fde29e90015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114186842344561168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -348,10 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a61195799e4700478f8fbdeac481af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTimeInSeconds: 2
-  _attackTimeInSeconds: 1
+  _cooldownTimeInSeconds: 0.5
   _playerControllerBase: {fileID: 114100535086619882}
-  _weapon: {fileID: 61767914639882830}
+  _weapon: {fileID: 58467128448474252}
   _animation: {fileID: 114087861889933940}
 --- !u!114 &114287236272938962
 MonoBehaviour:
@@ -394,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ignoredColliders:
-  - {fileID: 61767914639882830}
+  - {fileID: 58467128448474252}
   _life: {fileID: 114287236272938962}
   _playerControllerBase: {fileID: 114100535086619882}
 --- !u!114 &114873327137577674
@@ -420,7 +399,7 @@ SpriteRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229924678281714}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_MotionVectors: 1
@@ -446,7 +425,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5e55bba8e1f63e64e98748c7a6311646, type: 3}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

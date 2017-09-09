@@ -11,7 +11,6 @@ namespace Control.Actions
     {
         [SerializeField] private float _cooldownTimeInSeconds = 2;
 
-        [SerializeField] private float _attackTimeInSeconds = 1;
         [SerializeField] private PlayerControllerBase _playerControllerBase;
 
         [SerializeField] private Collider2D _weapon;
