@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace LifeSystem
 {
@@ -14,16 +15,28 @@ namespace LifeSystem
 
         private int[] _teamPointCounter;
 
+        [SerializeField] private Text[] _teamPointCounterDisplay;
+
         private void Start()
         {
             _teamPointCounter = new int[_teamCount];
+            UpdateDisplay();
         }
 
         public void ScorePoint(int teamId)
         {
             _teamPointCounter[teamId]++;
             Debug.Log("Score team " + teamId +" : " + _teamPointCounter[teamId]);
+            UpdateDisplay();
             CheckWin();
+        }
+
+        private void UpdateDisplay()
+        {
+            for (int teamIndex = 0; teamIndex < _teamCount; teamIndex++)
+            {
+                _teamPointCounterDisplay[teamIndex].text = _teamPointCounter[teamIndex].ToString();
+            }
         }
 
         private void CheckWin()
