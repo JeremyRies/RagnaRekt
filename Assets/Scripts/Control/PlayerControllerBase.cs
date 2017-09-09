@@ -15,6 +15,8 @@ namespace Control
             MoveSpeed = 6,
             TimeToJumpApex = .4f;
 
+        [SerializeField] private SpriteRenderer _sprite;
+
         [SerializeField] public Action Attack;
         [SerializeField] public Action Skill;
 
@@ -73,7 +75,11 @@ namespace Control
             if (!_looksLeft && horizontalInput.x < 0)
             {
                 _looksLeft = true;
-
+                _sprite.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            } else if (_looksLeft && horizontalInput.x > 0)
+            {
+                _looksLeft = false;
+                _sprite.transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
 
