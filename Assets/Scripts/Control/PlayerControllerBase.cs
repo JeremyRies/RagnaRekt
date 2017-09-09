@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using Control.Actions;
+using UnityEngine;
+using Action = Control.Actions.Action;
 
 namespace Control
 {
@@ -11,6 +14,9 @@ namespace Control
             MinJumpHeight = 1,
             MoveSpeed = 6,
             TimeToJumpApex = .4f;
+
+        [SerializeField] public Action Attack;
+        [SerializeField] public Action Skill;
 
         private const float AccelerationTimeAirborne = .2f;
         private const float AccelerationTimeGrounded = .1f;
@@ -47,6 +53,8 @@ namespace Control
             UpdateHorizontalVelocity(horizontalInput);
 
             HandleJump();
+            HandleSkill();
+            HandleAttack();
 
             ApplyGravity();
 
@@ -56,6 +64,33 @@ namespace Control
             {
                 Velocity.y = 0;
             }
+        }
+
+        private void HandleSkill()
+        {
+            if (InputProvider.GetButtonDown("Skill"))
+            {
+                Skill.TryToActivate(GetDirection());
+            }
+        }
+
+        private void HandleAttack()
+        {
+            if (InputProvider.GetButtonDown("Attack"))
+            {
+                Attack.TryToActivate(GetDirection());
+            }
+        }
+
+        private Direction GetDirection()
+        {
+            var vertical = InputProvider.GetAxis("Vertical");
+            if (Math.Abs(vertical) > 0.00001F)
+            {
+                return vertical > 0 ? Direction.TOP : Direction.DOWN;
+            }
+            // TODO consider view direction
+            return InputProvider.GetAxis("Horizontal") > 0 ? Direction.RIGHT : Direction.LEFT;
         }
 
         protected bool IsHittingCeiling

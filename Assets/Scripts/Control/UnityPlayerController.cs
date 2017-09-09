@@ -4,7 +4,7 @@
     {
         protected override IInputProvider GetInputProvider()
         {
-            return new UnityInputProvider();
+            return new UnityInputProvider(PlayerId);
         }
     }
 }
