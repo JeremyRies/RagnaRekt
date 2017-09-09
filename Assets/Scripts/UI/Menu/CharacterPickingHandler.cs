@@ -77,7 +77,7 @@ namespace UI.Menu
                 var crossLevelDataTransfer = GameObject.FindObjectOfType<CrossLevelDataTransfer>();
                 if (crossLevelDataTransfer != null)
                     crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
-                LevelController.GetLevelController().LoadGameScene();
+                LevelController.GetInstance().LoadGameScene();
             }
 
         }

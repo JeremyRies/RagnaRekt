@@ -53,9 +53,10 @@ namespace LifeSystem
         }
 
         private void Win(int teamIndex)
-        {
+        { 
             Debug.Log("Team: " + teamIndex + " wins!");
-            SceneManager.LoadScene(0);
+
+            LevelController.GetInstance().LoadMenuScene();
         }
 
         private bool IsMatchPointsAheadOfOtherTeam(int teamIndex, int points)

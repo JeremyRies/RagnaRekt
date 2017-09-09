@@ -19,7 +19,7 @@ namespace Assets.Scripts.Entities
             if (_ignoredColliders.Contains(other)) return;
             if (!other.CompareTag("Weapon")) return;
             var otherTeamId = other.GetComponent<Killable>().TeamId;
-            if (otherTeamId == _player.TeamId)return;
+            if (otherTeamId == _player.Team.TeamId)return;
 
             Debug.Log("Player died");
             _life.ReceiveHit();

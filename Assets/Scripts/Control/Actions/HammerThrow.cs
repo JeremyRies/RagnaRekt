@@ -45,8 +45,11 @@ namespace Control.Actions
             _hammerInstance.transform.position = _player.transform.position;
             _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
             var hammer = _hammerInstance.AddComponent<Hammer>();
+
             hammer._hammerConfig = _conf;
-            hammer.TeamId = PlayerController.TeamId;
+         
+            hammer.TeamId = _player.Team.TeamId;
+
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
             _hammerInstance.GetComponent<Collider2D>();

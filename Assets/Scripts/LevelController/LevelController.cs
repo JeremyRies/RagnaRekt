@@ -7,7 +7,7 @@ public class LevelController
 {
     private static LevelController _instance = null;
 
-    public static LevelController GetLevelController()
+    public static LevelController GetInstance()
     {
         if (_instance == null)
             _instance = new LevelController();
