@@ -65,9 +65,15 @@ namespace Control
 
             MovePlayer(Velocity*Time.deltaTime);
 
+            if (Velocity.y < 0.1)
+            {
+                _animation.HitGround();
+            }
+
             if (IsHittingCeiling || IsOnGround)
             {
                 Velocity.y = 0;
+                _animation.HitGround();
             }
         }
 
