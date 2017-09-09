@@ -40,8 +40,8 @@ namespace Control.Actions
         {
             //todo team id is not correct from start pls fix 
             _killable.TeamId = _playerControllerBase.TeamId;
-            _weapon.gameObject.SetActive(true);
             _animation.Attack();
+            _weapon.gameObject.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(_animation.AttackDuration))
                 .Subscribe(_ => _weapon.gameObject.SetActive(false));
         }
