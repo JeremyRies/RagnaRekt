@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
-namespace LevelBuilder
+namespace Level
 {
     public class LevelBuilder : MonoBehaviour
     {
@@ -19,14 +19,20 @@ namespace LevelBuilder
 
         public bool DisableRenderers;
 
+        public GameObject[] RendererParents;
+
         private void BuildLevel(bool preview)
         {
-            var renderers = FindObjectsOfType<SpriteRenderer>()
-                .Where(r => r.sprite != null)
-                .Where(r => r.sprite.name.Contains("ground"))
-                .ToArray();
+            var rendererList = new List<SpriteRenderer>();
+            foreach (var rendererParent in RendererParents)
+            {
+                rendererList.AddRange(rendererParent.GetComponentsInChildren<SpriteRenderer>());
+            }
+
+            var renderers = rendererList.ToArray();
 
             Debug.Log("Found " + renderers.Length + " `Ground`-SpriteRenderers");
+
 
             if (DetectMisplacedRenderers(renderers))
             {
@@ -36,7 +42,7 @@ namespace LevelBuilder
             var levelSize = GetLevelSize(renderers);
             var blocks = CreateBlockArray(levelSize, renderers);
 
-            FillGround(blocks);
+            //FillGround(blocks);
             UpdateTileTypes(blocks);
 
             if (preview)
@@ -45,7 +51,9 @@ namespace LevelBuilder
             }
             else
             {
-                var layout = ReplaceSpriteRenderers(renderers, blocks);
+               // var layout = ReplaceSpriteRenderers(renderers, blocks);
+                var layout = new GameObject("collider");
+                layout.transform.position = new Vector3(-0.5f,-0.5f,0f);
                 CreateHorizontalColliders(layout, blocks);
                 CreateVerticalColliders(layout, blocks);
             }
@@ -150,97 +158,6 @@ namespace LevelBuilder
         {
             var edgeCollider = layout.AddComponent<EdgeCollider2D>();
             edgeCollider.points = edgePoints;
-        }
-
-        private GameObject ReplaceSpriteRenderers(SpriteRenderer[] renderers, TileType[,] blocks)
-        {
-            DestroyRecursive(renderers.Select(r => r.gameObject).ToList());
-
-            var scene = SceneManager.GetSceneByName("Master");
-            SceneManager.SetActiveScene(scene);
-
-            var layout = new GameObject("LevelLayout");
-            layout.transform.position = Vector3.zero;
-
-            var sprites = this.AvailableTileSets.First(ts => ts.Type == TileSet).Tiles.ToDictionary(t => t.Type, t => t.Sprite);
-
-            var maxX = blocks.GetLength(0);
-            var maxY = blocks.GetLength(1);
-
-            for (int x = 0; x < maxX; x++)
-            {
-                for (int y = 0; y < maxY; y++)
-                {
-                    if (blocks[x, y] == TileType.None) continue;
-
-                    var block = new GameObject("Block [ " + x + " / " + y + " ]");
-                    block.transform.position = new Vector3(x, y, 0);
-                    block.transform.SetParent(layout.transform);
-
-                    var spriteRenderer = block.AddComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = sprites[blocks[x, y]];
-                    spriteRenderer.enabled = DisableRenderers;
-                }
-            }
-
-            return layout;
-        }
-
-        private static void DestroyRecursive(List<GameObject> objects)
-        {
-            var parents = new HashSet<GameObject>();
-            foreach (var o in objects)
-            {
-                var parent = o.transform.parent;
-                if (parent != null && parent.gameObject != null)
-                {
-                    parents.Add(parent.gameObject);
-                }
-
-                DestroyImmediate(o);
-            }
-
-            var emptyParents = new HashSet<GameObject>();
-            foreach (var parent in parents)
-            {
-                if (parent.transform.childCount == 0 &&  HasOnlyTransformAndColliders(parent))
-                {
-                    emptyParents.Add(parent);
-                }
-            }
-
-            if (emptyParents.Any())
-            {
-                DestroyRecursive(emptyParents.ToList());
-            }
-        }
-
-        private static bool HasOnlyTransformAndColliders(GameObject parent)
-        {
-            return parent.GetComponents(typeof (Component)).Length == parent.GetComponents(typeof (Collider2D)).Length + 1;
-        }
-
-        private void FillGround(TileType[,] blocks)
-        {
-            var maxX = blocks.GetLength(0);
-            var maxY = blocks.GetLength(1);
-            for (int x = 0; x < maxX; x++)
-            {
-                var groundLevel = 0;
-                for (int y = 0; y < maxY; y++)
-                {
-                    if (blocks[x, y] == TileType.Center)
-                    {
-                        groundLevel = y;
-                        break;
-                    }
-                }
-
-                for (int y = 0; y < groundLevel; y++)
-                {
-                    blocks[x, y] = TileType.Center;
-                }
-            }
         }
 
         private void UpdateTileTypes(TileType[,] blocks)
@@ -432,7 +349,7 @@ namespace LevelBuilder
             {
                 spriteRenderer.color = Color.white;
 
-                var position = spriteRenderer.transform.position;
+                var position = spriteRenderer.transform.localPosition;
                 var x = Mathf.RoundToInt(position.x);
                 var y = Mathf.RoundToInt(position.y);
 

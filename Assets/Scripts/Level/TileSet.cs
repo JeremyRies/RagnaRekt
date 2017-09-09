@@ -1,8 +1,8 @@
 using System;
-using LevelBuilder;
+using LinkedLives.Game;
 using UnityEngine;
 
-namespace LinkedLives.Game
+namespace Level
 {
     [Serializable]
     public struct TileSet
