@@ -120,6 +120,8 @@ GameObject:
   - component: {fileID: 48888411}
   - component: {fileID: 48888410}
   - component: {fileID: 48888409}
+  - component: {fileID: 48888415}
+  - component: {fileID: 48888414}
   m_Layer: 8
   m_Name: Player 1
   m_TagString: Untagged
@@ -156,14 +158,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 1
-  TeamId: 0
   MaxJumpHeight: 4
   MinJumpHeight: 1
   MoveSpeed: 6
   TimeToJumpApex: 0.4
   Attack: {fileID: 0}
   Skill: {fileID: 0}
-  _playerLifeSystem: {fileID: 0}
 --- !u!61 &48888411
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -244,6 +244,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &48888414
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 48888408}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &48888415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 48888408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c97450b876df644bfb2c45444c52bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelConfig: {fileID: 11400000, guid: e8bae1b432a179f4798b6923e6f9d1ae, type: 2}
+  _spriteRenderer: {fileID: 48888412}
+  _hitBox: {fileID: 48888414}
 --- !u!1 &186551142
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,14 +428,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 2
-  TeamId: 0
   MaxJumpHeight: 4
   MinJumpHeight: 1
   MoveSpeed: 6
   TimeToJumpApex: 0.4
   Attack: {fileID: 0}
   Skill: {fileID: 0}
-  _playerLifeSystem: {fileID: 0}
 --- !u!61 &205698100
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -670,6 +707,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &861362539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 861362541}
+  - component: {fileID: 861362540}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &861362540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 861362539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3c580195727424b995dbbb7f5afc8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &861362541
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 861362539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1683133865
 GameObject:
