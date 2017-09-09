@@ -264,7 +264,7 @@ Animator:
   m_GameObject: {fileID: 1839361872294520}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 835805eed16c808478f04f7c6e869605, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _sprite: {fileID: 212893768557047876}
+  Animation: {fileID: 114087861889933940}
   PlayerId: 0
 --- !u!114 &114087861889933940
 MonoBehaviour:
@@ -300,6 +301,7 @@ MonoBehaviour:
   _controller: {fileID: 114100535086619882}
   _animator: {fileID: 95393400828925116}
   AttackDuration: 0.2
+  _deathDuration: 1
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1

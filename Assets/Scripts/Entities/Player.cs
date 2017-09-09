@@ -9,6 +9,7 @@ namespace Entities
     {
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] public PlayerAnimation Animation;
 
         public int PlayerId;
         public Team Team;

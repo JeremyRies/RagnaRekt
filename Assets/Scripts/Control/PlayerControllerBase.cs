@@ -31,7 +31,7 @@ namespace Control
         [NonSerialized] protected Vector3 Velocity;
         
         public ReactiveProperty<bool> IsMoving = new ReactiveProperty<bool>(false);
-        private const float MinHorizontalMovement = 0.01F;
+        private const float MinHorizontalMovement = 0.03F;
 
         protected virtual void Start()
         {
@@ -65,9 +65,15 @@ namespace Control
 
             MovePlayer(Velocity*Time.deltaTime);
 
+            if (Velocity.y < 0.1)
+            {
+                _animation.HitGround();
+            }
+
             if (IsHittingCeiling || IsOnGround)
             {
                 Velocity.y = 0;
+                _animation.HitGround();
             }
         }
 
