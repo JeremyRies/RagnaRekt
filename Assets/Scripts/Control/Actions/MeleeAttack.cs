@@ -10,7 +10,7 @@ namespace Control.Actions
     {
         [SerializeField] private float _cooldownTimeInSeconds = 2;
         [SerializeField] private float _attackTimeInSeconds = 1;
-        [SerializeField] private Sword _sword;
+        [SerializeField] private MeleeWeapon _weapon;
 
         private Cooldown _cooldown;
 
@@ -29,9 +29,9 @@ namespace Control.Actions
 
         private void Attack()
         {
-            _sword.Visible = true;
+            _weapon.Visible = true;
             var timer = new Timer(_attackTimeInSeconds);
-            timer.Elapsed += (nil, args) => _sword.Visible = false;
+            timer.Elapsed += (nil, args) => _weapon.Visible = false;
             timer.Start();
         }
     }
