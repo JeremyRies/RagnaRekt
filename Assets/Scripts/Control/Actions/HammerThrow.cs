@@ -11,7 +11,7 @@ public class HammerThrow : Control.Actions.Action
     [SerializeField]
     private float _cooldownTimeInSeconds;
     [SerializeField]
-    public GameObject Hammer;
+    public GameObject Player;
     [SerializeField]
     public float velocity;
     [SerializeField]
@@ -38,7 +38,8 @@ public class HammerThrow : Control.Actions.Action
     {
         if (_cooldown.IsOnCoolDown.Value==false)
         {
-            updateVelocity(direction);
+            
+            updateVelocity();
             _cooldown.Start();
             _hammerReturn.Start();
             StartCoroutine(Throw(direction));
@@ -51,16 +52,17 @@ public class HammerThrow : Control.Actions.Action
    public  IEnumerator Throw(Direction direction)
     {
 
-        Hammer.SetActive(true);
-        Hammer.transform.position = new Vector2(gameObject.transform.position.x + velocity*2, gameObject.transform.position.y);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+        gameObject.transform.position = new Vector2(Player.transform.position.x + velocity*2, Player.transform.position.y);
 
 
 
-        while (Hammer.active==true)
+        while (gameObject.active==true)
         {
             
-            Dir = (Hammer.transform.position - gameObject.transform.position).normalized;
-            distance = Vector2.Distance(Hammer.transform.position, gameObject.transform.position);
+            Dir = ( gameObject.transform.position - Player.transform.position).normalized;
+            distance = Vector2.Distance(gameObject.transform.position, Player.transform.position);
 
             Debug.Log(distance);
 
@@ -71,18 +73,18 @@ public class HammerThrow : Control.Actions.Action
 
             if(flyBack == false)
             {
-            
-            Hammer.transform.position = new Vector2(Hammer.transform.position.x  +  velocity, Hammer.transform.position.y);
+
+                gameObject.transform.position = new Vector2(gameObject.transform.position.x  +  velocity, gameObject.transform.position.y);
 
             }else {
-                
-                Hammer.transform.position -= (Vector3)Dir *Math.Abs(velocity);
+
+                gameObject.transform.position -= (Vector3)Dir *Math.Abs(velocity);
             }
 
             if (distance <= Math.Abs(velocity))
             {
                 flyBack = false;
-                Hammer.SetActive(false);
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
             }
 
@@ -92,14 +94,15 @@ public class HammerThrow : Control.Actions.Action
 
         
     }
-   public void updateVelocity(Direction direction)
+   public void updateVelocity()
     {
         if(PlayerController.isLookingLeft)
         { velocity = Math.Abs(velocity) * -1; }
 
         if (!PlayerController.isLookingLeft)
         { velocity = Math.Abs(velocity); }
-
+        
+        
     }
     
 
