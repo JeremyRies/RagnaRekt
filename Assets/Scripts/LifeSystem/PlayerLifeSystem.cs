@@ -51,5 +51,20 @@ namespace LifeSystem
             var pos = new Vector2(xpos,_levelConfig.LevelYMaxPosition);
             _player.position = pos;
         }
+
+        private void Update()
+        {
+            CheckFallingOff();
+        }
+
+        private void CheckFallingOff()
+        {
+            var positionY = transform.position.y;
+            Debug.Log(positionY);
+            if (positionY < _levelConfig.LevelYDeathPosition)
+            {
+                ReceiveHit();
+            }
+        }
     }
 }

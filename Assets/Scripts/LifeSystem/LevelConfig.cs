@@ -11,5 +11,8 @@ namespace LifeSystem
         public float LevelRightMaxPosition;
         [SerializeField]
         public float LevelYMaxPosition;
+
+        [SerializeField]
+        public float LevelYDeathPosition;
     }
 }
