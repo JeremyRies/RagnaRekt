@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Assets.Scripts.Entities;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,6 +20,11 @@ namespace LifeSystem
             var player = Instantiate(_gameConfig.PlayerPrefab);
             player.PlayerId = playerId;
             player.Color = Random.ColorHSV();
+            PositionRandomly(playerId, player);
+        }
+
+        private void PositionRandomly(int playerId, Player player)
+        {
             var maxLeft = playerId % 2 == 0 ? 0 : _levelConfig.LevelLeftMaxPosition;
             var maxRight = playerId % 2 == 0 ? _levelConfig.LevelRightMaxPosition : 0;
             var xpos = Random.Range(maxLeft, maxRight);
