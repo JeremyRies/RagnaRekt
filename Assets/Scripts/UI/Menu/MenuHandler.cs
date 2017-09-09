@@ -1,13 +1,22 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UI.Menu
 {
     public class MenuHandler : MonoBehaviour
     {
+        public GameObject FirstGameObjectSelected;
         public GameObject MainMenuPanel;
         public GameObject CharacterPickingPanel;
 
         public CharacterPickingHandler CharacterPickingHandler;
+
+        private void Start()
+        {
+            CharacterPickingHandler.Reset();
+            SwitchToMainPanel();
+        }
 
         public void OnStartTwoPlayer()
         {
@@ -16,16 +25,18 @@ namespace UI.Menu
             SwitchToCharacterPanel();
         }
 
-        private void SwitchToCharacterPanel()
+        public void SwitchToCharacterPanel()
         {
             MainMenuPanel.SetActive(false);
             CharacterPickingPanel.SetActive(true);
         }
 
-        private void SwitchToMainPanel()
+        public void SwitchToMainPanel()
         {
             MainMenuPanel.SetActive(true);
             CharacterPickingPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(FirstGameObjectSelected);
+            CharacterPickingHandler.Reset();
         }
 
         public void OnStartFourPlayer()
@@ -33,11 +44,6 @@ namespace UI.Menu
             CharacterPickingHandler.SetNumberPlayers(4);
 
             SwitchToCharacterPanel();
-        }
-
-        private void SwitchToCharacterScreen()
-        {
-        
         }
 
         public void OnQuit()
