@@ -8,6 +8,8 @@ namespace Assets.Scripts.Util
         private readonly float _cooldownTime;
 
         private readonly ReactiveProperty<bool> _onCooldown = new ReactiveProperty<bool>(false);
+        private IDisposable _disposable;
+
         public ReactiveProperty<bool> IsOnCoolDown { get { return _onCooldown.ToReactiveProperty(); } }
 
         public Cooldown(float cooldownTimeInSeconds)
@@ -18,9 +20,13 @@ namespace Assets.Scripts.Util
         public void Start()
         {
             if (_onCooldown.Value) return;
+            if(_disposable != null)
+            {
+                _disposable.Dispose();
+            }
 
             _onCooldown.Value = true;
-            Observable.Timer(TimeSpan.FromSeconds(_cooldownTime))
+            _disposable = Observable.Timer(TimeSpan.FromSeconds(_cooldownTime))
                 .Subscribe(_ => _onCooldown.Value = false);
         }
     }

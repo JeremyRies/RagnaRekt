@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace Control.Actions
 {
@@ -14,5 +15,9 @@ namespace Control.Actions
 
         [SerializeField]
         public float CooldownTimeInSeconds;
+
+        
+
+
     }
 }
