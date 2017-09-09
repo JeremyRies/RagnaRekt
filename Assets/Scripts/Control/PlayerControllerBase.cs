@@ -1,5 +1,6 @@
 ﻿using System;
 using Control.Actions;
+using UniRx;
 using UnityEngine;
 using Action = Control.Actions.Action;
 
@@ -27,6 +28,9 @@ namespace Control
         protected float MinJumpVelocity { get; private set; }
         [NonSerialized] protected Vector3 Velocity;
         
+        public ReactiveProperty<bool> IsMoving = new ReactiveProperty<bool>(false);
+        private const float MinHorizontalMovement = 0.01F;
+
         protected virtual void Start()
         {
             InputProvider = GetInputProvider();
@@ -46,14 +50,14 @@ namespace Control
 
         private void Update()
         {
+            HandleJump();
+            HandleSkill();
+            HandleAttack();
+
             var horizontalInput = GetHorizontalInput();
 
             UpdateViewDirection(horizontalInput);
             UpdateHorizontalVelocity(horizontalInput);
-
-            HandleJump();
-            HandleSkill();
-            HandleAttack();
 
             ApplyGravity();
 
@@ -119,7 +123,9 @@ namespace Control
 
         private void UpdateHorizontalVelocity(Vector2 input)
         {
+
             var targetVelocityX = input.x* _conf.MoveSpeed;
+            IsMoving.Value = Mathf.Abs(input.x) > MinHorizontalMovement;
 
             Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing,
                 Controller.Collisions.Below ? AccelerationTimeGrounded : AccelerationTimeAirborne);
@@ -142,6 +148,7 @@ namespace Control
                 if (IsOnGround)
                 {
                     Velocity.y = MaxJumpVelocity;
+
                 }
             }
 
