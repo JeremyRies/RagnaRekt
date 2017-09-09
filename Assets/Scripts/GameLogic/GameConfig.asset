@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   AmountOfPlayers: 2
-  PlayerPrefab: {fileID: 114049397316937804, guid: 5faab6ff097f49c4e94c0cad0b3f8b30,
-    type: 2}
+  CharactersSelected: 00000000000000000000000000000000
+  PlayerPrefab:
+  - {fileID: 114049397316937804, guid: 5faab6ff097f49c4e94c0cad0b3f8b30, type: 2}
