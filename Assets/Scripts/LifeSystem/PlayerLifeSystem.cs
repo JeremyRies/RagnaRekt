@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Entities;
 using UnityEngine;
+using UniRx;
 
 namespace LifeSystem
 {
@@ -27,7 +28,7 @@ namespace LifeSystem
 
            _player.TeamPointSystem.ScorePoint(_player.OtherTeamId);
             Die();
-            Respawn();
+            _player.Animation.Die().Subscribe(_ => Respawn());
         }
 
         private void Die()
