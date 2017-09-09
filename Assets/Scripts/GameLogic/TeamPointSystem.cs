@@ -25,8 +25,9 @@ namespace LifeSystem
 
         public void ScorePoint(int teamId)
         {
-            _teamPointCounter[teamId]++;
-            Debug.Log("Score team " + teamId +" : " + _teamPointCounter[teamId]);
+            Debug.Log(teamId);
+            _teamPointCounter[teamId-1]++;
+            Debug.Log("Score team " + teamId +" : " + _teamPointCounter[teamId-1]);
             UpdateDisplay();
             CheckWin();
         }
@@ -73,12 +74,12 @@ namespace LifeSystem
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                ScorePoint(0);
+                ScorePoint(1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                ScorePoint(1);
+                ScorePoint(2);
             }
         }
     }

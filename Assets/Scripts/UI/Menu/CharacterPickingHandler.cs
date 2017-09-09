@@ -69,17 +69,21 @@ namespace UI.Menu
             }
             else if (_counter + 1 == _numberPlayers)
             {
-                //TODO Toggle level loading
                 _selectedCharacterIDs[_counter] = id;
                 CharacterPreview.SetCharacter(_counter, id);
                 CharacterPreview.EnablePreview(_counter, true);
+
+
+                var crossLevelDataTransfer = GameObject.FindObjectOfType<CrossLevelDataTransfer>();
+                if (crossLevelDataTransfer != null)
+                    crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
+                LevelController.GetLevelController().LoadGameScene();
             }
 
         }
 
         public void RevertSelect()
         {
-
             Reset();
             MenuHandler.SwitchToMainPanel();
 

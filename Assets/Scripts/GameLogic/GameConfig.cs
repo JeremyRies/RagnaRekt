@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using Control;
+using Entities;
 using UnityEngine;
 
 namespace LifeSystem
@@ -7,6 +8,9 @@ namespace LifeSystem
     public class GameConfig : ScriptableObject
     {
         public int AmountOfPlayers = 2;
-        public Player PlayerPrefab;
+        public int[] CharactersSelected = new int[4];
+        public Player[] PlayerPrefab;
+
+        public TeamPointSystem TeamPointSystemPrefab;
     }
 }
