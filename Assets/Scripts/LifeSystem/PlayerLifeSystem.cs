@@ -49,7 +49,6 @@ namespace LifeSystem
         {
             var xpos = Random.Range(_levelConfig.LevelLeftMaxPosition, _levelConfig.LevelRightMaxPosition);
             var pos = new Vector2(xpos,_levelConfig.LevelYMaxPosition);
-            Debug.Log("Respawn at " + pos);
             _player.position = pos;
         }
     }

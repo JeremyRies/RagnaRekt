@@ -70,7 +70,7 @@ namespace Control
         }
 
         private bool _looksLeft;
-        private void UpdateViewDirection(Vector2 horizontalInput)
+        public void UpdateViewDirection(Vector2 horizontalInput)
         {
             if (!_looksLeft && horizontalInput.x < 0)
             {
