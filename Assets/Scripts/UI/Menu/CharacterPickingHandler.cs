@@ -10,6 +10,7 @@ namespace UI.Menu
         public StandaloneInputModule StandaloneInputProvider;
         public GameObject FirstCharacter;
 
+        public CharacterPreview CharacterPreview;
         public MenuHandler MenuHandler;
 
         private int _numberPlayers = 2;
@@ -27,7 +28,9 @@ namespace UI.Menu
 
         public void Reset()
         {
+            CharacterPreview.ResetAll();
             _counter = 0;
+            UnityInputProvider = new UnityInputProvider(1);
             UpdateInput();
             _selectedCharacterIDs = null;
         }
@@ -46,7 +49,6 @@ namespace UI.Menu
             StandaloneInputProvider.horizontalAxis = "Horizontal " + (_counter + 1);
             StandaloneInputProvider.verticalAxis = "Vertical " + (_counter + 1);
             StandaloneInputProvider.submitButton = "Jump " + (_counter + 1);
-            UnityInputProvider = new UnityInputProvider(_counter + 1);
         }
 
 
@@ -57,25 +59,30 @@ namespace UI.Menu
 
         public void Select(int id)
         {
-            if (_counter + 1 >= _numberPlayers) return;
-            _selectedCharacterIDs[_counter] = id;
-            _counter++;
-            UpdateInput();
+            if (_counter + 1 < _numberPlayers)
+            {
+                _selectedCharacterIDs[_counter] = id;
+                CharacterPreview.SetCharacter(_counter, id);
+                CharacterPreview.EnablePreview(_counter, true);
+                _counter++;
+                UpdateInput();
+            }
+            else if (_counter + 1 == _numberPlayers)
+            {
+                //TODO Toggle level loading
+                _selectedCharacterIDs[_counter] = id;
+                CharacterPreview.SetCharacter(_counter, id);
+                CharacterPreview.EnablePreview(_counter, true);
+            }
+
         }
 
         public void RevertSelect()
         {
-            if (_counter >= 1)
-            {
-                _selectedCharacterIDs[_counter] = -1;
-                _counter--;
-                UpdateInput();
-            }
-            else if (_counter == 0)
-            {
-                Reset();
-                MenuHandler.SwitchToMainPanel();
-            }
+
+            Reset();
+            MenuHandler.SwitchToMainPanel();
+
         }
     }
 }
