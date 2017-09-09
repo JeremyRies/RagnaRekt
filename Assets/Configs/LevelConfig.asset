@@ -14,3 +14,4 @@ MonoBehaviour:
   LevelLeftMaxPosition: -5
   LevelRightMaxPosition: 5
   LevelYMaxPosition: 2
+  LevelYDeathPosition: -20
