@@ -19,7 +19,6 @@ namespace Control
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private Animator _animator;
         [SerializeField] public double AttackDuration = 0.5F;
-        [SerializeField] public double JumpDuration = 0.5F;
 
         private ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
 
@@ -29,13 +28,15 @@ namespace Control
 
             _state.Subscribe(state =>
             {
-                //Debug.Log("New state: " + state);
+                Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
         }
 
         private void UpdateWalking(bool walking)
         {
+            if (_state.Value == PlayerAnimationState.Attack) return;
+
             if(walking && _state.Value == PlayerAnimationState.Idle)
                 _state.Value = PlayerAnimationState.Walk;
             if(!walking && _state.Value == PlayerAnimationState.Walk)
@@ -52,10 +53,15 @@ namespace Control
         public void Jump()
         {
             if (_state.Value == PlayerAnimationState.Attack) return;
+            if (_state.Value == PlayerAnimationState.Jump) return;
 
             _state.Value = PlayerAnimationState.Jump;
-            Observable.Timer(TimeSpan.FromSeconds(JumpDuration))
-                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+        }
+
+        public void HitGround()
+        {
+            if(_state.Value == PlayerAnimationState.Jump)
+                _state.Value = PlayerAnimationState.Idle;
         }
 
     }

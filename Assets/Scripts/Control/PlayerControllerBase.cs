@@ -51,9 +51,9 @@ namespace Control
 
         private void Update()
         {
-            HandleJump();
-            HandleSkill();
             HandleAttack();
+            HandleSkill();
+            HandleJump();
 
             var horizontalInput = GetHorizontalInput();
 
@@ -67,6 +67,7 @@ namespace Control
             if (IsHittingCeiling || IsOnGround)
             {
                 Velocity.y = 0;
+                _animation.HitGround();
             }
         }
 

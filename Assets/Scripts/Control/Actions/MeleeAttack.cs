@@ -37,8 +37,8 @@ namespace Control.Actions
 
         private void Attack()
         {
-            _weapon.gameObject.SetActive(true);
             _animation.Attack();
+            _weapon.gameObject.SetActive(true);
             Observable.Timer(TimeSpan.FromSeconds(_animation.AttackDuration))
                 .Subscribe(_ => _weapon.gameObject.SetActive(false));
         }
