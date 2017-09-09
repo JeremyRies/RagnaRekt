@@ -430,6 +430,7 @@ MonoBehaviour:
   _ignoredColliders:
   - {fileID: 61767914639882830}
   _life: {fileID: 114287236272938962}
+  _playerControllerBase: {fileID: 114100535086619882}
 --- !u!114 &114873327137577674
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using Assets.Scripts.Util;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Control.Actions
@@ -22,6 +24,7 @@ namespace Control.Actions
         private bool _active;
         private GameObject _hammerInstance;
         private SpriteRenderer _spriteRendererOfHammerInstance;
+        private Collider2D _hammerCollider;
 
         private void Start()
         {
@@ -41,7 +44,11 @@ namespace Control.Actions
         private IEnumerator Throw()
         {
             _hammerInstance = Instantiate(_hammerPrefab);
+            var hammer = _hammerInstance.AddComponent<Hammer>();
+            hammer.TeamId = PlayerController.TeamId;
+
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
+            _hammerCollider = _hammerInstance.GetComponent<Collider2D>();
 
             UpdateVelocity();
 
@@ -55,8 +62,6 @@ namespace Control.Actions
             {          
                 _dir = (_hammerInstance.transform.position - Player.transform.position).normalized;
                 _distance = Vector2.Distance(_hammerInstance.transform.position, Player.transform.position);
-
-                Debug.Log(_distance);
 
                 if (_distance >= Range)
                 {

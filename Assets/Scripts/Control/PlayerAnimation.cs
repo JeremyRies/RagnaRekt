@@ -16,7 +16,7 @@ namespace Control
         {
             _stateMachine.State.Subscribe(state =>
             {
-                Debug.Log("New state: " + state);
+                //Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
         }
