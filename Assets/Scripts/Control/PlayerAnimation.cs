@@ -20,6 +20,7 @@ namespace Control
         [SerializeField] private Animator _animator;
         [SerializeField] public double AttackDuration = 0.5F;
         [SerializeField] private float _deathDuration = 1F;
+        [SerializeField] private float _skillDuration = 0.1F;
 
         private ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
 
@@ -38,6 +39,7 @@ namespace Control
         {
             if (_state.Value == PlayerAnimationState.Death) return;
             if (_state.Value == PlayerAnimationState.Attack) return;
+            if (_state.Value == PlayerAnimationState.Skill) return;
 
             if (walking && _state.Value == PlayerAnimationState.Idle)
                 _state.Value = PlayerAnimationState.Walk;
@@ -48,6 +50,7 @@ namespace Control
         public void Attack()
         {
             if (_state.Value == PlayerAnimationState.Death) return;
+            if (_state.Value == PlayerAnimationState.Skill) return;
             _state.Value = PlayerAnimationState.Attack;
             Observable.Timer(TimeSpan.FromSeconds(AttackDuration))
                 .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
@@ -57,6 +60,7 @@ namespace Control
         {
             if (_state.Value == PlayerAnimationState.Death) return;
             if (_state.Value == PlayerAnimationState.Attack) return;
+            if (_state.Value == PlayerAnimationState.Skill) return;
             if (_state.Value == PlayerAnimationState.Jump) return;
 
             _state.Value = PlayerAnimationState.Jump;
@@ -76,5 +80,14 @@ namespace Control
                 .Select(_ => _state.Value = PlayerAnimationState.Idle).AsUnitObservable();
         }
 
+        public void UseSkill()
+        {
+            if (_state.Value == PlayerAnimationState.Death) return;
+            if (_state.Value == PlayerAnimationState.Attack) return;
+
+            _state.Value = PlayerAnimationState.Skill;
+            Observable.Timer(TimeSpan.FromSeconds(_skillDuration))
+                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+        }
     }
 }

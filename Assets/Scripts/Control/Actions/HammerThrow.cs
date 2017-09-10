@@ -12,6 +12,7 @@ namespace Control.Actions
         [SerializeField] private HammerConfig _conf;
 
         [SerializeField] public PlayerControllerBase PlayerController;
+        [SerializeField] private PlayerAnimation _animation;
 
 
         private Vector2 _dir;
@@ -37,6 +38,7 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
 
             _cooldown.Start();
+            _animation.UseSkill();
             StartCoroutine(Throw());
         }
 
