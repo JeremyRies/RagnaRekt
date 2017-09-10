@@ -8,12 +8,12 @@ namespace Entities
     public class Player : MonoBehaviour
     {
         [SerializeField] private PlayerControllerBase _controller;
-        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] public SpriteRenderer _sprite;
         [SerializeField] public PlayerAnimation Animation;
 
         public int PlayerId;
         public Team Team;
-        public int OtherTeamId { get { return Team.TeamId == 1 ? 2 : 1; } }
+        public Team OtherTeam { get { return TeamPointSystem.GetOtherTeam(Team); } }
         public void LookLeft() { _controller.UpdateViewDirection(new Vector2(-1,0)); }
         public Color Color { set { _sprite.color = value; } }
 
@@ -22,6 +22,11 @@ namespace Entities
         void Start()
         {
             TeamPointSystem = FindObjectOfType<TeamPointSystem>();
+        }
+
+        public PlayerControllerBase GetPlayerController()
+        {
+            return _controller;
         }
     }
 }

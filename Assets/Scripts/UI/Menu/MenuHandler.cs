@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Sound;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,8 @@ namespace UI.Menu
         {
             CharacterPickingHandler.Reset();
             SwitchToMainPanel();
+            BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundMenu);
+            BackgroundMusic.BackgroundMusicInstance.StartPlay();
         }
 
         public void OnStartTwoPlayer()

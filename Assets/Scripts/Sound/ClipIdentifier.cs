@@ -14,5 +14,7 @@
         ThorSkillHammerReturn,
         ThorSkillHammerThrow,
         Walking,
+        BackgroundMenu,
+        BackgroundGame
     }
 }

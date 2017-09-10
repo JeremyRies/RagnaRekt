@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Assets.Scripts.Entities;
 using Entities;
+using Sound;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -25,12 +26,17 @@ namespace LifeSystem
             var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
             _teamPointSystem = Instantiate(_gameConfig.TeamPointSystemPrefab);
 
+            _teamPointSystem.AddTeams(_team1, _team2);
+
             if (crossLevelDataTransfer != null)
             {
                 _gameConfig.CharactersSelected = crossLevelDataTransfer.GetSelectedCharacters();
+                _gameConfig.AmountOfPlayers = crossLevelDataTransfer.GetNumberPlayers();
             }
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
 
+            //BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundGame);
+            BackgroundMusic.BackgroundMusicInstance.StartPlay();
 
         }
 

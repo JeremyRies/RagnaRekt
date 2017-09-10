@@ -52,14 +52,14 @@ namespace Control
                 var rayOrigin = velocity.x < 0 ? RaycastOrigins.BottomLeft : RaycastOrigins.BottomRight;
 
                 rayOrigin += Vector2.up*(HorizontalRaySpacing*i);
-                var hit = Physics2D.Raycast(rayOrigin, Vector2.right*Mathf.Sign(velocity.x), rayLength, CollisionMask);
+                var hit = Physics2D.RaycastAll(rayOrigin, Vector2.right*Mathf.Sign(velocity.x), rayLength, CollisionMask);
 
                 Debug.DrawRay(rayOrigin, Vector2.right*Collisions.FaceDir*rayLength, Color.red);
 
-                if (!hit || hit.distance <= 0) continue;
+                if (hit.Length % 2 == 0) continue;
                 
-                velocity.x = (hit.distance - SkinWidth) * Collisions.FaceDir;
-                rayLength = hit.distance;
+                velocity.x = (hit[0].distance - SkinWidth) * Collisions.FaceDir;
+                rayLength = hit[0].distance;
             }
         }
 
