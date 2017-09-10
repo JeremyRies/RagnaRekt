@@ -14,6 +14,7 @@ namespace Control
         [NonSerialized]
         public SpriteRenderer _spriteRendererOfHammerInstance;
         public BoxCollider2D _colliderOfHammerInstance;
+        public GameObject Effect;
 
         [NonSerialized]
         public float _velocity;
@@ -49,6 +50,7 @@ namespace Control
                 hammer._velocity = Math.Abs(hammer._velocity) * -1;
                 _spriteRendererOfHammerInstance.flipX = true;
                 _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x)*(-1), 0);
+                Effect.transform.position = new Vector2(hammer.transform.position.x -1, 0.4f);
             }
 
             if (isLookingLeft == false)
@@ -56,6 +58,7 @@ namespace Control
                 hammer._velocity = Math.Abs(hammer._velocity);
                 _spriteRendererOfHammerInstance.flipX = false;
                 _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x), 0);
+                Effect.transform.position = new Vector2(hammer.transform.position.x +1, 0.4f);
 
             }
         }

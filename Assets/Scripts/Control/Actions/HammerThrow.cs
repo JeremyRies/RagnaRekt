@@ -41,7 +41,7 @@ namespace Control.Actions
         public override void TryToActivate(Direction direction)
         {
             if (_cooldown.IsOnCoolDown.Value) return;
-
+            Debug.Log("Hi");
             _cooldown.Start();
             _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
             OnCooldown = true;
@@ -121,7 +121,7 @@ namespace Control.Actions
 
                 yield return null;
             }
-            // Debug.Log(_isInHand);
+           
             hammer.Reset();
         }
 
