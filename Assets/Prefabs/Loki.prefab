@@ -364,6 +364,7 @@ MonoBehaviour:
   _player: {fileID: 114049397316937804}
   _weapon: {fileID: 60013007664088774}
   _animation: {fileID: 114087861889933940}
+  HammerThrow: {fileID: 0}
 --- !u!114 &114287236272938962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -398,6 +399,7 @@ MonoBehaviour:
   _sprite: {fileID: 212893768557047876}
   _dashTimeInSeconds: 0.2
   _controller: {fileID: 114100535086619882}
+  _lifeSystem: {fileID: 114287236272938962}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1

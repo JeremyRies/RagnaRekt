@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Util;
 using Entities;
+using LifeSystem;
 using UnityEngine;
 using UniRx;
 
@@ -15,6 +16,8 @@ namespace Control.Actions
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private float _dashTimeInSeconds = 0.1F;
         [SerializeField] private PlayerControllerBase _controller;
+        [SerializeField] private PlayerLifeSystem _lifeSystem;
+
 
         private Cooldown _cooldown;
 
@@ -39,7 +42,12 @@ namespace Control.Actions
         private void MovePlayer(Direction direction)
         {
             Visible = false;
-            Observable.Timer(TimeSpan.FromSeconds(_dashTimeInSeconds)).Subscribe(_ => Visible = true);
+            _lifeSystem.SetInvincible(_dashTimeInSeconds);
+
+            Observable.Timer(TimeSpan.FromSeconds(_dashTimeInSeconds)).Subscribe(_ =>
+            {
+                Visible = true;
+            });
             switch (direction)
             {
                 case Direction.LEFT:
