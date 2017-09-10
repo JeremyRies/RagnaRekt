@@ -317,7 +317,7 @@ MonoBehaviour:
   _controller: {fileID: 114100535086619882}
   _sprite: {fileID: 212893768557047876}
   Animation: {fileID: 114087861889933940}
-  PlayerId: 0
+  PlayerId: 1
 --- !u!114 &114087861889933940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,12 +392,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fe5737acdba4a498b6d91e43163745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTimeInSeconds: 1
+  _cooldownTimeInSeconds: 2
   _player: {fileID: 114049397316937804}
   _animation: {fileID: 114087861889933940}
-  _dashRange: 5
+  _dashRange: 6
   _sprite: {fileID: 212893768557047876}
-  _dashTimeInSeconds: 0.2
+  _dashTimeInSeconds: 0.3
   _controller: {fileID: 114100535086619882}
   _lifeSystem: {fileID: 114287236272938962}
 --- !u!114 &114522263512032690

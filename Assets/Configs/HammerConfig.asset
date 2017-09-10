@@ -15,4 +15,8 @@ MonoBehaviour:
   Range: 10
   HammerPrefab: {fileID: 1400423861394630, guid: 8760671256b1bec47877c1ae1b496df1,
     type: 2}
-  CooldownTimeInSeconds: 2
+<<<<<<< HEAD
+  CooldownTimeInSeconds: 4
+=======
+  CooldownTimeInSeconds: 5
+>>>>>>> 528798f7eb3d398957e1b7bc147baa47d957fb70
