@@ -362,6 +362,7 @@ MonoBehaviour:
   _player: {fileID: 114049397316937804}
   _weapon: {fileID: 60342472711583192}
   _animation: {fileID: 114087861889933940}
+  HammerThrow: {fileID: 114303373183518000}
 --- !u!114 &114287236272938962
 MonoBehaviour:
   m_ObjectHideFlags: 1

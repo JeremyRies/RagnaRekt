@@ -20,8 +20,8 @@ namespace Control.Actions
         private float _distanceToPlayer;
 
 
-        
-       private bool _isInHand;
+
+        [NonSerialized] public bool _isInHand;
         private Hammer hammer;
         private Cooldown _cooldown;
         private GameObject _hammerInstance;
@@ -73,6 +73,7 @@ namespace Control.Actions
                 _distanceToPlayer = Vector2.Distance(_hammerInstance.transform.position, _player.transform.position);
 
                 hammer.Update();
+                
 
                 if (_distanceFromStartPoint >= _conf.Range)
                 {
@@ -101,6 +102,7 @@ namespace Control.Actions
 
                 yield return null;
             }
+            Debug.Log(_isInHand);
             hammer.Reset();
         }
 
