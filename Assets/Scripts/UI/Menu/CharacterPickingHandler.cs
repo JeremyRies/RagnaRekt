@@ -21,6 +21,11 @@ namespace UI.Menu
 
         private int _counter = 0;
 
+        void Start()
+        {
+            _counter = 0;
+        }
+
         void Update()
         {
             if (UnityInputProvider.GetButtonDown("Attack"))
@@ -40,6 +45,7 @@ namespace UI.Menu
 
         public void SetNumberPlayers(int i)
         {
+            CharacterPreview.ResetAll();
             _numberPlayers = i;
             _selectedCharacterIDs = new int[i];
             _counter = 0;
@@ -58,6 +64,11 @@ namespace UI.Menu
         public int[] GetSelectedCharacters()
         {
             return _selectedCharacterIDs;
+        }
+
+        public int GetCounter()
+        {
+            return _counter;
         }
 
         public void Select(int id)
@@ -96,6 +107,12 @@ namespace UI.Menu
         public void RevertSelect()
         {
             Reset();
+
+            foreach (var charButton in FindObjectsOfType<CharacterButton>())
+            {
+                charButton.ResetPlayerId();
+            }
+
             Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> MenuHandler.SwitchToMainPanel());
 
         }

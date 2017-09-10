@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
+using Sound;
 using UnityEditor.Animations;
 using UniRx;
 
@@ -23,10 +24,7 @@ namespace Control.Actions
         private float _distanceFromStartPoint;
         private float _distanceToPlayer;
 
-
-
-        [NonSerialized] public bool _isInHand = true;
-        private Hammer hammer;
+        [NonSerialized] public bool IsInHand = true;
         private Cooldown _cooldown;
         private GameObject _hammerInstance;
         private SpriteRenderer _spriteRendererOfHammerInstance;
@@ -43,7 +41,7 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
             Debug.Log("Hi");
             _cooldown.Start();
-            _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
+            StartCoroutine(Throw());
             OnCooldown = true;
         }
 
@@ -52,8 +50,10 @@ namespace Control.Actions
             set { _player._sprite.color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
         }
 
-        private IEnumerator Throw(Direction direction)
+        private IEnumerator Throw()
         {
+            SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.ThorSkillHammerThrow);
+
             _hammerInstance = Instantiate(_conf.HammerPrefab);
             var hammer = _hammerInstance.GetComponent<Hammer>();
             var hammerVs = _hammerInstance.GetComponent<HammerVsHammer>();
@@ -61,31 +61,28 @@ namespace Control.Actions
             hammerVs.PlayerController = PlayerController;
             hammer._hammerConfig = _conf;
             hammer.TeamId = _player.Team.TeamId;
-
-            
+                   
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
             
-            hammer._spriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
+            hammer.SpriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
 
             _colliderOfHammerInstance = _hammerInstance.GetComponent<BoxCollider2D>();
 
-            hammer._colliderOfHammerInstance = _colliderOfHammerInstance;
+            hammer.ColliderOfHammerInstance = _colliderOfHammerInstance;
 
-            hammer._velocity = Math.Abs(_conf.Velocity);
+            hammer.Velocity = Math.Abs(_conf.Velocity);
             hammer.UpdateVelocity(PlayerController.isLookingLeft,hammer);
             
-            _isInHand = false;
-
+            IsInHand = false;
 
             _hammerInstance.transform.position = _player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * hammer._velocity * 2;
+            _hammerInstance.transform.position += Vector3.right * hammer.Velocity * 2;
             _animation.Controller = _thorWithoutHammer;
-
-
+            _animation.UseSkill();
 
             var playerStartPos = _player.transform.position;
 
-            while (_isInHand==false)
+            while (IsInHand==false)
             {          
                 _dir = (_hammerInstance.transform.position - _player.transform.position).normalized;
                 _distanceFromStartPoint = Vector2.Distance(_hammerInstance.transform.position, playerStartPos);
@@ -96,26 +93,28 @@ namespace Control.Actions
 
                 if (_distanceFromStartPoint >= _conf.Range)
                 {
-                    hammer._flyBack = true;
+                    hammer.FlyBack = true;
+                    SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.ThorSkillHammerReturn);
                 }
 
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
-                    _isInHand = true;
+                    IsInHand = true;
                     _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
-                if (hammer._flyBack)
+                if (hammer.FlyBack)
                 {
-                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(hammer._velocity);
+                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(hammer.Velocity);
                 }else {
-                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer._velocity, _hammerInstance.transform.position.y);
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer.Velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(hammer._velocity * 5) && hammer._flyBack )
+                if (_distanceToPlayer <= Math.Abs(hammer.Velocity * 5) && hammer.FlyBack )
                 {
-                    hammer._flyBack = false;
-                    _isInHand = true;
+                    SfxSound.SfxSoundInstance.Stop();
+                    hammer.FlyBack = false;
+                    IsInHand = true;
                     _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 

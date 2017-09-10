@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace Control.Actions
 {
@@ -13,7 +11,7 @@ namespace Control.Actions
         [SerializeField]
         public PlayerControllerBase PlayerController;
         [SerializeField]
-        public float collisionSeconds;
+        public float CollisionSeconds;
 
        
 
@@ -23,9 +21,9 @@ namespace Control.Actions
             if (other.CompareTag("Weapon"))
             {
 
-                Hammer._velocity = 0;
+                Hammer.Velocity = 0;
                 Hammer.GetComponent<Animator>().SetBool("HammerClash", true);
-                StartCoroutine(HammerCollision(collisionSeconds));
+                StartCoroutine(HammerCollision(CollisionSeconds));
                 
             }
 
@@ -34,10 +32,11 @@ namespace Control.Actions
         public IEnumerator HammerCollision(float sec)
         {
             yield return new WaitForSeconds(sec);
-            Hammer._flyBack = true;
-            Hammer._velocity = Hammer._hammerConfig.Velocity;
+            Hammer.FlyBack = true;
+            Hammer.Velocity = Hammer._hammerConfig.Velocity;
             Hammer.UpdateAnimation();
             Hammer.UpdateVelocity(PlayerController.isLookingLeft, Hammer);
+
             
 
         }

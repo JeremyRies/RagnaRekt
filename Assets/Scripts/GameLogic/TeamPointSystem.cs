@@ -20,8 +20,6 @@ namespace LifeSystem
 
         private int _matchPointAmount = 2;
 
-        private int _teamCount=2;
-
         private Dictionary<Team, int> _teamPointCounter = new Dictionary<Team, int>();
 
         private IInputProvider _inputProvider;
@@ -88,7 +86,7 @@ namespace LifeSystem
                 player.GetPlayerController().DisableInput();
             }
 
-            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene());
+            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene()).AddTo(gameObject);
         }
 
         private bool IsMatchPointsAheadOfOtherTeam(Team team, int points)

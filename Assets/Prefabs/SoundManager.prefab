@@ -112,7 +112,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.856
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -305,6 +305,8 @@ MonoBehaviour:
     Clip: 10
   - AudioClip: {fileID: 8300000, guid: c4f9257e8b188d545bae494998ab483e, type: 3}
     Clip: 11
+  - AudioClip: {fileID: 8300000, guid: eca7510818c09b949a0c36a60f630542, type: 3}
+    Clip: 14
   _sfxAudioSource: {fileID: 82651763234395898}
 --- !u!114 &114458504907892880
 MonoBehaviour:
