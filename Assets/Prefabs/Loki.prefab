@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212330257132151100}
   - component: {fileID: 50385869856852290}
   - component: {fileID: 114186842344561168}
-  - component: {fileID: 58467128448474252}
+  - component: {fileID: 58830596586283164}
   m_Layer: 8
   m_Name: Sword
   m_TagString: Weapon
@@ -149,8 +149,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1229924678281714}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9, y: 9, z: 1}
+  m_LocalPosition: {x: 0.408, y: -0.007, z: 0}
+  m_LocalScale: {x: 3.7097845, y: 4.440943, z: 1}
   m_Children: []
   m_Father: {fileID: 4062215194652316}
   m_RootOrder: 1
@@ -162,7 +162,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1615896409057580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_Children:
   - {fileID: 4452028562940534}
@@ -190,7 +190,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 3
---- !u!58 &58467128448474252
+--- !u!58 &58830596586283164
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -202,9 +202,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.00000011920929}
+  m_Offset: {x: -0.00000011920929, y: 0}
   serializedVersion: 2
-  m_Radius: 0.09
+  m_Radius: 0.1
 --- !u!61 &61072768704276714
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cooldownTimeInSeconds: 0.1
   _player: {fileID: 114049397316937804}
-  _weapon: {fileID: 58467128448474252}
+  _weapon: {fileID: 58830596586283164}
   _animation: {fileID: 114087861889933940}
 --- !u!114 &114287236272938962
 MonoBehaviour:
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ignoredColliders:
-  - {fileID: 58467128448474252}
+  - {fileID: 58830596586283164}
   _life: {fileID: 114287236272938962}
   _player: {fileID: 114049397316937804}
 --- !u!114 &114873327137577674
@@ -470,7 +470,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fbadc454ea7ddcc4f9c44bc8a6de499f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b7ed75dae3c5b9147b67cf08804a19d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
