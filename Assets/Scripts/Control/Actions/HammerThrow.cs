@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
+using UnityEditor.Animations;
 
 namespace Control.Actions
 {
@@ -14,6 +15,8 @@ namespace Control.Actions
         [SerializeField] public PlayerControllerBase PlayerController;
         [SerializeField] private PlayerAnimation _animation;
 
+        [SerializeField] private AnimatorController _thorWithHammer;
+        [SerializeField] private AnimatorController _thorWithoutHammer;
 
         private Vector2 _dir;
         private float _distanceFromStartPoint;
@@ -21,7 +24,7 @@ namespace Control.Actions
 
 
 
-        [NonSerialized] public bool _isInHand;
+        [NonSerialized] public bool _isInHand = true;
         private Hammer hammer;
         private Cooldown _cooldown;
         private GameObject _hammerInstance;
@@ -61,7 +64,7 @@ namespace Control.Actions
             UpdateVelocity();
 
             _isInHand = false;
-
+            _animation.Controller = _thorWithoutHammer;
 
 
             var playerStartPos = _player.transform.position;
@@ -82,8 +85,8 @@ namespace Control.Actions
 
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
-
                     _isInHand = true;
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 if (hammer._flyBack)
@@ -97,12 +100,12 @@ namespace Control.Actions
                 {
                     hammer._flyBack = false;
                     _isInHand = true;
-
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 yield return null;
             }
-            Debug.Log(_isInHand);
+            // Debug.Log(_isInHand);
             hammer.Reset();
         }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UniRx;
 using UnityEditor;
+using UnityEditor.Animations;
 
 namespace Control
 {
@@ -100,5 +101,7 @@ namespace Control
             return _animationFinished.Where(anim => anim == PlayerAnimationState.Skill)
                 .Take(1).AsUnitObservable();
         }
+
+        public AnimatorController Controller { set { _animator.runtimeAnimatorController = value; } }
     }
 }
