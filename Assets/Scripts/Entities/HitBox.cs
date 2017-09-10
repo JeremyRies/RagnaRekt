@@ -13,14 +13,21 @@ namespace Assets.Scripts.Entities
         [SerializeField] private List<Collider2D> _ignoredColliders;
         [SerializeField] private PlayerLifeSystem _life;
         [SerializeField] private Player _player;
-
+        [SerializeField] private Collider2D _ownWeapon;
+        [SerializeField] private Animator _parryEffect;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_ignoredColliders.Contains(other)) return;
             if (!other.CompareTag("Weapon")) return;
             var otherTeamId = other.GetComponent<Killable>().TeamId;
-            if (otherTeamId == _player.Team.TeamId)return;
+            if (otherTeamId == _player.Team.TeamId) return;
+
+            if (other.IsTouching(_ownWeapon))
+            {
+                _parryEffect.SetTrigger("Parry");
+                return;
+            }
 
             SfxSound.SfxSoundInstance.PlayClip(_player.HeroType == HeroType.Thor
                 ? ClipIdentifier.LokiHit
