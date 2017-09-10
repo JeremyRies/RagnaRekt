@@ -21,6 +21,11 @@ namespace UI.Menu
 
         private int _counter = 0;
 
+        void Start()
+        {
+            _counter = 0;
+        }
+
         void Update()
         {
             if (UnityInputProvider.GetButtonDown("Attack"))

@@ -88,7 +88,7 @@ namespace LifeSystem
                 player.GetPlayerController().DisableInput();
             }
 
-            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene());
+            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene()).AddTo(gameObject);
         }
 
         private bool IsMatchPointsAheadOfOtherTeam(Team team, int points)
