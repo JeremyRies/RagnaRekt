@@ -15,6 +15,7 @@
         ThorSkillHammerThrow,
         Walking,
         BackgroundMenu,
-        BackgroundGame
+        BackgroundGame,
+        UIButtonSelect
     }
 }

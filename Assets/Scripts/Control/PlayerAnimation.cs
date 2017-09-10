@@ -100,7 +100,6 @@ namespace Control
             if (_animating) return Observable.Empty<Unit>();
 
             _state.Value = PlayerAnimationState.Skill;
-            _controller.ArrestMovement();
             return _animationFinished.Where(anim => anim == PlayerAnimationState.Skill)
                 .Take(1).AsUnitObservable();
         }
