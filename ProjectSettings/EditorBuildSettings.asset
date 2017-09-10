@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Josh 1.unity
     guid: 121f3f32a2af7334eb33f1a6ae821f55
+  - enabled: 1
+    path: Assets/Scenes/LevelNeo.unity
+    guid: 705416f033ab11c438dfb33125ee25af
