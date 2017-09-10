@@ -35,7 +35,7 @@ namespace LifeSystem
             }
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
 
-            //BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundGame);
+            BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundGame);
             BackgroundMusic.BackgroundMusicInstance.StartPlay();
 
         }
