@@ -30,6 +30,7 @@ namespace Control.Actions
         private Cooldown _cooldown;
         private GameObject _hammerInstance;
         private SpriteRenderer _spriteRendererOfHammerInstance;
+        private BoxCollider2D _colliderOfHammerInstance;
 
         private void Start()
         {
@@ -48,18 +49,21 @@ namespace Control.Actions
         private IEnumerator Throw(Direction direction)
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
-            
-            var hammer = _hammerInstance.AddComponent<Hammer>();
+            var hammer = _hammerInstance.GetComponent<Hammer>();
+            var hammerVs = _hammerInstance.GetComponent<HammerVsHammer>();
 
+            hammerVs.PlayerController = PlayerController;
             hammer._hammerConfig = _conf;
-         
             hammer.TeamId = _player.Team.TeamId;
 
-
+            
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
+            
             hammer._spriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
 
-            _hammerInstance.GetComponent<Collider2D>();
+            _colliderOfHammerInstance = _hammerInstance.GetComponent<BoxCollider2D>();
+
+            hammer._colliderOfHammerInstance = _colliderOfHammerInstance;
 
             hammer._velocity = Math.Abs(_conf.Velocity);
             hammer.UpdateVelocity(PlayerController.isLookingLeft,hammer);
