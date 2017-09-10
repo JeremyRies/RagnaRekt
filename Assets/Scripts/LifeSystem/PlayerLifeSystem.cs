@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Control;
 using Entities;
+using Sound;
 using UnityEngine;
 using UniRx;
 
@@ -42,8 +43,15 @@ namespace LifeSystem
         private void Die()
         {
             Invincible = true;
+            PlayDeathSound();
             _player.GetPlayerController().DisableInput();
             _player.TeamPointSystem.ScorePoint(_player.OtherTeam);
+        }
+
+        private void PlayDeathSound()
+        {
+            var clip = _player.HeroType == HeroType.Thor ? ClipIdentifier.ThorDeath : ClipIdentifier.LokiDeath;
+            SfxSound.SfxSoundInstance.PlayClip(clip);
         }
 
         private void StartInvincibilityAfterDeath()
