@@ -106,6 +106,12 @@ namespace UI.Menu
         public void RevertSelect()
         {
             Reset();
+
+            foreach (var charButton in FindObjectsOfType<CharacterButton>())
+            {
+                charButton.Reset();
+            }
+
             Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> MenuHandler.SwitchToMainPanel());
 
         }
