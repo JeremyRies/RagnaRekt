@@ -92,7 +92,7 @@ namespace Control.Actions
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 if (hammer._flyBack)
@@ -102,11 +102,11 @@ namespace Control.Actions
                     _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer._velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(hammer._velocity) && hammer._flyBack )
+                if (_distanceToPlayer <= Math.Abs(hammer._velocity * 5) && hammer._flyBack )
                 {
                     hammer._flyBack = false;
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 yield return null;
