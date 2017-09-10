@@ -163,6 +163,10 @@ MonoBehaviour:
   TeamTexts:
   - {fileID: 114764205197731918}
   - {fileID: 114004615885112946}
+  _hatiWinPrefab: {fileID: 1366968231466862, guid: 5e3a3f7a4a004c7428175b15c296c48b,
+    type: 2}
+  _skalliWinPrefab: {fileID: 1557104137804982, guid: ffcf82e08113c0b408d0500a5c6c57d0,
+    type: 2}
 --- !u!114 &114630456226612836
 MonoBehaviour:
   m_ObjectHideFlags: 1
