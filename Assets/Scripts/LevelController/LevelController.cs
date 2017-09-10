@@ -22,6 +22,6 @@ public class LevelController
 
     public void LoadGameScene()
     {
-        SceneManager.LoadSceneAsync("JoshWithCollider 1", LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync("LevelNeo", LoadSceneMode.Single);
     }
 }

@@ -18,7 +18,7 @@ namespace Control.Actions
         [SerializeField] private float _dashTimeInSeconds = 0.1F;
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private PlayerLifeSystem _lifeSystem;
-
+        [SerializeField] private float _dashPreparationTimeInSeconds = 0.2F;
 
         private Cooldown _cooldown;
 
@@ -44,7 +44,9 @@ namespace Control.Actions
 
         private void StartDash(Direction direction)
         {
-            _animation.UseSkill().Subscribe(_ => MovePlayer(direction));
+            _animation.UseSkill();
+            _controller.ArrestMovement();
+            Observable.Timer(TimeSpan.FromSeconds(_dashPreparationTimeInSeconds)).Subscribe(_ => MovePlayer(direction));
         }
 
         private void MovePlayer(Direction direction)
@@ -71,7 +73,6 @@ namespace Control.Actions
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
             }
-            _controller.ArrestMovement();
         }
 
         private bool Visible
