@@ -302,6 +302,7 @@ MonoBehaviour:
   _animator: {fileID: 95393400828925116}
   AttackDuration: 0.1
   _deathDuration: 1
+  _skillDuration: 0.3
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,10 +362,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c3643b58e6c2540ae121b4890d60c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 4987802579821146}
+  _player: {fileID: 114049397316937804}
   _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
   PlayerController: {fileID: 114100535086619882}
-  _player: {fileID: 114049397316937804}
+  _animation: {fileID: 114087861889933940}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1
