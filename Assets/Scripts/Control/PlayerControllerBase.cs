@@ -27,7 +27,7 @@ namespace Control
         private float _gravity;
 
         public IInputProvider InputProvider { get; private set; }
-        protected CollisionController Controller { get; private set; }
+        public CollisionController Controller { get; private set; }
         protected float MaxJumpVelocity { get; private set; }
         protected float MinJumpVelocity { get; private set; }
         [NonSerialized] protected Vector3 Velocity;
