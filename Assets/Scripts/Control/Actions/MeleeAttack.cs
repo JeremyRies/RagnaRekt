@@ -44,8 +44,7 @@ namespace Control.Actions
         private void Attack()
         {
             _killable.TeamId = _player.Team.TeamId;
-            _weapon.gameObject.SetActive(true);
-            _animation.Attack().Subscribe(_ => _weapon.gameObject.SetActive(false));
+            _animation.Attack().Subscribe(_weapon.gameObject.SetActive);
         }
     }
 }
