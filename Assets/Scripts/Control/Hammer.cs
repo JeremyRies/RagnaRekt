@@ -33,6 +33,7 @@ namespace Control
 
         internal void Reset()
         {
+            
             Destroy(gameObject);
         }
     }
