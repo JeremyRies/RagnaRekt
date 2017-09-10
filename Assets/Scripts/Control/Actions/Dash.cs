@@ -2,6 +2,7 @@
 using Assets.Scripts.Util;
 using Entities;
 using LifeSystem;
+using Sound;
 using UnityEngine;
 using UniRx;
 
@@ -76,6 +77,8 @@ namespace Control.Actions
         {
             set
             {
+                if(!value)
+                    SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.LokiSkillDisappear);
                 _sprite.enabled = value;
                 _controller.enabled = value;
             }
