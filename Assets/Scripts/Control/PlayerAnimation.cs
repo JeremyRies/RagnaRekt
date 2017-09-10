@@ -62,12 +62,14 @@ namespace Control
             _animationFinished.OnNext((PlayerAnimationState) animation);
         }
 
-        public IObservable<Unit> Attack()
+        public IObservable<bool> Attack()
         {
-            if (_animating) return Observable.Empty<Unit>();
+            if (_animating) return Observable.Empty<bool>();
+            var subject = new Subject<bool>();
             _state.Value = PlayerAnimationState.Attack;
-            return _animationFinished.Where(anim => anim == PlayerAnimationState.Attack)
-                .Take(1).AsUnitObservable();
+            _animationFinished.Where(anim => anim == PlayerAnimationState.Attack)
+                .Take(1).Subscribe(_ => subject.OnNext(false));
+            return Observable.Return(true).Concat(subject);
         }
 
         public void Jump()
