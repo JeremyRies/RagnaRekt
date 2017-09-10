@@ -31,6 +31,7 @@ namespace LifeSystem
             if (crossLevelDataTransfer != null)
             {
                 _gameConfig.CharactersSelected = crossLevelDataTransfer.GetSelectedCharacters();
+                _gameConfig.AmountOfPlayers = crossLevelDataTransfer.GetNumberPlayers();
             }
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
 
