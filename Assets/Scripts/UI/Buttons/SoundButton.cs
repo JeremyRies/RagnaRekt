@@ -11,4 +11,10 @@ public class SoundButton : Button {
         base.OnSelect(eventData);
         SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.UIButtonSelect);
     }
+
+    public override void OnSubmit(BaseEventData eventData)
+    {
+        base.OnSubmit(eventData);
+        SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.UIButtonSelect);
+    }
 }

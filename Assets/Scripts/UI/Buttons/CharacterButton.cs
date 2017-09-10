@@ -29,6 +29,7 @@ public class CharacterButton : Button
     public override void OnSubmit(BaseEventData eventData)
     {
         DisplayPlayerId(false);
+        SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.UIButtonSelect);
         base.OnSubmit(eventData);
         DisplayPlayerId(true);
     }
