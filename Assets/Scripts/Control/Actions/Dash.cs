@@ -64,8 +64,10 @@ namespace Control.Actions
                     _player.transform.localPosition += new Vector3(_dashRange, 0, 0);
                     break;
                 case Direction.TOP:
+                    Debug.Log("Direction: " + direction);
                     break;
                 case Direction.DOWN:
+                    Debug.Log("Direction: " + direction);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
