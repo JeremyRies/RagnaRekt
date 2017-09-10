@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,7 +24,7 @@ namespace UI.Menu
         {
             CharacterPickingHandler.SetNumberPlayers(2);
 
-            SwitchToCharacterPanel();
+            Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_ => SwitchToCharacterPanel());
         }
 
         public void SwitchToCharacterPanel()
@@ -43,7 +45,7 @@ namespace UI.Menu
         {
             CharacterPickingHandler.SetNumberPlayers(4);
 
-            SwitchToCharacterPanel();
+            Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_ => SwitchToCharacterPanel());
         }
 
         public void OnQuit()
