@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.Util;
 using Entities;
+using Sound;
 using UniRx;
 using UnityEngine;
 
@@ -43,6 +44,7 @@ namespace Control.Actions
 
         private void Attack()
         {
+            SfxSound.SfxSoundInstance.PlayClip( _player.HeroType == HeroType.Thor ? ClipIdentifier.ThorAttack : ClipIdentifier.LokiAttack );
             _killable.TeamId = _player.Team.TeamId;
             _weapon.gameObject.SetActive(true);
             _animation.Attack().Subscribe(_ => _weapon.gameObject.SetActive(false));

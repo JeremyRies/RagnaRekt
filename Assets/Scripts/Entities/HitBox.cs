@@ -2,6 +2,7 @@
 using Control;
 using Entities;
 using LifeSystem;
+using Sound;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities
@@ -20,6 +21,10 @@ namespace Assets.Scripts.Entities
             if (!other.CompareTag("Weapon")) return;
             var otherTeamId = other.GetComponent<Killable>().TeamId;
             if (otherTeamId == _player.Team.TeamId)return;
+
+            SfxSound.SfxSoundInstance.PlayClip(_player.HeroType == HeroType.Thor
+                ? ClipIdentifier.LokiHit
+                : ClipIdentifier.ThorHit); 
 
             Debug.Log("Player died");
             _life.ReceiveHit();
