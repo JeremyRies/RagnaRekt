@@ -8,7 +8,7 @@ namespace Entities
     public class Player : MonoBehaviour
     {
         [SerializeField] private PlayerControllerBase _controller;
-        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] public SpriteRenderer _sprite;
         [SerializeField] public PlayerAnimation Animation;
 
         public int PlayerId;
