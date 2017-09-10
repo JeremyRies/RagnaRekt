@@ -41,6 +41,8 @@ namespace LifeSystem
             var character = _gameConfig.CharactersSelected[playerId - 1];
             var player = Instantiate(_gameConfig.PlayerPrefab[character - 1]);
             player.PlayerId = playerId;
+            player.HeroType = (HeroType) character;
+
             if (playerId%2 == 0)
             {
                 _team2.AddPlayer(player);
