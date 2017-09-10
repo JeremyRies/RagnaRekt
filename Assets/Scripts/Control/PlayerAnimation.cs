@@ -39,7 +39,7 @@ namespace Control
             _state.Subscribe(state =>
             {
                 _animating = StatesWithAnimantion.Contains(state);
-                Debug.Log("New state: " + state);
+                // Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
         }
@@ -56,7 +56,7 @@ namespace Control
 
         private void OnAnimationFinished(int animation)
         {
-            Debug.Log("Animation finished: " + (PlayerAnimationState) animation);
+            // Debug.Log("Animation finished: " + (PlayerAnimationState) animation);
             _state.Value = PlayerAnimationState.Idle;
             _animationFinished.OnNext((PlayerAnimationState) animation);
         }
