@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a61195799e4700478f8fbdeac481af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTimeInSeconds: 0.1
+  _cooldownTimeInSeconds: 0.07
   _player: {fileID: 114049397316937804}
   _weapon: {fileID: 58830596586283164}
   _animation: {fileID: 114087861889933940}
