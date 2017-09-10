@@ -25,6 +25,8 @@ namespace LifeSystem
             var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
             _teamPointSystem = Instantiate(_gameConfig.TeamPointSystemPrefab);
 
+            _teamPointSystem.AddTeams(_team1, _team2);
+
             if (crossLevelDataTransfer != null)
             {
                 _gameConfig.CharactersSelected = crossLevelDataTransfer.GetSelectedCharacters();
