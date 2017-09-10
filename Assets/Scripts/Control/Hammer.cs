@@ -22,6 +22,11 @@ namespace Control
         [NonSerialized]
         public HammerConfig _hammerConfig;
 
+        public Hammer(SpriteRenderer spriteRendererOfHammerInstance)
+        {
+            SpriteRendererOfHammerInstance = spriteRendererOfHammerInstance;
+        }
+
         public void Update()
         {
             UpdateAnimation();
@@ -50,7 +55,7 @@ namespace Control
                 hammer.Velocity = Math.Abs(hammer.Velocity) * -1;
                 SpriteRendererOfHammerInstance.flipX = true;
                 ColliderOfHammerInstance.offset = new Vector2(Math.Abs(ColliderOfHammerInstance.offset.x)*(-1), 0);
-                Effect.transform.position = new Vector2(hammer.transform.position.x -1, 0);
+                Effect.transform.position = new Vector2(hammer.transform.position.x -1, 0.4f);
             }
 
             if (isLookingLeft == false)
@@ -58,7 +63,7 @@ namespace Control
                 hammer.Velocity = Math.Abs(hammer.Velocity);
                 SpriteRendererOfHammerInstance.flipX = false;
                 ColliderOfHammerInstance.offset = new Vector2(Math.Abs(ColliderOfHammerInstance.offset.x), 0);
-                Effect.transform.position = new Vector2(hammer.transform.position.x +1, 0);
+                Effect.transform.position = new Vector2(hammer.transform.position.x +1, 0.4f);
 
             }
         }

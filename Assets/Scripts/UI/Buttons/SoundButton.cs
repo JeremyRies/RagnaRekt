@@ -1,0 +1,14 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Sound;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class SoundButton : Button {
+    public override void OnSelect(BaseEventData eventData)
+    {
+        base.OnSelect(eventData);
+        SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.UIButtonSelect);
+    }
+}

@@ -71,6 +71,7 @@ namespace Control.Actions
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
             }
+            _controller.ArrestMovement();
         }
 
         private bool Visible
