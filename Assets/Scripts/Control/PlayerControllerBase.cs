@@ -127,12 +127,10 @@ namespace Control
 
         private Direction GetDirection()
         {
-            var vertical = InputProvider.GetAxis("Vertical");
-            if (Math.Abs(vertical) > 0.00001F)
-            {
-                return vertical > 0 ? Direction.TOP : Direction.DOWN;
-            }
-            return _looksLeft ? Direction.LEFT : Direction.RIGHT;
+            var horizontal = InputProvider.GetAxis("Horizontal");
+            return Mathf.Abs(horizontal) > MinHorizontalMovement
+                ? horizontal > 0 ? Direction.RIGHT : Direction.LEFT
+                : _looksLeft ? Direction.LEFT : Direction.RIGHT;
         }
 
         protected bool IsHittingCeiling
