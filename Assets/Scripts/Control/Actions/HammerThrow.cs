@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
+using UnityEditor.Animations;
 
 namespace Control.Actions
 {
@@ -14,6 +15,8 @@ namespace Control.Actions
         [SerializeField] public PlayerControllerBase PlayerController;
         [SerializeField] private PlayerAnimation _animation;
 
+        [SerializeField] private AnimatorController _thorWithHammer;
+        [SerializeField] private AnimatorController _thorWithoutHammer;
 
         private Vector2 _dir;
         private float _distanceFromStartPoint;
@@ -21,7 +24,7 @@ namespace Control.Actions
 
 
 
-        [NonSerialized] public bool _isInHand;
+        [NonSerialized] public bool _isInHand = true;
         private Hammer hammer;
         private Cooldown _cooldown;
         private GameObject _hammerInstance;
@@ -39,14 +42,13 @@ namespace Control.Actions
 
             _cooldown.Start();
             _animation.UseSkill();
-            StartCoroutine(Throw());
+            StartCoroutine(Throw(direction));
         }
 
-        private IEnumerator Throw()
+        private IEnumerator Throw(Direction direction)
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
-            _hammerInstance.transform.position = _player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
+            
             var hammer = _hammerInstance.AddComponent<Hammer>();
 
             hammer._hammerConfig = _conf;
@@ -55,12 +57,19 @@ namespace Control.Actions
 
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
+            hammer._spriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
+
             _hammerInstance.GetComponent<Collider2D>();
 
+            hammer._velocity = Math.Abs(_conf.Velocity);
+            hammer.UpdateVelocity(PlayerController.isLookingLeft,hammer);
             
-            UpdateVelocity();
-
             _isInHand = false;
+
+
+            _hammerInstance.transform.position = _player.transform.position;
+            _hammerInstance.transform.position += Vector3.right * hammer._velocity * 2;
+            _animation.Controller = _thorWithoutHammer;
 
 
 
@@ -82,44 +91,31 @@ namespace Control.Actions
 
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
-
                     _isInHand = true;
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 if (hammer._flyBack)
                 {
-                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(_conf.Velocity);
+                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(hammer._velocity);
                 }else {
-                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + _conf.Velocity, _hammerInstance.transform.position.y);
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer._velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(_conf.Velocity) && hammer._flyBack )
+                if (_distanceToPlayer <= Math.Abs(hammer._velocity) && hammer._flyBack )
                 {
                     hammer._flyBack = false;
                     _isInHand = true;
-
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 yield return null;
             }
-            Debug.Log(_isInHand);
+            // Debug.Log(_isInHand);
             hammer.Reset();
         }
 
-        private void UpdateVelocity()
-        {
-            if (PlayerController.isLookingLeft)
-            {
-                _conf.Velocity = Math.Abs(_conf.Velocity) * -1;
-                _spriteRendererOfHammerInstance.flipX = true;
-            }
-
-            if (!PlayerController.isLookingLeft)
-            {
-                _conf.Velocity = Math.Abs(_conf.Velocity);
-                _spriteRendererOfHammerInstance.flipX = false;
-            }    
-        }
+      
     }
 }
 

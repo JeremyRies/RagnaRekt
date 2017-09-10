@@ -1,4 +1,6 @@
-﻿using Control;
+﻿using System;
+using Control;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -72,12 +74,13 @@ namespace UI.Menu
                 _selectedCharacterIDs[_counter] = id;
                 CharacterPreview.SetCharacter(_counter, id);
                 CharacterPreview.EnablePreview(_counter, true);
+                Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> LevelController.GetInstance().LoadGameScene());
 
 
                 var crossLevelDataTransfer = GameObject.FindObjectOfType<CrossLevelDataTransfer>();
                 if (crossLevelDataTransfer != null)
                     crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
-                LevelController.GetInstance().LoadGameScene();
+           
             }
 
         }
@@ -85,7 +88,7 @@ namespace UI.Menu
         public void RevertSelect()
         {
             Reset();
-            MenuHandler.SwitchToMainPanel();
+            Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> MenuHandler.SwitchToMainPanel());
 
         }
     }

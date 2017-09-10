@@ -16,11 +16,7 @@ namespace Control.Actions
         [SerializeField] private PlayerAnimation _animation;
 
         [SerializeField] private HammerThrow HammerThrow;
-
-
-
-
-
+        
         private Cooldown _cooldown;
         private Killable _killable;
 

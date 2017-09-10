@@ -11,7 +11,11 @@ namespace Control
         [NonSerialized]
         public bool _flyBack;
 
-        
+        [NonSerialized]
+        public SpriteRenderer _spriteRendererOfHammerInstance;
+
+        [NonSerialized]
+        public float _velocity;
 
         [NonSerialized]
         public HammerConfig _hammerConfig;
@@ -35,6 +39,21 @@ namespace Control
         {
             
             Destroy(gameObject);
+        }
+
+        public void UpdateVelocity(bool isLookingLeft, Hammer hammer)
+        {
+            if (isLookingLeft == true)
+            {
+                hammer._velocity = Math.Abs(hammer._velocity) * -1;
+                _spriteRendererOfHammerInstance.flipX = true;
+            }
+
+            if (isLookingLeft == false)
+            {
+                hammer._velocity = Math.Abs(hammer._velocity);
+                _spriteRendererOfHammerInstance.flipX = false;
+            }
         }
     }
 }

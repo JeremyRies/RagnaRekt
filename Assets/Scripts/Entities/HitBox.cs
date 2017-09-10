@@ -17,7 +17,11 @@ namespace Assets.Scripts.Entities
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_ignoredColliders.Contains(other)) return;
-            if (!other.CompareTag("Weapon")) return;
+            if (!other.CompareTag("Weapon"))
+            {
+                gameObject.GetComponent<Hammer>()._flyBack = true;
+                return;
+            }
             var otherTeamId = other.GetComponent<Killable>().TeamId;
             if (otherTeamId == _player.Team.TeamId)return;
 

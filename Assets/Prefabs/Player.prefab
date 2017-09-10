@@ -394,6 +394,8 @@ MonoBehaviour:
   _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
   PlayerController: {fileID: 114100535086619882}
   _animation: {fileID: 114087861889933940}
+  _thorWithHammer: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
+  _thorWithoutHammer: {fileID: 9100000, guid: 4e987e166ba83a94f94d5cfb8f0af4d0, type: 2}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1
