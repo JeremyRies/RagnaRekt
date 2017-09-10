@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c580195727424b995dbbb7f5afc8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamPointCounterDisplay:
+  TeamTexts:
   - {fileID: 114764205197731918}
   - {fileID: 114004615885112946}
 --- !u!114 &114630456226612836

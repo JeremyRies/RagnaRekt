@@ -21,6 +21,8 @@ namespace Control
         private const float AccelerationTimeAirborne = .2f;
         private const float AccelerationTimeGrounded = .1f;
 
+        private bool _inputEnabled = true;
+
         private float _velocityXSmoothing;
         private float _gravity;
 
@@ -52,11 +54,16 @@ namespace Control
 
         private void Update()
         {
-            HandleJump();
-            HandleSkill();
-            HandleAttack();
+            Vector2 horizontalInput = Vector2.zero;
+            if (_inputEnabled)
+            {
+                HandleJump();
 
-            var horizontalInput = GetHorizontalInput();
+                HandleSkill();
+                HandleAttack();
+
+                horizontalInput = GetHorizontalInput();
+            }
 
             UpdateViewDirection(horizontalInput);
             UpdateHorizontalVelocity(horizontalInput);
@@ -78,6 +85,16 @@ namespace Control
         }
 
         private bool _looksLeft;
+
+        public void DisableInput()
+        {
+            _inputEnabled = false;
+        }
+
+        public void EnableInput()
+        {
+            _inputEnabled = true;
+        }
 
         public void UpdateViewDirection(Vector2 horizontalInput)
         {
