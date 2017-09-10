@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Control;
 using Entities;
 using UnityEngine;
 using UniRx;
@@ -8,6 +9,16 @@ namespace LifeSystem
     public class PlayerLifeSystem : MonoBehaviour
     {
         private bool _invincible;
+
+        private bool Invincible
+        {
+            get { return _invincible; }
+            set
+            {
+                _invincible = value;
+                _hitBox.enabled = !value;
+            }
+        }
 
         [SerializeField] private LevelConfig _levelConfig;
         [SerializeField] private Transform _playerTransform;
@@ -22,15 +33,20 @@ namespace LifeSystem
 
         public void ReceiveHit()
         {
-            if(_invincible) Debug.LogError("Should not be able to hit when invincible");
+            if(Invincible) Debug.LogError("Should not be able to hit when invincible");
             //audio
-
-           _player.TeamPointSystem.ScorePoint(_player.OtherTeam);
             Die();
             _player.Animation.Die().Subscribe(_ => Respawn());
         }
 
         private void Die()
+        {
+            Invincible = true;
+            _player.GetPlayerController().DisableInput();
+            _player.TeamPointSystem.ScorePoint(_player.OtherTeam);
+        }
+
+        private void StartInvincibilityAfterDeath()
         {
             StartCoroutine(Invincibility(_invincibilityTimeAfterDeath));
         }
@@ -42,8 +58,8 @@ namespace LifeSystem
 
         private IEnumerator Invincibility(float invincibilityTime)
         {
-            _invincible = true;
-            _hitBox.enabled = false;
+            Invincible = true;
+
             float currentInvincibilityTime = 0f;
 
             while (currentInvincibilityTime < invincibilityTime)
@@ -53,15 +69,19 @@ namespace LifeSystem
                 yield return new WaitForSeconds(_timeBetweenInvincibilityAnimation);
             }
             _sprite.enabled = true;
-            _invincible = false;
-            _hitBox.enabled = true;
+
+            Invincible = false;
         }
 
         private void Respawn()
         {
+            _player.GetPlayerController().EnableInput();
+
             var xpos = Random.Range(_levelConfig.LevelLeftMaxPosition, _levelConfig.LevelRightMaxPosition);
             var pos = new Vector2(xpos,_levelConfig.LevelYMaxPosition);
             _playerTransform.position = pos;
+
+            StartInvincibilityAfterDeath();
         }
 
         private void Update()
@@ -74,7 +94,8 @@ namespace LifeSystem
             var positionY = transform.position.y;
             if (positionY < _levelConfig.LevelYDeathPosition)
             {
-                ReceiveHit();
+                Die();
+                Respawn();
             }
         }
     }
