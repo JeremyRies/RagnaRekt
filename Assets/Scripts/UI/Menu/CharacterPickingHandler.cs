@@ -1,5 +1,6 @@
 ﻿using System;
 using Control;
+using Sound;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -74,10 +75,13 @@ namespace UI.Menu
                 _selectedCharacterIDs[_counter] = id;
                 CharacterPreview.SetCharacter(_counter, id);
                 CharacterPreview.EnablePreview(_counter, true);
+
+                BackgroundMusic.BackgroundMusicInstance.StopPlay();
+
                 Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> LevelController.GetInstance().LoadGameScene());
 
 
-                var crossLevelDataTransfer = GameObject.FindObjectOfType<CrossLevelDataTransfer>();
+                var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
                 if (crossLevelDataTransfer != null)
                     crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
            
