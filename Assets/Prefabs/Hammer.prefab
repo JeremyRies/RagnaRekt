@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hammer: {fileID: 114965612861775050}
   PlayerController: {fileID: 0}
-  collisionSeconds: 0.5
+  CollisionSeconds: 0.3
 --- !u!114 &114965612861775050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1907d72434f4fdb9ee8a98e77e60b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colliderOfHammerInstance: {fileID: 61730813146013880}
+  ColliderOfHammerInstance: {fileID: 61730813146013880}
   Effect: {fileID: 1817976492338324}
 --- !u!212 &212294261039066536
 SpriteRenderer:
