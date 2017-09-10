@@ -60,6 +60,11 @@ namespace UI.Menu
             return _selectedCharacterIDs;
         }
 
+        public int GetCounter()
+        {
+            return _counter;
+        }
+
         public void Select(int id)
         {
             if (_counter + 1 < _numberPlayers)
