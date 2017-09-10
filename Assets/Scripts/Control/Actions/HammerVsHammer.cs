@@ -38,6 +38,7 @@ namespace Control.Actions
             Hammer._velocity = Hammer._hammerConfig.Velocity;
             Hammer.UpdateAnimation();
             Hammer.UpdateVelocity(PlayerController.isLookingLeft, Hammer);
+
             
 
         }
