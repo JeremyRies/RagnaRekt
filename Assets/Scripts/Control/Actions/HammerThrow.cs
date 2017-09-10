@@ -4,6 +4,7 @@ using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
 using UnityEditor.Animations;
+using UniRx;
 
 namespace Control.Actions
 {
@@ -41,8 +42,7 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
 
             _cooldown.Start();
-            _animation.UseSkill();
-            StartCoroutine(Throw(direction));
+            _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
         }
 
         private IEnumerator Throw(Direction direction)
