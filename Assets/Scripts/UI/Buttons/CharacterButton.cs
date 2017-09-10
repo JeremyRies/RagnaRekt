@@ -33,6 +33,14 @@ public class CharacterButton : Button
         DisplayPlayerId(true);
     }
 
+    public void Reset()
+    {
+        foreach (var playerId in _playerIds)
+        {
+            playerId.gameObject.SetActive(false);
+        }
+    }
+
     private void DisplayPlayerId(bool value)
     {
         var currentPlayer = CharacterPickingHandler.GetCounter();
