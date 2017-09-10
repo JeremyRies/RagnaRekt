@@ -363,7 +363,7 @@ MonoBehaviour:
   _cooldownTimeInSeconds: 1
   _player: {fileID: 114049397316937804}
   _animation: {fileID: 114087861889933940}
-  _dashRange: 4
+  _dashRange: 5
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1

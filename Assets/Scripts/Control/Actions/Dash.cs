@@ -43,12 +43,6 @@ namespace Control.Actions
                 case Direction.RIGHT:
                     _player.transform.localPosition += new Vector3(_dashRange, 0, 0);
                     break;
-                case Direction.TOP:
-                    _player.transform.localPosition += new Vector3(0, _dashRange, 0);
-                    break;
-                case Direction.DOWN:
-                    _player.transform.localPosition += new Vector3(0, -_dashRange, 0);
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
             }
