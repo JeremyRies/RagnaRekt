@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Name: HammerConfig
   m_EditorClassIdentifier: 
   Velocity: 0.3
-  Range: 10
+  Range: 15
   HammerPrefab: {fileID: 1400423861394630, guid: 8760671256b1bec47877c1ae1b496df1,
     type: 2}
-  CooldownTimeInSeconds: 5
-
+  CooldownTimeInSeconds: 2.3
