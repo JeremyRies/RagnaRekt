@@ -300,9 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
   _animator: {fileID: 95393400828925116}
-  AttackDuration: 0.1
   _deathDuration: 1
-  _skillDuration: 0.3
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a61195799e4700478f8fbdeac481af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cooldownTimeInSeconds: 0.2
+  _cooldownTimeInSeconds: 0.1
   _player: {fileID: 114049397316937804}
   _weapon: {fileID: 58467128448474252}
   _animation: {fileID: 114087861889933940}

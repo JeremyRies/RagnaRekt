@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UniRx;
+using UnityEditor;
 
 namespace Control
 {
@@ -18,11 +20,17 @@ namespace Control
     {
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] private Animator _animator;
-        [SerializeField] public double AttackDuration = 0.5F;
         [SerializeField] private float _deathDuration = 1F;
-        [SerializeField] private float _skillDuration = 0.1F;
 
-        private ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
+        private readonly ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
+        private readonly Subject<PlayerAnimationState> _animationFinished = new Subject<PlayerAnimationState>();
+
+        private bool _animating;
+
+        private readonly PlayerAnimationState[] StatesWithAnimantion =
+        {
+            PlayerAnimationState.Attack, PlayerAnimationState.Skill, PlayerAnimationState.Death
+        };
 
         private void Start()
         {
@@ -30,6 +38,7 @@ namespace Control
 
             _state.Subscribe(state =>
             {
+                _animating = StatesWithAnimantion.Contains(state);
                 Debug.Log("New state: " + state);
                 _animator.SetInteger("State", (int) state);
             });
@@ -37,9 +46,7 @@ namespace Control
 
         private void UpdateWalking(bool walking)
         {
-            if (_state.Value == PlayerAnimationState.Death) return;
-            if (_state.Value == PlayerAnimationState.Attack) return;
-            if (_state.Value == PlayerAnimationState.Skill) return;
+            if (_animating) return;
 
             if (walking && _state.Value == PlayerAnimationState.Idle)
                 _state.Value = PlayerAnimationState.Walk;
@@ -47,20 +54,24 @@ namespace Control
                 _state.Value = PlayerAnimationState.Idle;
         }
 
-        public void Attack()
+        private void OnAnimationFinished(int animation)
         {
-            if (_state.Value == PlayerAnimationState.Death) return;
-            if (_state.Value == PlayerAnimationState.Skill) return;
+            Debug.Log("Animation finished: " + (PlayerAnimationState) animation);
+            _state.Value = PlayerAnimationState.Idle;
+            _animationFinished.OnNext((PlayerAnimationState) animation);
+        }
+
+        public IObservable<Unit> Attack()
+        {
+            if (_animating) return Observable.Empty<Unit>();
             _state.Value = PlayerAnimationState.Attack;
-            Observable.Timer(TimeSpan.FromSeconds(AttackDuration))
-                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+            return _animationFinished.Where(anim => anim == PlayerAnimationState.Attack)
+                .Take(1).AsUnitObservable();
         }
 
         public void Jump()
         {
-            if (_state.Value == PlayerAnimationState.Death) return;
-            if (_state.Value == PlayerAnimationState.Attack) return;
-            if (_state.Value == PlayerAnimationState.Skill) return;
+            if (_animating) return;
             if (_state.Value == PlayerAnimationState.Jump) return;
 
             _state.Value = PlayerAnimationState.Jump;
@@ -68,7 +79,7 @@ namespace Control
 
         public void HitGround()
         {
-            if (_state.Value == PlayerAnimationState.Death) return;
+            if (_animating) return;
             if (_state.Value == PlayerAnimationState.Jump)
                 _state.Value = PlayerAnimationState.Idle;
         }
@@ -76,18 +87,18 @@ namespace Control
         public IObservable<Unit> Die()
         {
             _state.Value = PlayerAnimationState.Death;
-            return Observable.Timer(TimeSpan.FromSeconds(_deathDuration))
-                .Select(_ => _state.Value = PlayerAnimationState.Idle).AsUnitObservable();
+            var timer = Observable.Timer(TimeSpan.FromSeconds(_deathDuration));
+            timer.Subscribe(_ => OnAnimationFinished((int) PlayerAnimationState.Death));
+            return timer.AsUnitObservable();
         }
 
-        public void UseSkill()
+        public IObservable<Unit> UseSkill()
         {
-            if (_state.Value == PlayerAnimationState.Death) return;
-            if (_state.Value == PlayerAnimationState.Attack) return;
+            if (_animating) return Observable.Empty<Unit>();
 
             _state.Value = PlayerAnimationState.Skill;
-            Observable.Timer(TimeSpan.FromSeconds(_skillDuration))
-                .Subscribe(_ => _state.Value = PlayerAnimationState.Idle);
+            return _animationFinished.Where(anim => anim == PlayerAnimationState.Skill)
+                .Take(1).AsUnitObservable();
         }
     }
 }
