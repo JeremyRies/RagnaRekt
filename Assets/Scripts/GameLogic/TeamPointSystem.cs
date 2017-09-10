@@ -20,8 +20,6 @@ namespace LifeSystem
 
         private int _matchPointAmount = 2;
 
-        private int _teamCount=2;
-
         private Dictionary<Team, int> _teamPointCounter = new Dictionary<Team, int>();
 
         private IInputProvider _inputProvider;
