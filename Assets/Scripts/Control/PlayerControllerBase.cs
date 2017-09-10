@@ -115,8 +115,7 @@ namespace Control
             {
                 return vertical > 0 ? Direction.TOP : Direction.DOWN;
             }
-            // TODO consider view direction
-            return InputProvider.GetAxis("Horizontal") > 0 ? Direction.RIGHT : Direction.LEFT;
+            return _looksLeft ? Direction.LEFT : Direction.RIGHT;
         }
 
         protected bool IsHittingCeiling
@@ -131,7 +130,6 @@ namespace Control
 
         private void UpdateHorizontalVelocity(Vector2 input)
         {
-
             var targetVelocityX = input.x* _conf.MoveSpeed;
             IsMoving.Value = Mathf.Abs(input.x) > MinHorizontalMovement;
 

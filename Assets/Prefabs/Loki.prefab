@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4452028562940534}
-  - component: {fileID: 114303373183518000}
+  - component: {fileID: 114381598208397308}
   m_Layer: 8
   m_Name: Skills
   m_TagString: Untagged
@@ -317,7 +317,7 @@ MonoBehaviour:
   _animation: {fileID: 114087861889933940}
   _player: {fileID: 114049397316937804}
   Attack: {fileID: 114186842344561168}
-  Skill: {fileID: 114303373183518000}
+  Skill: {fileID: 114381598208397308}
 --- !u!114 &114186842344561168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,7 +349,7 @@ MonoBehaviour:
   _sprite: {fileID: 212893768557047876}
   _hitBox: {fileID: 61503345507171506}
   _player: {fileID: 114049397316937804}
---- !u!114 &114303373183518000
+--- !u!114 &114381598208397308
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -357,13 +357,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644958977179206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c3643b58e6c2540ae121b4890d60c3, type: 3}
+  m_Script: {fileID: 11500000, guid: b5fe5737acdba4a498b6d91e43163745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cooldownTimeInSeconds: 1
   _player: {fileID: 114049397316937804}
-  _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
-  PlayerController: {fileID: 114100535086619882}
   _animation: {fileID: 114087861889933940}
+  _dashRange: 4
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1
