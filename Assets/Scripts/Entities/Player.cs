@@ -39,7 +39,6 @@ namespace Entities
         void Start()
         {
             TeamPointSystem = FindObjectOfType<TeamPointSystem>();
-            AssetDatabase.CreateAsset(new PlayerIdConfig(), "Assets/PlayerIdConfig.asset");
         }
 
         public PlayerControllerBase GetPlayerController()

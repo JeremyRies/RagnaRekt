@@ -41,7 +41,7 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
             Debug.Log("Hi");
             _cooldown.Start();
-            _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw()));
+            StartCoroutine(Throw());
             OnCooldown = true;
         }
 
@@ -78,6 +78,7 @@ namespace Control.Actions
             _hammerInstance.transform.position = _player.transform.position;
             _hammerInstance.transform.position += Vector3.right * hammer.Velocity * 2;
             _animation.Controller = _thorWithoutHammer;
+            _animation.UseSkill();
 
             var playerStartPos = _player.transform.position;
 

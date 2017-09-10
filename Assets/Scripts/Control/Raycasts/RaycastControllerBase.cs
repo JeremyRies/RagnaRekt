@@ -22,8 +22,15 @@ namespace Control.Raycasts
             CalculateRaySpacing();
         }
 
+        private void AssureCollider()
+        {
+            if (Collider) return;
+            Collider = GetComponent<BoxCollider2D>();
+        }
+
         protected void UpdateRaycastOrigins()
         {
+            AssureCollider();
             var bounds = Collider.bounds;
             bounds.Expand(SkinWidth*-2);
 
