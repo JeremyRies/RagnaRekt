@@ -13,6 +13,7 @@ namespace Control
 
         [NonSerialized]
         public SpriteRenderer _spriteRendererOfHammerInstance;
+        public BoxCollider2D _colliderOfHammerInstance;
 
         [NonSerialized]
         public float _velocity;
@@ -47,13 +48,18 @@ namespace Control
             {
                 hammer._velocity = Math.Abs(hammer._velocity) * -1;
                 _spriteRendererOfHammerInstance.flipX = true;
+                _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x)*(-1), 0);
             }
 
             if (isLookingLeft == false)
             {
                 hammer._velocity = Math.Abs(hammer._velocity);
                 _spriteRendererOfHammerInstance.flipX = false;
+                _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x), 0);
+
             }
         }
+
+     
     }
 }
