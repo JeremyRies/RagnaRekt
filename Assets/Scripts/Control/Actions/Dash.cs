@@ -12,6 +12,9 @@ namespace Control.Actions
         [SerializeField] private Player _player;
         [SerializeField] private PlayerAnimation _animation;
         [SerializeField] private float _dashRange = 3;
+        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private float _dashTimeInSeconds = 0.1F;
+        [SerializeField] private PlayerControllerBase _controller;
 
         private Cooldown _cooldown;
 
@@ -35,6 +38,8 @@ namespace Control.Actions
 
         private void MovePlayer(Direction direction)
         {
+            Visible = false;
+            Observable.Timer(TimeSpan.FromSeconds(_dashTimeInSeconds)).Subscribe(_ => Visible = true);
             switch (direction)
             {
                 case Direction.LEFT:
@@ -45,6 +50,15 @@ namespace Control.Actions
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
+            }
+        }
+
+        private bool Visible
+        {
+            set
+            {
+                _sprite.enabled = value;
+                _controller.enabled = value;
             }
         }
     }
