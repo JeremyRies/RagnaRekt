@@ -34,7 +34,7 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            
+            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
         }
 
         public override void TryToActivate(Direction direction)
@@ -43,6 +43,12 @@ namespace Control.Actions
 
             _cooldown.Start();
             _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
+            OnCooldown = true;
+        }
+
+        private bool OnCooldown
+        {
+            set { _player._sprite.color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
         }
 
         private IEnumerator Throw(Direction direction)
