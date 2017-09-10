@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Control;
+using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,81 +11,99 @@ namespace LifeSystem
 {
     public class TeamPointSystem : MonoBehaviour
     {
+        public Text[] TeamTexts;
+
+        private Team _team1;
+        private Team _team2;
+
         private int _pointsForWin = 5;
 
         private int _matchPointAmount = 2;
 
         private int _teamCount=2;
 
-        private int[] _teamPointCounter;
+        private Dictionary<Team, int> _teamPointCounter = new Dictionary<Team, int>();
 
-        [SerializeField] private Text[] _teamPointCounterDisplay;
+        private IInputProvider _inputProvider;
+
+        [SerializeField] private Dictionary<Team, Text> _teamPointCounterDisplay = new Dictionary<Team, Text>();
 
         private void Start()
         {
-            _teamPointCounter = new int[_teamCount];
             UpdateDisplay();
+            _inputProvider = new UnityInputProvider(1);
         }
 
-        public void ScorePoint(int teamId)
+        public void AddTeams(Team team1, Team team2)
         {
-            Debug.Log(teamId);
-            _teamPointCounter[teamId-1]++;
-            Debug.Log("Score team " + teamId +" : " + _teamPointCounter[teamId-1]);
+            _team1 = team1;
+            _team2 = team2;
+
+            _teamPointCounter.Add(team1, 0);
+            _teamPointCounterDisplay.Add(team1, TeamTexts[0]);
+            
+            _teamPointCounter.Add(team2, 0);
+            _teamPointCounterDisplay.Add(team2, TeamTexts[1]);
+        }
+
+        public void ScorePoint(Team team)
+        {
+            Debug.Log(team.TeamId);
+            _teamPointCounter[team]++;
+            Debug.Log("Score team " + team.TeamId +" : " + _teamPointCounter[team]);
             UpdateDisplay();
             CheckWin();
         }
 
         private void UpdateDisplay()
         {
-            for (int teamIndex = 0; teamIndex < _teamCount; teamIndex++)
+            foreach (var team in _teamPointCounter.Keys)
             {
-                _teamPointCounterDisplay[teamIndex].text = _teamPointCounter[teamIndex].ToString();
+                _teamPointCounterDisplay[team].text = _teamPointCounter[team].ToString();
             }
         }
 
         private void CheckWin()
         {
-            for (int teamIndex = 0; teamIndex < _teamCount; teamIndex++)
+            foreach (var team in _teamPointCounter.Keys)
             {
-                var points = _teamPointCounter[teamIndex];
-                if (points >= _pointsForWin && IsMatchPointsAheadOfOtherTeam(teamIndex,points))
+                var points = _teamPointCounter[team];
+                if (points >= _pointsForWin && IsMatchPointsAheadOfOtherTeam(team, points))
                 {
-                    Win(teamIndex);
+                    Win(team);
                 }
             }
         }
 
-        private void Win(int teamIndex)
+        private void Win(Team team)
         { 
-            Debug.Log("Team: " + teamIndex + " wins!");
+            Debug.Log("Team: " + team.TeamId + " wins!");
 
-            LevelController.GetInstance().LoadMenuScene();
-        }
-
-        private bool IsMatchPointsAheadOfOtherTeam(int teamIndex, int points)
-        {
-            return PointsOfOtherTeam(teamIndex) + _matchPointAmount <= points;
-        }
-
-        private int PointsOfOtherTeam(int teamIndex)
-        {
-            return _teamPointCounter[teamIndex == 0 ? 1 : 0];
-        }
-
-        private void Update()
-        {
-            //only for debug
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            foreach (var player in _team1.GetPlayers())
             {
-                ScorePoint(1);
+                player.GetPlayerController().DisableInput();
+            }
+            foreach (var player in _team2.GetPlayers())
+            {
+                player.GetPlayerController().DisableInput();
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                ScorePoint(2);
-            }
+            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene());
+        }
+
+        private bool IsMatchPointsAheadOfOtherTeam(Team team, int points)
+        {
+            return PointsOfOtherTeam(team) + _matchPointAmount <= points;
+        }
+
+        private int PointsOfOtherTeam(Team team)
+        {
+            return _teamPointCounter[ GetOtherTeam(team)];
+        }
+
+        public Team GetOtherTeam(Team team)
+        {
+            return _teamPointCounter.First(x => x.Key != team).Key;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace LifeSystem
             if(_invincible) Debug.LogError("Should not be able to hit when invincible");
             //audio
 
-           _player.TeamPointSystem.ScorePoint(_player.OtherTeamId);
+           _player.TeamPointSystem.ScorePoint(_player.OtherTeam);
             Die();
             _player.Animation.Die().Subscribe(_ => Respawn());
         }
