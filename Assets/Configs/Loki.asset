@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxJumpHeight: 7
   MinJumpHeight: 2
-  MoveSpeed: 18
+  MoveSpeed: 16.5
   TimeToJumpApex: 0.35
