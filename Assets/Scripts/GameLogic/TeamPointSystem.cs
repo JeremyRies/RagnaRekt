@@ -24,7 +24,9 @@ namespace LifeSystem
 
         private IInputProvider _inputProvider;
 
-        [SerializeField] private Dictionary<Team, Text> _teamPointCounterDisplay = new Dictionary<Team, Text>();
+        private Dictionary<Team, Text> _teamPointCounterDisplay = new Dictionary<Team, Text>();
+        [SerializeField] private GameObject _hatiWinPrefab;
+        [SerializeField] private GameObject _skalliWinPrefab;
 
         private void Start()
         {
@@ -84,6 +86,15 @@ namespace LifeSystem
             foreach (var player in _team2.GetPlayers())
             {
                 player.GetPlayerController().DisableInput();
+            }
+
+            if (team.TeamId == 1)
+            {
+                Instantiate(_skalliWinPrefab, Vector3.zero, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_hatiWinPrefab, Vector3.zero, Quaternion.identity);
             }
 
             Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene()).AddTo(gameObject);
