@@ -9,18 +9,23 @@ namespace Control
     public class Hammer : Killable
     {
         [NonSerialized]
-        public bool _flyBack;
+        public bool FlyBack;
 
         [NonSerialized]
-        public SpriteRenderer _spriteRendererOfHammerInstance;
-        public BoxCollider2D _colliderOfHammerInstance;
+        public SpriteRenderer SpriteRendererOfHammerInstance;
+        public BoxCollider2D ColliderOfHammerInstance;
         public GameObject Effect;
 
         [NonSerialized]
-        public float _velocity;
+        public float Velocity;
 
         [NonSerialized]
         public HammerConfig _hammerConfig;
+
+        public Hammer(SpriteRenderer spriteRendererOfHammerInstance)
+        {
+            SpriteRendererOfHammerInstance = spriteRendererOfHammerInstance;
+        }
 
         public void Update()
         {
@@ -31,7 +36,7 @@ namespace Control
 
         public void UpdateAnimation()
         {
-            if (_flyBack)
+            if (FlyBack)
             {
                 gameObject.GetComponent<Animator>().SetBool("HammerBack", true);
             }
@@ -47,17 +52,17 @@ namespace Control
         {
             if (isLookingLeft == true)
             {
-                hammer._velocity = Math.Abs(hammer._velocity) * -1;
-                _spriteRendererOfHammerInstance.flipX = true;
-                _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x)*(-1), 0);
+                hammer.Velocity = Math.Abs(hammer.Velocity) * -1;
+                SpriteRendererOfHammerInstance.flipX = true;
+                ColliderOfHammerInstance.offset = new Vector2(Math.Abs(ColliderOfHammerInstance.offset.x)*(-1), 0);
                 Effect.transform.position = new Vector2(hammer.transform.position.x -1, 0.4f);
             }
 
             if (isLookingLeft == false)
             {
-                hammer._velocity = Math.Abs(hammer._velocity);
-                _spriteRendererOfHammerInstance.flipX = false;
-                _colliderOfHammerInstance.offset = new Vector2(Math.Abs(_colliderOfHammerInstance.offset.x), 0);
+                hammer.Velocity = Math.Abs(hammer.Velocity);
+                SpriteRendererOfHammerInstance.flipX = false;
+                ColliderOfHammerInstance.offset = new Vector2(Math.Abs(ColliderOfHammerInstance.offset.x), 0);
                 Effect.transform.position = new Vector2(hammer.transform.position.x +1, 0.4f);
 
             }
