@@ -1,6 +1,7 @@
 ﻿using System;
 using Control;
 using LifeSystem;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entities
@@ -10,8 +11,21 @@ namespace Entities
         [SerializeField] private PlayerControllerBase _controller;
         [SerializeField] public SpriteRenderer _sprite;
         [SerializeField] public PlayerAnimation Animation;
+        [SerializeField] public SpriteRenderer _playerIdSprite;
+        [SerializeField] public PlayerIdConfig _playerIdConfig;
 
-        public int PlayerId;
+        private int _playerId;
+
+        public int PlayerId
+        {
+            get { return _playerId; }
+            set
+            {
+                _playerId = value;
+                _playerIdSprite.sprite = _playerIdConfig.GetSpriteForPlayer(value);
+            }
+        }
+
         public Team Team;
 
         public HeroType HeroType;
@@ -25,6 +39,7 @@ namespace Entities
         void Start()
         {
             TeamPointSystem = FindObjectOfType<TeamPointSystem>();
+            AssetDatabase.CreateAsset(new PlayerIdConfig(), "Assets/PlayerIdConfig.asset");
         }
 
         public PlayerControllerBase GetPlayerController()
