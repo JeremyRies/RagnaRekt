@@ -6,6 +6,8 @@ using UnityEngine;
 public class CrossLevelDataTransfer : MonoBehaviour
 {
     public GameObject SoundManager;
+
+    private int _numberPlayers;
     private int[] _selectedCharacters;
 
 	// Use this for initialization
@@ -13,6 +15,16 @@ public class CrossLevelDataTransfer : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(SoundManager);
 	}
+
+    public void SaveNumberPlayers(int number)
+    {
+        _numberPlayers = number;
+    }
+
+    public int GetNumberPlayers()
+    {
+        return _numberPlayers;
+    }
 
     public void SaveSelectedCharacters(int[] characters)
     {
