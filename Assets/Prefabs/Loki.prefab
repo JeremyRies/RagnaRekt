@@ -475,9 +475,9 @@ MonoBehaviour:
   _cooldownTimeInSeconds: 2
   _player: {fileID: 114049397316937804}
   _animation: {fileID: 114087861889933940}
-  _dashRange: 6
+  _dashRange: 8
   _sprite: {fileID: 212893768557047876}
-  _dashTimeInSeconds: 0.3
+  _dashTimeInSeconds: 0.25
   _controller: {fileID: 114100535086619882}
   _lifeSystem: {fileID: 114287236272938962}
 --- !u!114 &114522263512032690

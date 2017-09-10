@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Loki
   m_EditorClassIdentifier: 
   MaxJumpHeight: 7
-  MinJumpHeight: 1
+  MinJumpHeight: 2
   MoveSpeed: 18
-  TimeToJumpApex: 0.4
+  TimeToJumpApex: 0.35
