@@ -4,6 +4,7 @@ using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
 using UnityEditor.Animations;
+using UniRx;
 
 namespace Control.Actions
 {
@@ -41,15 +42,13 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
 
             _cooldown.Start();
-            _animation.UseSkill();
-            StartCoroutine(Throw());
+            _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
         }
 
-        private IEnumerator Throw()
+        private IEnumerator Throw(Direction direction)
         {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
-            _hammerInstance.transform.position = _player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * _conf.Velocity * 2;
+            
             var hammer = _hammerInstance.AddComponent<Hammer>();
 
             hammer._hammerConfig = _conf;
@@ -58,13 +57,20 @@ namespace Control.Actions
 
 
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
+            hammer._spriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
+
             _hammerInstance.GetComponent<Collider2D>();
 
+            hammer._velocity = Math.Abs(_conf.Velocity);
+            hammer.UpdateVelocity(PlayerController.isLookingLeft,hammer);
             
-            UpdateVelocity();
-
             _isInHand = false;
+
+
+            _hammerInstance.transform.position = _player.transform.position;
+            _hammerInstance.transform.position += Vector3.right * hammer._velocity * 2;
             _animation.Controller = _thorWithoutHammer;
+
 
 
             var playerStartPos = _player.transform.position;
@@ -86,21 +92,21 @@ namespace Control.Actions
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 if (hammer._flyBack)
                 {
-                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(_conf.Velocity);
+                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(hammer._velocity);
                 }else {
-                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + _conf.Velocity, _hammerInstance.transform.position.y);
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer._velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(_conf.Velocity) && hammer._flyBack )
+                if (_distanceToPlayer <= Math.Abs(hammer._velocity * 5) && hammer._flyBack )
                 {
                     hammer._flyBack = false;
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 yield return null;
@@ -109,20 +115,7 @@ namespace Control.Actions
             hammer.Reset();
         }
 
-        private void UpdateVelocity()
-        {
-            if (PlayerController.isLookingLeft)
-            {
-                _conf.Velocity = Math.Abs(_conf.Velocity) * -1;
-                _spriteRendererOfHammerInstance.flipX = true;
-            }
-
-            if (!PlayerController.isLookingLeft)
-            {
-                _conf.Velocity = Math.Abs(_conf.Velocity);
-                _spriteRendererOfHammerInstance.flipX = false;
-            }    
-        }
+      
     }
 }
 

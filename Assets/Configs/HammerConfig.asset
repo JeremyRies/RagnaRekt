@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12dad4d76bfe420c8d58617eb05b73b6, type: 3}
   m_Name: HammerConfig
   m_EditorClassIdentifier: 
-  Velocity: 0.4
-  Range: 14
+  Velocity: 0.3
+  Range: 10
   HammerPrefab: {fileID: 1400423861394630, guid: 8760671256b1bec47877c1ae1b496df1,
     type: 2}
-  CooldownTimeInSeconds: 5
+  CooldownTimeInSeconds: 2
