@@ -35,7 +35,7 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            
+            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
         }
 
         public override void TryToActivate(Direction direction)
@@ -44,6 +44,12 @@ namespace Control.Actions
 
             _cooldown.Start();
             _animation.UseSkill().Subscribe(_ =>  StartCoroutine(Throw(direction)));
+            OnCooldown = true;
+        }
+
+        private bool OnCooldown
+        {
+            set { _player._sprite.color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
         }
 
         private IEnumerator Throw(Direction direction)
@@ -96,7 +102,7 @@ namespace Control.Actions
                 if (_cooldown.IsOnCoolDown.Value==false)
                 {
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 if (hammer._flyBack)
@@ -106,11 +112,11 @@ namespace Control.Actions
                     _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer._velocity, _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(hammer._velocity) && hammer._flyBack )
+                if (_distanceToPlayer <= Math.Abs(hammer._velocity * 5) && hammer._flyBack )
                 {
                     hammer._flyBack = false;
                     _isInHand = true;
-                    _animation.Controller = _thorWithHammer;
+                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
                 }
 
                 yield return null;

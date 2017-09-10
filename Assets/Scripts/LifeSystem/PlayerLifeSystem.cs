@@ -17,33 +17,38 @@ namespace LifeSystem
         [SerializeField]
         private Player _player;
 
-        private float _invincibilityTime = 2f;
+        private float _invincibilityTimeAfterDeath = 2f;
         private float _timeBetweenInvincibilityAnimation = 0.1f;
-        private float _currentInvincibilityTime;
 
         public void ReceiveHit()
         {
             if(_invincible) Debug.LogError("Should not be able to hit when invincible");
             //audio
 
-           _player.TeamPointSystem.ScorePoint(_player.OtherTeamId);
+           _player.TeamPointSystem.ScorePoint(_player.OtherTeam);
             Die();
             _player.Animation.Die().Subscribe(_ => Respawn());
         }
 
         private void Die()
         {
-            _currentInvincibilityTime = 0;
-            StartCoroutine(Invincibility());
+            StartCoroutine(Invincibility(_invincibilityTimeAfterDeath));
         }
 
-        private IEnumerator Invincibility()
+        public void SetInvincible(float invincibilityTime)
+        {
+            StartCoroutine(Invincibility(invincibilityTime));
+        }
+
+        private IEnumerator Invincibility(float invincibilityTime)
         {
             _invincible = true;
             _hitBox.enabled = false;
-            while (_currentInvincibilityTime < _invincibilityTime)
+            float currentInvincibilityTime = 0f;
+
+            while (currentInvincibilityTime < invincibilityTime)
             {
-                _currentInvincibilityTime += _timeBetweenInvincibilityAnimation;
+                currentInvincibilityTime += _timeBetweenInvincibilityAnimation;
                 _sprite.enabled = !_sprite.enabled;
                 yield return new WaitForSeconds(_timeBetweenInvincibilityAnimation);
             }
