@@ -58,16 +58,14 @@ namespace Control.Actions
             switch (direction)
             {
                 case Direction.LEFT:
-                    _player.transform.localPosition += new Vector3(-_dashRange, 0, 0);
+                    _controller.Controller.Move(new Vector2(-_dashRange, 0));
                     break;
                 case Direction.RIGHT:
-                    _player.transform.localPosition += new Vector3(_dashRange, 0, 0);
+                    _controller.Controller.Move(new Vector2(_dashRange, 0));
                     break;
                 case Direction.TOP:
-                    Debug.Log("Direction: " + direction);
                     break;
                 case Direction.DOWN:
-                    Debug.Log("Direction: " + direction);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("direction", direction, null);
