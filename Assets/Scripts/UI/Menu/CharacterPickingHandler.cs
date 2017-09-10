@@ -83,7 +83,11 @@ namespace UI.Menu
 
                 var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
                 if (crossLevelDataTransfer != null)
+                {
                     crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
+                    crossLevelDataTransfer.SaveNumberPlayers(_numberPlayers);
+                }
+
            
             }
 
