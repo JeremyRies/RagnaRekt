@@ -16,6 +16,7 @@
         Walking,
         BackgroundMenu,
         BackgroundGame,
-        UIButtonSelect
+        UIButtonSelect,
+        RagnarRekt
     }
 }

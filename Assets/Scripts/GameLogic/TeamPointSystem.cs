@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Control;
+using Sound;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -78,6 +79,8 @@ namespace LifeSystem
         private void Win(Team team)
         { 
             Debug.Log("Team: " + team.TeamId + " wins!");
+
+            SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.RagnarRekt);
 
             foreach (var player in _team1.GetPlayers())
             {
