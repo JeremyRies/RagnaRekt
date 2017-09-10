@@ -34,7 +34,7 @@ public class CharacterButton : Button
         DisplayPlayerId(true);
     }
 
-    public void Reset()
+    public void ResetPlayerId()
     {
         foreach (var playerId in _playerIds)
         {

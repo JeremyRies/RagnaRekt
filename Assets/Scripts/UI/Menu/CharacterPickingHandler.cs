@@ -45,6 +45,7 @@ namespace UI.Menu
 
         public void SetNumberPlayers(int i)
         {
+            CharacterPreview.ResetAll();
             _numberPlayers = i;
             _selectedCharacterIDs = new int[i];
             _counter = 0;
@@ -109,7 +110,7 @@ namespace UI.Menu
 
             foreach (var charButton in FindObjectsOfType<CharacterButton>())
             {
-                charButton.Reset();
+                charButton.ResetPlayerId();
             }
 
             Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> MenuHandler.SwitchToMainPanel());
