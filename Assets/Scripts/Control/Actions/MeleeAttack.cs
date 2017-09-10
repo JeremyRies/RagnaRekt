@@ -34,7 +34,7 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
             if (HammerThrow != null)
             {
-                if (HammerThrow._isInHand == false) return;
+                if (HammerThrow.IsInHand == false) return;
             }
             
             Attack();

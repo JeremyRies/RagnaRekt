@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprite: {fileID: 212893768557047876}
-  _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
+  _conf: {fileID: 11400000, guid: 3719bdc1838d2c745953c8737b4889fc, type: 2}
   _animation: {fileID: 114087861889933940}
   _player: {fileID: 114049397316937804}
   Attack: {fileID: 114186842344561168}

@@ -29,6 +29,11 @@ namespace Sound
             _sfxAudioSource.PlayOneShot(sfxClip.AudioClip);
         }
 
+        public void Stop()
+        {
+            _sfxAudioSource.Stop();
+        }
+
         void Update()
         {
             //testing area
@@ -50,5 +55,7 @@ namespace Sound
                 PlayClip((ClipIdentifier)4);
             }
         }
+
+
     }
 }
