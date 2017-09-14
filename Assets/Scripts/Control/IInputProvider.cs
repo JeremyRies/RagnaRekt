@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Control
 {
     public interface IInputProvider

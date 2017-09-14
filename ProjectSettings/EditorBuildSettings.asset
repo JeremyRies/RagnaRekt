@@ -12,11 +12,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 7a9ea3179c58c4f4c8afd824b462089a
   - enabled: 1
-    path: Assets/Scenes/JoshWithCollider 1.unity
-    guid: b84724cefa5819443b2e6734e38100c9
-  - enabled: 1
-    path: Assets/Scenes/Josh 1.unity
-    guid: 121f3f32a2af7334eb33f1a6ae821f55
-  - enabled: 1
     path: Assets/Scenes/LevelNeo.unity
     guid: 705416f033ab11c438dfb33125ee25af

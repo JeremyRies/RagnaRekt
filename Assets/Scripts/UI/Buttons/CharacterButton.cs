@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sound;
+﻿using Sound;
 using UI.Menu;
-using UniRx;
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

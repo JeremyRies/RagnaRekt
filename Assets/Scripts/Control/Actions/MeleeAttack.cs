@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Scripts.Util;
+﻿using Assets.Scripts.Util;
 using Entities;
 using Sound;
 using UniRx;

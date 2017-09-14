@@ -2,8 +2,6 @@
 using System.Linq;
 using UnityEngine;
 using UniRx;
-using UnityEditor;
-using UnityEditor.Animations;
 
 namespace Control
 {
@@ -104,6 +102,6 @@ namespace Control
                 .Take(1).AsUnitObservable();
         }
 
-        public AnimatorController Controller { set { _animator.runtimeAnimatorController = value; } }
+        public RuntimeAnimatorController Controller { set { _animator.runtimeAnimatorController = value; } }
     }
 }

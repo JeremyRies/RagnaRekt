@@ -1,7 +1,6 @@
 ﻿using System;
 using Control.Actions;
 using Entities;
-using Sound;
 using UniRx;
 using UnityEngine;
 using Action = Control.Actions.Action;

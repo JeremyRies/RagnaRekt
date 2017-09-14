@@ -4,7 +4,6 @@ using Assets.Scripts.Util;
 using UnityEngine;
 using Entities;
 using Sound;
-using UnityEditor.Animations;
 using UniRx;
 
 namespace Control.Actions
@@ -17,8 +16,8 @@ namespace Control.Actions
         [SerializeField] public PlayerControllerBase PlayerController;
         [SerializeField] private PlayerAnimation _animation;
 
-        [SerializeField] private AnimatorController _thorWithHammer;
-        [SerializeField] private AnimatorController _thorWithoutHammer;
+        [SerializeField] private RuntimeAnimatorController _thorWithHammer;
+        [SerializeField] private RuntimeAnimatorController _thorWithoutHammer;
 
         private Vector2 _dir;
         private float _distanceFromStartPoint;

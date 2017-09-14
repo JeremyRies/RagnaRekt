@@ -1,6 +1,4 @@
-﻿using Entities;
-
-namespace Control
+﻿namespace Control
 {
     class UnityPlayerController : PlayerControllerBase
     {

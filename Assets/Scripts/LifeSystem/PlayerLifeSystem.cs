@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Control;
 using Entities;
 using Sound;
 using UnityEngine;

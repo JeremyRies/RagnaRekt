@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Entities;
-using Control;
-using Entities;
+﻿using Entities;
 using UnityEngine;
 
 namespace LifeSystem

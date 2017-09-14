@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sound;
-using UnityEngine;
+﻿using Sound;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

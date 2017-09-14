@@ -1,7 +1,6 @@
 ﻿using Control.Actions;
 using UnityEngine;
 using System;
-using System.Collections;
 
 namespace Control
 

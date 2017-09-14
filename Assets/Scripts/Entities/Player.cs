@@ -1,7 +1,6 @@
 ﻿using System;
 using Control;
 using LifeSystem;
-using UnityEditor;
 using UnityEngine;
 
 namespace Entities

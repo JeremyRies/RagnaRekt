@@ -1,9 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using Assets.Scripts.Entities;
-using Entities;
+﻿using Entities;
 using Sound;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
 
 namespace LifeSystem
