@@ -53,11 +53,7 @@ namespace UI.Menu
 
         public void OnQuit()
         {
-#if DEBUG
             Debug.Break();
-#else
-        Application.Stop();
-#endif
         }
     }
 }
