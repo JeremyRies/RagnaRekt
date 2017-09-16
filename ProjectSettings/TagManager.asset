@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player HitBox
   - Weapon
+  - AirconsoleDebug
   layers:
   - Default
   - TransparentFX

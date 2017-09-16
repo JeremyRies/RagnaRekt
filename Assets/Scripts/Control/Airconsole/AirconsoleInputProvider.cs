@@ -1,4 +1,6 @@
-﻿using Control;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Control;
 using NDream.AirConsole;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -13,12 +15,25 @@ namespace Airconsole
 
         private bool _gameIsRunning=false;
 
+        private readonly Dictionary<string, bool> _buttonDown = new Dictionary<string, bool>
+        {
+            {"Jump",false},
+            {"Attack",false},
+            {"Skill",false},
+        };
+
+        private float _horizontal;
+        private List<string> _buttonNames;
+
         void Awake()
         {
             AirConsole.instance.onMessage += OnMessage;
             AirConsole.instance.onConnect += OnConnect;
             AirConsole.instance.onDisconnect += OnDisconnect;
+            StatusText = GameObject.FindGameObjectWithTag("AirconsoleDebug").GetComponent<Text>();
             StatusText.text = "Awake";
+
+            _buttonNames = _buttonDown.Keys.ToList();
         }
 
         /// <summary>
@@ -55,7 +70,11 @@ namespace Airconsole
             {
                 Debug.Log("Data: " + data);
                 HandleHorizontalMovement(data);
-                HandleJump(data);
+                foreach (var button in _buttonNames)
+                {
+                    HandleButtonDown(data,button);
+                }
+                
             }
         }
 
@@ -73,31 +92,29 @@ namespace Airconsole
 
             var direction = (string) dpadLeftData["message"]["direction"];
             Debug.Log("Direction:" + direction);
+
             _horizontal = direction == "right" ? 1 : -1;
         }
 
-        private void HandleJump(JToken data)
+        private void HandleButtonDown(JToken data,string buttonName)
         {
-            if(data["jump"] == null) return;
+            if(data[buttonName] == null) return;
 
-            _jumpButtonDown = (bool)data["jump"]["pressed"];
+            var isPressed = (bool)data[buttonName]["pressed"];
+
+            _buttonDown[buttonName] = isPressed;
         }
 
         void StartGame()
         {
             AirConsole.instance.SetActivePlayers(1);
-            _gameIsRunning = false;
+            _gameIsRunning = true;
         }
 
         private void StopGame()
         {
             _gameIsRunning = false;
         }
-
-        private float _horizontal;
-        private bool _hitButtonDown;
-        private bool _jumpButtonDown;
-
 
         public float GetAxis(string axisName)
         {
@@ -106,13 +123,12 @@ namespace Airconsole
 
         public bool GetButtonDown(string buttonName)
         {
-            //todo make generic
-            return _jumpButtonDown;
+            return _buttonDown[buttonName];
         }
 
         public bool GetButtonUp(string buttonName)
         {
-            return false;
+            return !_buttonDown[buttonName];
         }
     }
 }
