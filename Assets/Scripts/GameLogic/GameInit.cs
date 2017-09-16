@@ -47,8 +47,10 @@ namespace GameLogic
 
         private void SetupAirconsole()
         {
-            var gO = new GameObject("Airconsole");
-            var airconsole = gO.AddComponent<AirConsole>();
+            var airconsoleObject = new GameObject("Airconsole");
+
+            airconsoleObject.AddComponent<AirConsole>();
+            airconsoleObject.AddComponent<AirConsoleConnectionService>();
         }
 
         private void CreatePlayer(int playerId)
@@ -77,7 +79,7 @@ namespace GameLogic
         {
             if (_gameConfig.UseAirconsole)
             {
-                var inputProviderObject = new GameObject("AirconsolePlayer: " + player.PlayerId +" InputProvider");
+                var inputProviderObject = new GameObject("Airconsole InputProvider");
                 var airconsoleInputProvider = inputProviderObject.AddComponent<AirconsoleInputProvider>();
                 airconsoleInputProvider.Initialize(player.PlayerId);
 
