@@ -10,10 +10,9 @@ namespace Control.Actions
 {
     public class HammerThrow : Action
     {
-        [SerializeField] private Player _player  ;
+        [SerializeField] private Player _player;
         [SerializeField] private HammerConfig _conf;
 
-        [SerializeField] public PlayerControllerBase PlayerController;
         [SerializeField] private PlayerAnimation _animation;
 
         [SerializeField] private RuntimeAnimatorController _thorWithHammer;
@@ -38,7 +37,7 @@ namespace Control.Actions
         public override void TryToActivate(Direction direction)
         {
             if (_cooldown.IsOnCoolDown.Value) return;
-            Debug.Log("Hi");
+
             _cooldown.Start();
             StartCoroutine(Throw());
             OnCooldown = true;
@@ -46,7 +45,7 @@ namespace Control.Actions
 
         private bool OnCooldown
         {
-            set { _player._sprite.color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
+            set { _player.Color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
         }
 
         private IEnumerator Throw()
@@ -57,7 +56,7 @@ namespace Control.Actions
             var hammer = _hammerInstance.GetComponent<Hammer>();
             var hammerVs = _hammerInstance.GetComponent<HammerVsHammer>();
 
-            hammerVs.PlayerController = PlayerController;
+            hammerVs.PlayerController = _player.GetPlayerController();
             hammer._hammerConfig = _conf;
             hammer.TeamId = _player.Team.TeamId;
                    
@@ -70,7 +69,7 @@ namespace Control.Actions
             hammer.ColliderOfHammerInstance = _colliderOfHammerInstance;
 
             hammer.Velocity = Math.Abs(_conf.Velocity);
-            hammer.UpdateVelocity(PlayerController.isLookingLeft,hammer);
+            hammer.UpdateVelocity(_player.GetPlayerController().isLookingLeft,hammer);
             
             IsInHand = false;
 

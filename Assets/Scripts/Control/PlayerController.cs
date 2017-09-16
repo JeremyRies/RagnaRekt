@@ -8,12 +8,11 @@ using Action = Control.Actions.Action;
 namespace Control
 {
     [RequireComponent(typeof (CollisionController))]
-    public abstract class PlayerControllerBase : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private PlayerMovementConfig _conf;
         [SerializeField] private PlayerAnimation _animation;
-        [SerializeField] private Player _player;
 
         [SerializeField] public Action Attack;
         [SerializeField] public Action Skill;
@@ -26,18 +25,23 @@ namespace Control
         private float _velocityXSmoothing;
         private float _gravity;
 
-        public IInputProvider InputProvider { get; private set; }
+        private IInputProvider InputProvider { get; set; }
         public CollisionController Controller { get; private set; }
-        protected float MaxJumpVelocity { get; private set; }
-        protected float MinJumpVelocity { get; private set; }
-        [NonSerialized] protected Vector3 Velocity;
+        private float MaxJumpVelocity { get; set; }
+        private float MinJumpVelocity { get; set; }
+
+        private Vector3 _velocity;
         
         public ReactiveProperty<bool> IsMoving = new ReactiveProperty<bool>(false);
         private const float MinHorizontalMovement = 0.03F;
 
-        protected virtual void Start()
+        public void Initialize(IInputProvider inputProvider)
         {
-            InputProvider = GetInputProvider(_player.PlayerId);
+            InputProvider = inputProvider;
+        }
+
+        protected void Start()
+        {         
             Controller = GetComponent<CollisionController>();
 
             _gravity = -(2* _conf.MaxJumpHeight) /Mathf.Pow(_conf.TimeToJumpApex, 2);
@@ -45,9 +49,7 @@ namespace Control
             MinJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(_gravity)* _conf.MinJumpHeight);
         }
 
-        protected abstract IInputProvider GetInputProvider(int playerPlayerId);
-
-        protected virtual Vector2 GetHorizontalInput()
+        private Vector2 GetHorizontalInput()
         {
             return new Vector2(InputProvider.GetAxis("Horizontal"), 0f);
         }
@@ -55,7 +57,7 @@ namespace Control
         private void Update()
         {
             Vector2 horizontalInput = Vector2.zero;
-            if (_inputEnabled)
+            if (_inputEnabled && InputProvider != null)
             {
                 HandleJump();
 
@@ -70,16 +72,16 @@ namespace Control
 
             ApplyGravity();
 
-            MovePlayer(Velocity*Time.deltaTime);
+            MovePlayer(_velocity*Time.deltaTime);
 
-            if (Velocity.y < 0.1)
+            if (_velocity.y < 0.1)
             {
                 _animation.HitGround();
             }
 
             if (IsHittingCeiling || IsOnGround)
             {
-                Velocity.y = 0;
+                _velocity.y = 0;
                 _animation.HitGround();
             }
         }
@@ -133,12 +135,12 @@ namespace Control
                 : _looksLeft ? Direction.LEFT : Direction.RIGHT;
         }
 
-        protected bool IsHittingCeiling
+        private bool IsHittingCeiling
         {
             get { return Controller.Collisions.Above; }
         }
 
-        protected bool IsOnGround
+        private bool IsOnGround
         {
             get { return Controller.Collisions.Below; }
         }
@@ -148,43 +150,43 @@ namespace Control
             var targetVelocityX = input.x* _conf.MoveSpeed;
             IsMoving.Value = Mathf.Abs(input.x) > MinHorizontalMovement;
 
-            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing,
+            _velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing,
                 Controller.Collisions.Below ? AccelerationTimeGrounded : AccelerationTimeAirborne);
         }
 
-        protected virtual void MovePlayer(Vector2 amount)
+        private void MovePlayer(Vector2 amount)
         {
             Controller.Move(amount);
         }
 
-        protected virtual void ApplyGravity()
+        private void ApplyGravity()
         {
-            Velocity.y += _gravity*Time.deltaTime;
+            _velocity.y += _gravity*Time.deltaTime;
         }
 
-        protected virtual void HandleJump()
+        private void HandleJump()
         {
             if (InputProvider.GetButtonDown("Jump"))
             {
                 if (IsOnGround)
                 {
-                    Velocity.y = MaxJumpVelocity;
+                    _velocity.y = MaxJumpVelocity;
                     _animation.Jump();
                 }
             }
 
             if (InputProvider.GetButtonUp("Jump"))
             {
-                if (Velocity.y > MinJumpVelocity)
+                if (_velocity.y > MinJumpVelocity)
                 {
-                    Velocity.y = MinJumpVelocity;
+                    _velocity.y = MinJumpVelocity;
                 }
             }
         }
 
-        public virtual void ArrestMovement()
+        public void ArrestMovement()
         {
-            Velocity = Vector3.zero;
+            _velocity = Vector3.zero;
             _velocityXSmoothing = 0;
         }
 
@@ -192,21 +194,6 @@ namespace Control
         {
             get { return this._looksLeft; }
 
-        }
-
-        public float VelocityX
-        {
-            get { return this.Velocity.x; }
-        }
-
-        public float VelocityY
-        {
-            get { return this.Velocity.y; }
-        }
-
-        public Vector2 Size
-        {
-            get { return Controller.Collider.size; }
         }
     }
 }

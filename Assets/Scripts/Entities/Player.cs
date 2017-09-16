@@ -1,5 +1,6 @@
 ﻿using System;
 using Control;
+using GameLogic;
 using LifeSystem;
 using UnityEngine;
 
@@ -7,11 +8,11 @@ namespace Entities
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private PlayerControllerBase _controller;
-        [SerializeField] public SpriteRenderer _sprite;
-        [SerializeField] public PlayerAnimation Animation;
-        [SerializeField] public SpriteRenderer _playerIdSprite;
-        [SerializeField] public PlayerIdConfig _playerIdConfig;
+        [SerializeField] private PlayerController _controller;
+        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private PlayerAnimation _animation;
+        [SerializeField] private SpriteRenderer _playerIdSprite;
+        [SerializeField] private PlayerIdConfig _playerIdConfig;
 
         private int _playerId;
 
@@ -33,6 +34,16 @@ namespace Entities
         public void LookLeft() { _controller.UpdateViewDirection(new Vector2(-1,0)); }
         public Color Color { set { _sprite.color = value; } }
 
+        public IInputProvider InputProvider
+        {
+            set { _controller.Initialize(value); }
+        }
+
+        public PlayerAnimation Animation
+        {
+            get { return _animation; }         
+        }
+
         [NonSerialized] public TeamPointSystem TeamPointSystem;
 
         void Start()
@@ -40,7 +51,7 @@ namespace Entities
             TeamPointSystem = FindObjectOfType<TeamPointSystem>();
         }
 
-        public PlayerControllerBase GetPlayerController()
+        public PlayerController GetPlayerController()
         {
             return _controller;
         }

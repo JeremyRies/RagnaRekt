@@ -55,9 +55,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4987802579821146}
   - component: {fileID: 61072768704276714}
-  - component: {fileID: 114100535086619882}
   - component: {fileID: 114873327137577674}
   - component: {fileID: 114049397316937804}
+  - component: {fileID: 114475161960314832}
   m_Layer: 8
   m_Name: Thor
   m_TagString: Untagged
@@ -390,12 +390,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfda6d39936a91469e6025c80b2be51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114100535086619882}
+  _controller: {fileID: 114475161960314832}
   _sprite: {fileID: 212893768557047876}
-  Animation: {fileID: 114087861889933940}
+  _animation: {fileID: 114087861889933940}
   _playerIdSprite: {fileID: 212714742865510540}
   _playerIdConfig: {fileID: 11400000, guid: aca5049823842c6488b1db4882f0d22d, type: 2}
-  HeroType: 0
+  HeroType: 1
 --- !u!114 &114087861889933940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -407,26 +407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f458c6ac5736d9d458d9ae94c396a4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114100535086619882}
+  _player: {fileID: 114049397316937804}
   _animator: {fileID: 95393400828925116}
   _deathDuration: 1
---- !u!114 &114100535086619882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615896409057580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33832c40e59f421ba04d50d2c90d3205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 212893768557047876}
-  _conf: {fileID: 11400000, guid: 3719bdc1838d2c745953c8737b4889fc, type: 2}
-  _animation: {fileID: 114087861889933940}
-  _player: {fileID: 114049397316937804}
-  Attack: {fileID: 114186842344561168}
-  Skill: {fileID: 114303373183518000}
 --- !u!114 &114186842344561168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,10 +455,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 114049397316937804}
   _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
-  PlayerController: {fileID: 114100535086619882}
   _animation: {fileID: 114087861889933940}
   _thorWithHammer: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
   _thorWithoutHammer: {fileID: 9100000, guid: 4e987e166ba83a94f94d5cfb8f0af4d0, type: 2}
+--- !u!114 &114475161960314832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615896409057580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac651069da4b89541a0fe9a6c20ef819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 212893768557047876}
+  _conf: {fileID: 11400000, guid: 3719bdc1838d2c745953c8737b4889fc, type: 2}
+  _animation: {fileID: 114087861889933940}
+  Attack: {fileID: 114186842344561168}
+  Skill: {fileID: 114303373183518000}
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1

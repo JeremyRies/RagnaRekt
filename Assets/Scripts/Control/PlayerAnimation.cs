@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Entities;
 using UnityEngine;
 using UniRx;
 
@@ -17,9 +18,12 @@ namespace Control
 
     public class PlayerAnimation : MonoBehaviour
     {
-        [SerializeField] private PlayerControllerBase _controller;
+        [SerializeField] private Player _player;
+
         [SerializeField] private Animator _animator;
         [SerializeField] private float _deathDuration = 1F;
+
+        private PlayerController _controller;
 
         private readonly ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
         private readonly Subject<PlayerAnimationState> _animationFinished = new Subject<PlayerAnimationState>();
@@ -33,6 +37,8 @@ namespace Control
 
         private void Start()
         {
+            _controller = _player.GetPlayerController();
+
             _controller.IsMoving.DistinctUntilChanged().Subscribe(UpdateWalking);
 
             _state.Subscribe(state =>

@@ -16,21 +16,23 @@ namespace Control.Actions
         [SerializeField] private float _dashRange = 3;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private float _dashTimeInSeconds = 0.1F;
-        [SerializeField] private PlayerControllerBase _controller;
+
         [SerializeField] private PlayerLifeSystem _lifeSystem;
         [SerializeField] private float _dashPreparationTimeInSeconds = 0.2F;
 
+        private PlayerController _controller;
         private Cooldown _cooldown;
 
         private void Awake()
         {
+            _controller = _player.GetPlayerController();
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
             _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
         }
 
         private bool OnCooldown
         {
-            set { _player._sprite.color = value ? new Color(0.8F, 0.8F, 0.8F) : Color.white; }
+            set { _player.Color = value ? new Color(0.8F, 0.8F, 0.8F) : Color.white; }
         }
 
         public override void TryToActivate(Direction direction)

@@ -1,19 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Control;
 using NDream.AirConsole;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Airconsole
+namespace Control.Airconsole
 {
     public class AirconsoleInputProvider : MonoBehaviour, IInputProvider
     {
-        [SerializeField]
-        public Text StatusText;
 
-        private bool _gameIsRunning=false;
+        private bool _connected=false;
 
         private readonly Dictionary<string, bool> _buttonDown = new Dictionary<string, bool>
         {
@@ -24,16 +20,20 @@ namespace Airconsole
 
         private float _horizontal;
         private List<string> _buttonNames;
+        private int _playerId;
 
         void Awake()
         {
             AirConsole.instance.onMessage += OnMessage;
             AirConsole.instance.onConnect += OnConnect;
             AirConsole.instance.onDisconnect += OnDisconnect;
-            StatusText = GameObject.FindGameObjectWithTag("AirconsoleDebug").GetComponent<Text>();
-            StatusText.text = "Awake";
 
             _buttonNames = _buttonDown.Keys.ToList();
+        }
+
+        public void Initialize(int playerId)
+        {
+            _playerId = playerId;
         }
 
         /// <summary>
@@ -44,29 +44,26 @@ namespace Airconsole
         /// <param name="deviceId">The device_id that connected</param>
         void OnConnect(int deviceId)
         {
-            if (!_gameIsRunning)
+            if (!_connected)
             {
-                StatusText.text = "Starting game";
-                StartGame();
-            }
-            else
-            {
-                StatusText.text = "No Players registered";
+                Debug.Log("Connecting setting player id:  " + _playerId);
+                AirConsole.instance.SetActivePlayers();
+                _connected = true;
             }
         }
 
         void OnDisconnect(int deviceId)
-        {
-            int activePlayer = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
-
-            StatusText.text = "Active Player left: " + activePlayer;
-            StopGame();
+        {         
+            _connected = false;
         }
 
         void OnMessage(int deviceId, JToken data)
         {
-            int activePlayer = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
-            if (activePlayer != -1)
+            var airConsolePlayerNumber = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
+            int activePlayer = airConsolePlayerNumber + 1;
+
+            Debug.Log("On Message - active Player: " + activePlayer);
+            if (activePlayer == _playerId)
             {
                 Debug.Log("Data: " + data);
                 HandleHorizontalMovement(data);
@@ -103,17 +100,6 @@ namespace Airconsole
             var isPressed = (bool)data[buttonName]["pressed"];
 
             _buttonDown[buttonName] = isPressed;
-        }
-
-        void StartGame()
-        {
-            AirConsole.instance.SetActivePlayers(1);
-            _gameIsRunning = true;
-        }
-
-        private void StopGame()
-        {
-            _gameIsRunning = false;
         }
 
         public float GetAxis(string axisName)

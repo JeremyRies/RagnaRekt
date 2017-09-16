@@ -16,7 +16,7 @@ namespace Sound
         {
             get { return _backgroundMusicInstance; }
         }
-        private void Start()
+        private void Awake()
         {
             _backgroundMusicInstance = this;
             _audioSource.loop = true;

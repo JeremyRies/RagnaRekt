@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Control.Actions
@@ -8,12 +9,12 @@ namespace Control.Actions
     {
         [SerializeField]
         public Hammer Hammer;
-        [SerializeField]
-        public PlayerControllerBase PlayerController;
+
         [SerializeField]
         public float CollisionSeconds;
 
-       
+        [NonSerialized]
+        public PlayerController PlayerController;
 
         private void OnTriggerEnter2D(Collider2D other)
         {

@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 114049397316937804, guid: ad444f6d99b845447b03844940836a27, type: 2}
   TeamPointSystemPrefab: {fileID: 114438388814238536, guid: 9c012ea9bd0a11d468f6cfa96572f80d,
     type: 2}
+  UseAirconsole: 1

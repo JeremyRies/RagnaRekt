@@ -1,7 +1,7 @@
 ﻿using Entities;
 using UnityEngine;
 
-namespace LifeSystem
+namespace GameLogic
 {
     public class GameConfig : ScriptableObject
     {
@@ -10,5 +10,6 @@ namespace LifeSystem
         public Player[] PlayerPrefab;
 
         public TeamPointSystem TeamPointSystemPrefab;
+        public bool UseAirconsole;
     }
 }
