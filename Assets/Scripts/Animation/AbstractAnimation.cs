@@ -1,6 +1,8 @@
 using UniRx;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
+using UnityEngine;
 
 namespace Animation {
 
@@ -16,15 +18,19 @@ namespace Animation {
         private static IObservable<int> CreateIndices(IAnimationConfig<T> config)
         {
             var indices = Observable.Range(0, config.Steps.Count);
-            var indexCycle = config.Loop ? indices.Repeat() : indices;
-            var secondsUntilNextIndex = TimeSpan.FromSeconds(config.SecondsUntilNext);
-            return Observable.Interval(secondsUntilNextIndex)
-                .Zip(indexCycle, (time, index) => index);
+            var timespan = TimeSpan.FromSeconds(config.SecondsUntilNext);
+            var delayed = indices.Delay(timespan);
+            return config.Loop ? delayed.Repeat() : delayed;
         }
 
         public IObservable<Action> AsObservable()
         {
-            return CreateIndices(_config).Select<int, Action>(index => () => Apply(_config.Steps[index]));
+            return CreateIndices(_config).Select(CreateAction);
+        }
+
+        private Action CreateAction(int index)
+        {
+            return () => Apply(_config.Steps[index]);
         }
 
         protected abstract void Apply(T step);

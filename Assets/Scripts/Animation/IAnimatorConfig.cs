@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Animation
 {
+    [Serializable]
     public struct AnimationStep<E, T>
     {
         public E Name;

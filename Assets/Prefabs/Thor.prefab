@@ -352,7 +352,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1839361872294520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
   m_CullingMode: 0
@@ -408,8 +408,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 114100535086619882}
-  _animator: {fileID: 95393400828925116}
   _deathDuration: 1
+  _config: {fileID: 11400000, guid: eb0478938bb3c4b43ab982b61cd02656, type: 2}
+  _renderer: {fileID: 212893768557047876}
 --- !u!114 &114100535086619882
 MonoBehaviour:
   m_ObjectHideFlags: 1

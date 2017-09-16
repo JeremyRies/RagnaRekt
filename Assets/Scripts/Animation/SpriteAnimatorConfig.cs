@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Animation
 {
-    [Serializable]
-    public class SpriteAnimatorConfig<E> : IAnimatorConfig<E, Sprite>
+    public class SpriteAnimatorConfig<E> : ScriptableObject, IAnimatorConfig<E, Sprite>
     {
         [SerializeField]
         private List<AnimationStep<E, Sprite>> _animationSteps;

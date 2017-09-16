@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Animation;
+using Control;
 using UnityEngine;
 using UniRx;
+using UnityEditor;
 
 namespace Control
 {
-    internal enum PlayerAnimationState
+    public enum PlayerAnimationState
     {
         Idle = 0,
         Walk = 1,
@@ -13,18 +17,22 @@ namespace Control
         Attack = 3,
         Skill = 4,
         Death = 5
-    } 
-
+    }
+    
     public class PlayerAnimation : MonoBehaviour
     {
         [SerializeField] private PlayerControllerBase _controller;
-        [SerializeField] private Animator _animator;
         [SerializeField] private float _deathDuration = 1F;
+
+        [SerializeField] private PlayerAnimatorConfig _config;
+        [SerializeField] private SpriteRenderer _renderer;
 
         private readonly ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
         private readonly Subject<PlayerAnimationState> _animationFinished = new Subject<PlayerAnimationState>();
 
         private bool _animating;
+
+        private SpriteAnimator<PlayerAnimationState> _animator;
 
         private readonly PlayerAnimationState[] StatesWithAnimantion =
         {
@@ -33,13 +41,17 @@ namespace Control
 
         private void Start()
         {
+            _animator = new SpriteAnimator<PlayerAnimationState>(_config, _renderer);
+            _animator.PlayAnimation(PlayerAnimationState.Idle);
+
             _controller.IsMoving.DistinctUntilChanged().Subscribe(UpdateWalking);
+
 
             _state.Subscribe(state =>
             {
                 _animating = StatesWithAnimantion.Contains(state);
                 // Debug.Log("New state: " + state);
-                _animator.SetInteger("State", (int) state);
+                // _animator.SetInteger("State", (int) state);
             });
         }
 
@@ -102,6 +114,14 @@ namespace Control
                 .Take(1).AsUnitObservable();
         }
 
-        public RuntimeAnimatorController Controller { set { _animator.runtimeAnimatorController = value; } }
+        public RuntimeAnimatorController Controller
+        {
+            set { }
+        } //_animator.runtimeAnimatorController = value; } }
+
+        private void OnDestroy()
+        {
+            _animator.InterruptCurrentAnimation();
+        }
     }
 }

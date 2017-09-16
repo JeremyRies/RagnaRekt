@@ -5,7 +5,8 @@ using UnityEngine;
 namespace Animation {
 
     [Serializable]
-    public class SpriteAnimationConfig : IAnimationConfig<Sprite>
+    [CreateAssetMenu(fileName = "SpriteAnimationConfig", menuName = "Game/SpriteAnimationConfig")]
+    public class SpriteAnimationConfig : ScriptableObject, IAnimationConfig<Sprite>
     {
 
         [SerializeField]

@@ -19,8 +19,6 @@ namespace Animation {
             _nextAnimation = _defaultAnimation;
 
             _currentAnimationName = new ReactiveProperty<E>(_defaultAnimation);
-
-            PlayAnimation(config.DefaultAnimation);
         }
 
         private static IDictionary<E, IAnimationConfig<T>> CreateDictionary(List<AnimationStep<E, T>> steps)
@@ -36,12 +34,17 @@ namespace Animation {
         private readonly ReactiveProperty<E> _currentAnimationName;
         public IObservable<E> CurrentAnimation { get { return _currentAnimationName; } }
 
-        private void PlayAnimation(E name)
+        public void PlayAnimation(E name)
         {
             InterruptCurrentAnimation();
             var animation = CreateNewAnimation(_dictionary[name]);
             _currentAnimationName.Value = name;
-            _currentAnimation = animation.AsObservable().Subscribe(action => action(), WhenAnimationFinished);
+            _currentAnimation = animation.AsObservable().Subscribe(ApplyAction, WhenAnimationFinished);
+        }
+
+        private void ApplyAction(Action action)
+        {
+            action.Invoke();
         }
 
         private void WhenAnimationFinished()
@@ -50,7 +53,7 @@ namespace Animation {
             _nextAnimation = _defaultAnimation;
         }
 
-        private void InterruptCurrentAnimation()
+        public void InterruptCurrentAnimation()
         {
             if (_currentAnimation != null)
                 _currentAnimation.Dispose();
