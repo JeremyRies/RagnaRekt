@@ -31,7 +31,12 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
+            _cooldown.IsOnCoolDown.Subscribe(isOnCd => OnCooldown = isOnCd);
+        }
+
+        private bool OnCooldown
+        {
+            set { _player.Color = value ? new Color(0.8F, 0.8F, 0.8F) : Color.white; }
         }
 
         public override void TryToActivate(Direction direction)
@@ -39,29 +44,35 @@ namespace Control.Actions
             if (_cooldown.IsOnCoolDown.Value) return;
 
             _cooldown.Start();
-            StartCoroutine(Throw());
-            OnCooldown = true;
+
+            HandleThorAnimation();
+            var playerStartPos = _player.transform.position;
+            var hammer = InitializeHammer(playerStartPos);
+            StartCoroutine(Throw(hammer, playerStartPos));
         }
 
-        private bool OnCooldown
+        private void HandleThorAnimation()
         {
-            set { _player.Color = value ? new Color(0.8F,0.8F,0.8F) : Color.white; }
-        }
+            _animation.Controller = _thorWithoutHammer;
+            _animation.UseSkill();
 
-        private IEnumerator Throw()
-        {
             SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.ThorSkillHammerThrow);
+        }
 
+
+        private Hammer InitializeHammer(Vector3 playerStartPos)
+        {
             _hammerInstance = Instantiate(_conf.HammerPrefab);
             var hammer = _hammerInstance.GetComponent<Hammer>();
-            var hammerVs = _hammerInstance.GetComponent<HammerVsHammer>();
 
-            hammerVs.PlayerController = _player.GetPlayerController();
             hammer._hammerConfig = _conf;
             hammer.TeamId = _player.Team.TeamId;
-                   
+
+            var hammerVs = _hammerInstance.GetComponent<HammerVsHammer>();
+            hammerVs.PlayerController = _player.GetPlayerController();
+
             _spriteRendererOfHammerInstance = _hammerInstance.GetComponent<SpriteRenderer>();
-            
+
             hammer.SpriteRendererOfHammerInstance = _spriteRendererOfHammerInstance;
 
             _colliderOfHammerInstance = _hammerInstance.GetComponent<BoxCollider2D>();
@@ -69,25 +80,26 @@ namespace Control.Actions
             hammer.ColliderOfHammerInstance = _colliderOfHammerInstance;
 
             hammer.Velocity = Math.Abs(_conf.Velocity);
-            hammer.UpdateVelocity(_player.GetPlayerController().isLookingLeft,hammer);
-            
+            hammer.UpdateVelocity(_player.GetPlayerController().isLookingLeft, hammer);
+
+            _hammerInstance.transform.position = playerStartPos;
+            _hammerInstance.transform.position += Vector3.right * hammer.Velocity * 2;
+
+
+            return hammer;
+        }
+
+        private IEnumerator Throw(Hammer hammer, Vector3 playerStartPos)
+        {
             IsInHand = false;
 
-            _hammerInstance.transform.position = _player.transform.position;
-            _hammerInstance.transform.position += Vector3.right * hammer.Velocity * 2;
-            _animation.Controller = _thorWithoutHammer;
-            _animation.UseSkill();
-
-            var playerStartPos = _player.transform.position;
-
             while (IsInHand==false)
-            {          
+            {
                 _dir = (_hammerInstance.transform.position - _player.transform.position).normalized;
                 _distanceFromStartPoint = Vector2.Distance(_hammerInstance.transform.position, playerStartPos);
                 _distanceToPlayer = Vector2.Distance(_hammerInstance.transform.position, _player.transform.position);
 
                 hammer.Update();
-                
 
                 if (_distanceFromStartPoint >= _conf.Range)
                 {
@@ -95,7 +107,7 @@ namespace Control.Actions
                     SfxSound.SfxSoundInstance.PlayClip(ClipIdentifier.ThorSkillHammerReturn);
                 }
 
-                if (_cooldown.IsOnCoolDown.Value==false)
+                if (_cooldown.IsOnCoolDown.Value == false)
                 {
                     IsInHand = true;
                     _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
@@ -103,12 +115,15 @@ namespace Control.Actions
 
                 if (hammer.FlyBack)
                 {
-                    _hammerInstance.transform.position -= (Vector3)_dir * Math.Abs(hammer.Velocity);
-                }else {
-                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer.Velocity, _hammerInstance.transform.position.y);
+                    _hammerInstance.transform.position -= (Vector3) _dir * Math.Abs(hammer.Velocity); 
+                }
+                else
+                {
+                    _hammerInstance.transform.position = new Vector2(_hammerInstance.transform.position.x + hammer.Velocity,
+                        _hammerInstance.transform.position.y);
                 }
 
-                if (_distanceToPlayer <= Math.Abs(hammer.Velocity * 5) && hammer.FlyBack )
+                if (HammerHasReturned(hammer))
                 {
                     SfxSound.SfxSoundInstance.Stop();
                     hammer.FlyBack = false;
@@ -122,7 +137,10 @@ namespace Control.Actions
             hammer.Reset();
         }
 
-      
+        private bool HammerHasReturned(Hammer hammer)
+        {
+            return _distanceToPlayer <= Math.Abs(hammer.Velocity * 5) && hammer.FlyBack;
+        }
     }
 }
 
