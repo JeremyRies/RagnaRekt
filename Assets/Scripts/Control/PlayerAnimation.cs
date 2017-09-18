@@ -21,55 +21,25 @@ namespace Control
     
     public class PlayerAnimation : MonoBehaviour
     {
-        [SerializeField] private PlayerControllerBase _controller;
-        [SerializeField] private float _deathDuration = 1F;
-
         [SerializeField] private PlayerAnimatorConfig _config;
         [SerializeField] private SpriteRenderer _renderer;
 
-        private readonly ReactiveProperty<PlayerAnimationState> _state = new ReactiveProperty<PlayerAnimationState>(PlayerAnimationState.Idle);
-        private readonly Subject<PlayerAnimationState> _animationFinished = new Subject<PlayerAnimationState>();
-
-        private bool _animating;
-
         private SpriteAnimator<PlayerAnimationState> _animator;
 
-        private readonly PlayerAnimationState[] StatesWithAnimantion =
-        {
-            PlayerAnimationState.Attack, PlayerAnimationState.Skill, PlayerAnimationState.Death
-        };
-
-
-
-        public IObservable<PlayerAnimationState> State;
+        public IObservable<PlayerAnimationState> State { get { return _animator.ShownAnimation; } }
 
         private void Awake()
         {
             _animator = new SpriteAnimator<PlayerAnimationState>(_config, _renderer);
             _animator.PlayAnimation(PlayerAnimationState.Idle);
-
-            State = _animator.ShownAnimation;
-
-            _controller.IsMoving.DistinctUntilChanged().Subscribe(UpdateWalking);
-
-
-            _state.Subscribe(state =>
-            {
-                _animating = StatesWithAnimantion.Contains(state);
-                // Debug.Log("New state: " + state);
-                // _animator.SetInteger("State", (int) state);
-                _animator.PlayAnimation(state);
-            });
         }
 
-        private void UpdateWalking(bool walking)
+        public void UpdateWalking(bool walking)
         {
-            /*if (_animating) return;
-
-            if (walking && _state.Value == PlayerAnimationState.Idle)
-                _state.Value = PlayerAnimationState.Walk;
-            if(!walking && _state.Value == PlayerAnimationState.Walk)
-                _state.Value = PlayerAnimationState.Idle;*/
+            if (walking && _animator.CurrentAnimation == PlayerAnimationState.Idle)
+                _animator.PlayAnimation(PlayerAnimationState.Walk);
+            if(!walking && _animator.CurrentAnimation == PlayerAnimationState.Walk)
+                _animator.PlayAnimation(PlayerAnimationState.Idle);
         }
 
         public void Attack()
@@ -80,10 +50,9 @@ namespace Control
 
         public void Jump()
         {
-            if (_animating) return;
-            if (_state.Value == PlayerAnimationState.Jump) return;
-
-            _state.Value = PlayerAnimationState.Jump;
+            if (_animator.CurrentAnimation == PlayerAnimationState.Walk 
+             || _animator.CurrentAnimation == PlayerAnimationState.Idle)
+                _animator.PlayAnimation(PlayerAnimationState.Jump);
         }
 
         public void HitGround()
@@ -94,17 +63,13 @@ namespace Control
 
         public void Die()
         {
-            Debug.Log("Die yo!");
             _animator.PlayAnimation(PlayerAnimationState.Death);
         }
 
-        public IObservable<Unit> UseSkill()
+        public void UseSkill()
         {
-            if (_animating) return Observable.Empty<Unit>();
-
-            _state.Value = PlayerAnimationState.Skill;
-            return _animationFinished.Where(anim => anim == PlayerAnimationState.Skill)
-                .Take(1).AsUnitObservable();
+            if(_animator.CurrentAnimation != PlayerAnimationState.Death)
+                _animator.PlayAnimation(PlayerAnimationState.Skill);
         }
 
         public RuntimeAnimatorController Controller

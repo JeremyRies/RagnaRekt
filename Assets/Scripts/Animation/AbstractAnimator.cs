@@ -7,8 +7,8 @@ namespace Animation {
 
     public abstract class AbstractAnimator<State, Property>
     {
-        private readonly IDictionary<State, IAnimationConfig<Property>> _dictionary;
-        private readonly State _defaultAnimation;
+        private IDictionary<State, IAnimationConfig<Property>> _dictionary;
+        private State _defaultAnimation;
 
         private IDisposable _currentAnimation;
 
@@ -19,6 +19,15 @@ namespace Animation {
             _nextAnimation = _defaultAnimation;
 
             _currentAnimationState = new ReactiveProperty<State>(_defaultAnimation);
+        }
+
+        public IAnimatorConfig<State, Property> Config
+        {
+            set
+            {
+                _defaultAnimation = value.DefaultAnimation;
+                _dictionary = CreateDictionary(value.AnimationSteps);
+            }
         }
 
         private static IDictionary<State, IAnimationConfig<Property>> CreateDictionary(List<AnimationStep<State, Property>> steps)

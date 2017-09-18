@@ -9,10 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
-  m_Name: AttackAnimation
+  m_Name: Loki Jump
   m_EditorClassIdentifier: 
-  _secondsUntilNext: 0.3
-  _loop: 0
+  _secondsUntilNext: 0.5
+  _loop: 1
   _sprites:
-  - {fileID: 21300000, guid: 1348eba3e36aee34c8c698e70f32a9a5, type: 3}
-  - {fileID: 21300000, guid: ede7c35b6fc58e546830ddcb26cc5f83, type: 3}
+  - {fileID: 21300000, guid: 8294ba4a74634414fa33a357c0eb39f7, type: 3}

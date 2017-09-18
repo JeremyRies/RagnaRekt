@@ -9,12 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
-  m_Name: WalkAnimation
+  m_Name: Loki Attack
   m_EditorClassIdentifier: 
-  _secondsUntilNext: 0.1
-  _loop: 1
+  _secondsUntilNext: 0.15
+  _loop: 0
   _sprites:
-  - {fileID: 21300000, guid: d9803bb1ae4f19d4b8fccfd7730b9c9a, type: 3}
-  - {fileID: 21300000, guid: 69ecc470e9e172547b03077b09377727, type: 3}
-  - {fileID: 21300000, guid: 45bdc9a214dea8e42a07a9543db74597, type: 3}
-  - {fileID: 21300000, guid: 3f4eadc661b0b204faefe1221a0045ab, type: 3}
+  - {fileID: 21300000, guid: b7ed75dae3c5b9147b67cf08804a19d8, type: 3}
+  - {fileID: 21300000, guid: 12672dcbe23a64048885e5558999b805, type: 3}

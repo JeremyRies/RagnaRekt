@@ -47,6 +47,8 @@ namespace Control
             _gravity = -(2* _conf.MaxJumpHeight) /Mathf.Pow(_conf.TimeToJumpApex, 2);
             MaxJumpVelocity = Mathf.Abs(_gravity)* _conf.TimeToJumpApex;
             MinJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(_gravity)* _conf.MinJumpHeight);
+
+            IsMoving.DistinctUntilChanged().Subscribe(_animation.UpdateWalking);
         }
 
         private Vector2 GetHorizontalInput()

@@ -407,9 +407,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f458c6ac5736d9d458d9ae94c396a4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 114049397316937804}
-  _animator: {fileID: 95393400828925116}
+  _controller: {fileID: 114475161960314832}
   _deathDuration: 1
+  _config: {fileID: 11400000, guid: eb0478938bb3c4b43ab982b61cd02656, type: 2}
+  _renderer: {fileID: 212893768557047876}
 --- !u!114 &114186842344561168
 MonoBehaviour:
   m_ObjectHideFlags: 1
