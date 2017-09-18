@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   AmountOfPlayers: 2
-  CharactersSelected: 01000000020000000000000000000000
+  CharactersSelected: 0100000001000000
   PlayerPrefab:
   - {fileID: 114049397316937804, guid: 5faab6ff097f49c4e94c0cad0b3f8b30, type: 2}
   - {fileID: 114049397316937804, guid: ad444f6d99b845447b03844940836a27, type: 2}
   TeamPointSystemPrefab: {fileID: 114438388814238536, guid: 9c012ea9bd0a11d468f6cfa96572f80d,
     type: 2}
+  UseAirconsole: 0

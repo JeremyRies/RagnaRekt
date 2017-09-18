@@ -72,9 +72,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4987802579821146}
   - component: {fileID: 61072768704276714}
-  - component: {fileID: 114100535086619882}
   - component: {fileID: 114873327137577674}
   - component: {fileID: 114049397316937804}
+  - component: {fileID: 114283141147548560}
   m_Layer: 8
   m_Name: Loki
   m_TagString: Untagged
@@ -392,12 +392,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfda6d39936a91469e6025c80b2be51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114100535086619882}
+  _controller: {fileID: 114283141147548560}
   _sprite: {fileID: 212893768557047876}
-  Animation: {fileID: 114087861889933940}
+  _animation: {fileID: 114087861889933940}
   _playerIdSprite: {fileID: 212725752958610510}
   _playerIdConfig: {fileID: 11400000, guid: aca5049823842c6488b1db4882f0d22d, type: 2}
-  HeroType: 0
+  HeroType: 2
 --- !u!114 &114087861889933940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,26 +409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f458c6ac5736d9d458d9ae94c396a4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114100535086619882}
+  _player: {fileID: 114049397316937804}
   _animator: {fileID: 95393400828925116}
   _deathDuration: 1
---- !u!114 &114100535086619882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1615896409057580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33832c40e59f421ba04d50d2c90d3205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 212893768557047876}
-  _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
-  _animation: {fileID: 114087861889933940}
-  _player: {fileID: 114049397316937804}
-  Attack: {fileID: 114186842344561168}
-  Skill: {fileID: 114381598208397308}
 --- !u!114 &114186842344561168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -445,6 +428,22 @@ MonoBehaviour:
   _weapon: {fileID: 60013007664088774}
   _animation: {fileID: 114087861889933940}
   HammerThrow: {fileID: 0}
+--- !u!114 &114283141147548560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615896409057580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac651069da4b89541a0fe9a6c20ef819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 212893768557047876}
+  _conf: {fileID: 11400000, guid: 231a09e5a794ade4b92cd4a4c64391bc, type: 2}
+  _animation: {fileID: 114087861889933940}
+  Attack: {fileID: 114186842344561168}
+  Skill: {fileID: 114381598208397308}
 --- !u!114 &114287236272938962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,8 +477,8 @@ MonoBehaviour:
   _dashRange: 8
   _sprite: {fileID: 212893768557047876}
   _dashTimeInSeconds: 0.25
-  _controller: {fileID: 114100535086619882}
   _lifeSystem: {fileID: 114287236272938962}
+  _dashPreparationTimeInSeconds: 0.2
 --- !u!114 &114522263512032690
 MonoBehaviour:
   m_ObjectHideFlags: 1

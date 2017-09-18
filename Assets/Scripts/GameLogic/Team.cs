@@ -1,26 +1,29 @@
 ﻿using System.Collections.Generic;
 using Entities;
 
-public class Team
+namespace GameLogic
 {
-    public int TeamId { get { return _teamId; } }
-
-    private List<Player> _players = new List<Player>();
-    private int _teamId;
-
-    public Team(int i)
+    public class Team
     {
-        _teamId = i;
-    }
+        public int TeamId { get { return _teamId; } }
 
-    public void AddPlayer(Player player)
-    {
-        _players.Add(player);
-        player.Team = this;
-    }
+        private List<Player> _players = new List<Player>();
+        private int _teamId;
 
-    public List<Player> GetPlayers()
-    {
-        return _players;
+        public Team(int i)
+        {
+            _teamId = i;
+        }
+
+        public void AddPlayer(Player player)
+        {
+            _players.Add(player);
+            player.Team = this;
+        }
+
+        public List<Player> GetPlayers()
+        {
+            return _players;
+        }
     }
 }

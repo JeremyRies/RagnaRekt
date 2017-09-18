@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LifeSystem
+namespace GameLogic
 {
     public class PlayerIdConfig : ScriptableObject
     {

@@ -6,7 +6,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LifeSystem
+namespace GameLogic
 {
     public class TeamPointSystem : MonoBehaviour
     {
@@ -19,11 +19,11 @@ namespace LifeSystem
 
         private int _matchPointAmount = 2;
 
-        private Dictionary<Team, int> _teamPointCounter = new Dictionary<Team, int>();
+        private readonly Dictionary<Team, int> _teamPointCounter = new Dictionary<Team, int>();
 
         private IInputProvider _inputProvider;
 
-        private Dictionary<Team, Text> _teamPointCounterDisplay = new Dictionary<Team, Text>();
+        private readonly Dictionary<Team, Text> _teamPointCounterDisplay = new Dictionary<Team, Text>();
         [SerializeField] private GameObject _hatiWinPrefab;
         [SerializeField] private GameObject _skalliWinPrefab;
 
@@ -47,9 +47,8 @@ namespace LifeSystem
 
         public void ScorePoint(Team team)
         {
-            Debug.Log(team.TeamId);
             _teamPointCounter[team]++;
-            Debug.Log("Score team " + team.TeamId +" : " + _teamPointCounter[team]);
+
             UpdateDisplay();
             CheckWin();
         }

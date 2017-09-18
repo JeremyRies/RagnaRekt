@@ -1,9 +1,13 @@
-﻿using Entities;
+﻿using Control;
+using Control.Airconsole;
+using Entities;
+using LifeSystem;
+using NDream.AirConsole;
 using Sound;
 using UniRx;
 using UnityEngine;
 
-namespace LifeSystem
+namespace GameLogic
 {
     public class GameInit : MonoBehaviour
     {
@@ -30,11 +34,23 @@ namespace LifeSystem
                 _gameConfig.CharactersSelected = crossLevelDataTransfer.GetSelectedCharacters();
                 _gameConfig.AmountOfPlayers = crossLevelDataTransfer.GetNumberPlayers();
             }
+
+            if (_gameConfig.UseAirconsole)
+                SetupAirconsole();
+
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
 
             BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundGame);
             BackgroundMusic.BackgroundMusicInstance.StartPlay();
 
+        }
+
+        private void SetupAirconsole()
+        {
+            var airconsoleObject = new GameObject("Airconsole");
+
+            airconsoleObject.AddComponent<AirConsole>();
+            airconsoleObject.AddComponent<AirConsoleConnectionService>();
         }
 
         private void CreatePlayer(int playerId)
@@ -43,6 +59,7 @@ namespace LifeSystem
             var player = Instantiate(_gameConfig.PlayerPrefab[character - 1]);
             player.PlayerId = playerId;
             player.HeroType = (HeroType) character;
+            HandleInputSelection(player);
 
             if (playerId%2 == 0)
             {
@@ -54,7 +71,24 @@ namespace LifeSystem
             }
             // player.Color = Random.ColorHSV();
             player.TeamPointSystem = _teamPointSystem;
+
             PositionRandomly(playerId, player);
+        }
+
+        private void HandleInputSelection(Player player)
+        {
+            if (_gameConfig.UseAirconsole)
+            {
+                var inputProviderObject = new GameObject("Airconsole InputProvider");
+                var airconsoleInputProvider = inputProviderObject.AddComponent<AirconsoleInputProvider>();
+                airconsoleInputProvider.Initialize(player.PlayerId);
+
+                player.InputProvider = airconsoleInputProvider;
+            }
+            else
+            {
+                player.InputProvider = new UnityInputProvider(player.PlayerId);
+            }
         }
 
         private void PositionRandomly(int playerId, Player player)

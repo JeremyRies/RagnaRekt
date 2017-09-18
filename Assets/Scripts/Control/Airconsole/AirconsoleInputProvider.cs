@@ -1,61 +1,49 @@
-﻿using Control;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NDream.AirConsole;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Airconsole
+namespace Control.Airconsole
 {
     public class AirconsoleInputProvider : MonoBehaviour, IInputProvider
     {
-        [SerializeField]
-        public Text StatusText;
+        private readonly Dictionary<string, bool> _buttonDown = new Dictionary<string, bool>
+        {
+            {"Jump",false},
+            {"Attack",false},
+            {"Skill",false},
+        };
 
-        private bool _gameIsRunning=false;
+        private float _horizontal;
+        private List<string> _buttonNames;
+        private int _playerId;
 
         void Awake()
         {
             AirConsole.instance.onMessage += OnMessage;
-            AirConsole.instance.onConnect += OnConnect;
-            AirConsole.instance.onDisconnect += OnDisconnect;
-            StatusText.text = "Awake";
+            _buttonNames = _buttonDown.Keys.ToList();
         }
 
-        /// <summary>
-        /// NOTE: We store the controller device_ids of the active players. We do not hardcode player device_ids 1 and 2,
-        ///       because the two controllers that are connected can have other device_ids e.g. 3 and 7.
-        ///       For more information read: http://developers.airconsole.com/#/guides/device_ids_and_states
-        /// </summary>
-        /// <param name="deviceId">The device_id that connected</param>
-        void OnConnect(int deviceId)
+        public void Initialize(int playerId)
         {
-            if (!_gameIsRunning)
-            {
-                StatusText.text = "Starting game";
-                StartGame();
-            }
-            else
-            {
-                StatusText.text = "No Players registered";
-            }
-        }
-
-        void OnDisconnect(int deviceId)
-        {
-            int activePlayer = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
-
-            StatusText.text = "Active Player left: " + activePlayer;
-            StopGame();
+            _playerId = playerId;
         }
 
         void OnMessage(int deviceId, JToken data)
         {
-            int activePlayer = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
-            if (activePlayer != -1)
+            var airConsolePlayerNumber = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
+            int activePlayer = airConsolePlayerNumber + 1;
+
+          //  Debug.Log("On Message - active Player: " + activePlayer);
+            if (activePlayer == _playerId)
             {
-                Debug.Log("Data: " + data);
+            //    Debug.Log("Data: " + data);
                 HandleHorizontalMovement(data);
-                HandleJump(data);
+                foreach (var button in _buttonNames)
+                {
+                    HandleButtonDown(data,button);
+                }             
             }
         }
 
@@ -72,32 +60,18 @@ namespace Airconsole
             }
 
             var direction = (string) dpadLeftData["message"]["direction"];
-            Debug.Log("Direction:" + direction);
+    
             _horizontal = direction == "right" ? 1 : -1;
         }
 
-        private void HandleJump(JToken data)
+        private void HandleButtonDown(JToken data,string buttonName)
         {
-            if(data["jump"] == null) return;
+            if(data[buttonName] == null) return;
 
-            _jumpButtonDown = (bool)data["jump"]["pressed"];
+            var isPressed = (bool)data[buttonName]["pressed"];
+
+            _buttonDown[buttonName] = isPressed;
         }
-
-        void StartGame()
-        {
-            AirConsole.instance.SetActivePlayers(1);
-            _gameIsRunning = false;
-        }
-
-        private void StopGame()
-        {
-            _gameIsRunning = false;
-        }
-
-        private float _horizontal;
-        private bool _hitButtonDown;
-        private bool _jumpButtonDown;
-
 
         public float GetAxis(string axisName)
         {
@@ -106,13 +80,12 @@ namespace Airconsole
 
         public bool GetButtonDown(string buttonName)
         {
-            //todo make generic
-            return _jumpButtonDown;
+            return _buttonDown[buttonName];
         }
 
         public bool GetButtonUp(string buttonName)
         {
-            return false;
+            return !_buttonDown[buttonName];
         }
     }
 }
