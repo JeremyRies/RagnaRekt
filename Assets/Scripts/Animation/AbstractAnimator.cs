@@ -8,17 +8,17 @@ namespace Animation {
     public abstract class AbstractAnimator<State, Property>
     {
         private IDictionary<State, IAnimationConfig<Property>> _dictionary;
-
         private State _defaultAnimation;
-        private State _nextAnimation;
-
         private IDisposable _currentAnimation;
+
+        private readonly ReactiveProperty<State> _currentAnimationState;
+        public IObservable<State> ShownAnimation { get { return _currentAnimationState; } }
+        public State CurrentAnimation { get { return _currentAnimationState.Value; } }
 
         protected AbstractAnimator(IAnimatorConfig<State, Property> config)
         {
             _dictionary = CreateDictionary(config.AnimationSteps);
             _defaultAnimation = config.DefaultAnimation;
-            _nextAnimation = _defaultAnimation;
 
             _currentAnimationState = new ReactiveProperty<State>(_defaultAnimation);
         }
@@ -39,15 +39,11 @@ namespace Animation {
             return result;
         }
 
-        private readonly ReactiveProperty<State> _currentAnimationState;
-        public IObservable<State> ShownAnimation { get { return _currentAnimationState; } }
-        public State CurrentAnimation { get { return _currentAnimationState.Value; } }
-
-        public void PlayAnimation(State name)
+        public void PlayAnimation(State state)
         {
             InterruptCurrentAnimation();
-            _currentAnimationState.Value = name;
-            _currentAnimation = CreateNewAnimation(_dictionary[name]).AsObservable()
+            _currentAnimationState.Value = state;
+            _currentAnimation = CreateNewAnimation(_dictionary[state]).AsObservable()
                 .Subscribe(ApplyAction, WhenAnimationFinished);
         }
 
@@ -58,8 +54,7 @@ namespace Animation {
 
         private void WhenAnimationFinished()
         {
-            PlayAnimation(_nextAnimation);
-            _nextAnimation = _defaultAnimation;
+            PlayAnimation(_defaultAnimation);
         }
 
         public void InterruptCurrentAnimation()

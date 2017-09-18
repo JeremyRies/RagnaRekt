@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 4062215194652316}
   - component: {fileID: 212893768557047876}
   - component: {fileID: 114087861889933940}
-  - component: {fileID: 95393400828925116}
   m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
@@ -345,23 +344,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!95 &95393400828925116
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1839361872294520}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95429146678294414
 Animator:
   serializedVersion: 3
@@ -407,8 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f458c6ac5736d9d458d9ae94c396a4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114475161960314832}
-  _deathDuration: 1
   _config: {fileID: 11400000, guid: eb0478938bb3c4b43ab982b61cd02656, type: 2}
   _renderer: {fileID: 212893768557047876}
 --- !u!114 &114186842344561168
@@ -457,8 +437,8 @@ MonoBehaviour:
   _player: {fileID: 114049397316937804}
   _conf: {fileID: 11400000, guid: f880579d42dc11f4d91e1c59a0c45f1e, type: 2}
   _animation: {fileID: 114087861889933940}
-  _thorWithHammer: {fileID: 9100000, guid: 0f42ce0960a922c45a81221626e17189, type: 2}
-  _thorWithoutHammer: {fileID: 9100000, guid: 4e987e166ba83a94f94d5cfb8f0af4d0, type: 2}
+  _thorWithHammer: {fileID: 11400000, guid: eb0478938bb3c4b43ab982b61cd02656, type: 2}
+  _thorWithoutHammer: {fileID: 11400000, guid: e56913792b4bcdd46a9dc5f2def1a8c0, type: 2}
 --- !u!114 &114475161960314832
 MonoBehaviour:
   m_ObjectHideFlags: 1

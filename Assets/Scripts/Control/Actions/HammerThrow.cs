@@ -15,8 +15,8 @@ namespace Control.Actions
 
         [SerializeField] private PlayerAnimation _animation;
 
-        [SerializeField] private RuntimeAnimatorController _thorWithHammer;
-        [SerializeField] private RuntimeAnimatorController _thorWithoutHammer;
+        [SerializeField] private PlayerAnimatorConfig _thorWithHammer;
+        [SerializeField] private PlayerAnimatorConfig _thorWithoutHammer;
 
         private Vector2 _dir;
         private float _distanceFromStartPoint;
@@ -31,7 +31,7 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            _cooldown.IsOnCoolDown.Subscribe(isOnCd => OnCooldown = isOnCd);
+            _cooldown.IsOnCoolDown.Subscribe(isOnCd => OnCooldown = isOnCd).AddTo(this);
         }
 
         private bool OnCooldown

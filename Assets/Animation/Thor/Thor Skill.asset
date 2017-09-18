@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
   m_Name: Thor Skill
   m_EditorClassIdentifier: 
-  _secondsUntilNext: 0.2
+  _secondsUntilNext: 0.1
   _loop: 0
   _sprites:
   - {fileID: 21300000, guid: feb8617c3ecf55e458b5339bef550a0e, type: 3}

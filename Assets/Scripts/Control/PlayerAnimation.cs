@@ -72,10 +72,10 @@ namespace Control
                 _animator.PlayAnimation(PlayerAnimationState.Skill);
         }
 
-        public RuntimeAnimatorController Controller
+        public PlayerAnimatorConfig Controller
         {
-            set { }
-        } //_animator.runtimeAnimatorController = value; } }
+            set { _animator.Config = value; }
+        } 
 
         private void OnDestroy()
         {
