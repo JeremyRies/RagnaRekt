@@ -14,4 +14,14 @@ MonoBehaviour:
   _animationSteps:
   - Name: 0
     Animation: {fileID: 11400000, guid: 813cc9fa3a16d524aab102701a39fbdc, type: 2}
+  - Name: 1
+    Animation: {fileID: 11400000, guid: 291f8884b1f10d24298e9b0dc4e2de89, type: 2}
+  - Name: 2
+    Animation: {fileID: 11400000, guid: bdbd167a98cea9d48a915b6ab50cf0db, type: 2}
+  - Name: 3
+    Animation: {fileID: 11400000, guid: 131644a8818d84744b246ab7060f9c78, type: 2}
+  - Name: 4
+    Animation: {fileID: 11400000, guid: 3129edb3e4435f34c936914c014c463a, type: 2}
+  - Name: 5
+    Animation: {fileID: 11400000, guid: daf4386a9f47d034a862cccec2e54fd2, type: 2}
   _defaultAnimation: 0

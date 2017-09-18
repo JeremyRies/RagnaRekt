@@ -5,44 +5,45 @@ using UnityEngine;
 
 namespace Animation {
 
-    public abstract class AbstractAnimator<E, T>
+    public abstract class AbstractAnimator<State, Property>
     {
-        private readonly IDictionary<E, IAnimationConfig<T>> _dictionary;
-        private readonly E _defaultAnimation;
+        private readonly IDictionary<State, IAnimationConfig<Property>> _dictionary;
+        private readonly State _defaultAnimation;
 
         private IDisposable _currentAnimation;
 
-        protected AbstractAnimator(IAnimatorConfig<E, T> config)
+        protected AbstractAnimator(IAnimatorConfig<State, Property> config)
         {
             _dictionary = CreateDictionary(config.AnimationSteps);
             _defaultAnimation = config.DefaultAnimation;
             _nextAnimation = _defaultAnimation;
 
-            _currentAnimationName = new ReactiveProperty<E>(_defaultAnimation);
+            _currentAnimationState = new ReactiveProperty<State>(_defaultAnimation);
         }
 
-        private static IDictionary<E, IAnimationConfig<T>> CreateDictionary(List<AnimationStep<E, T>> steps)
+        private static IDictionary<State, IAnimationConfig<Property>> CreateDictionary(List<AnimationStep<State, Property>> steps)
         {
-            var result = new Dictionary<E, IAnimationConfig<T>>();
+            var result = new Dictionary<State, IAnimationConfig<Property>>();
             steps.ForEach(step => result.Add(step.Name, step.Animation));
             return result;
         }
         
-        private E _nextAnimation;
-        public E NextAnimation { set { _nextAnimation = value; } }
+        private State _nextAnimation;
+        public State NextAnimation { set { _nextAnimation = value; } }
 
-        private readonly ReactiveProperty<E> _currentAnimationName;
-        public IObservable<E> CurrentAnimation { get { return _currentAnimationName; } }
+        private readonly ReactiveProperty<State> _currentAnimationState;
+        public IObservable<State> ShownAnimation { get { return _currentAnimationState; } }
+        public State CurrentAnimation { get { return _currentAnimationState.Value; } }
 
-        public void PlayAnimation(E name)
+        public void PlayAnimation(State name)
         {
             InterruptCurrentAnimation();
-            var animation = CreateNewAnimation(_dictionary[name]);
-            _currentAnimationName.Value = name;
-            _currentAnimation = animation.AsObservable().Subscribe(ApplyAction, WhenAnimationFinished);
+            _currentAnimationState.Value = name;
+            _currentAnimation = CreateNewAnimation(_dictionary[name]).AsObservable()
+                .Subscribe(ApplyAction, WhenAnimationFinished);
         }
 
-        private void ApplyAction(Action action)
+        private static void ApplyAction(Action action)
         {
             action.Invoke();
         }
@@ -59,7 +60,7 @@ namespace Animation {
                 _currentAnimation.Dispose();
         }
 
-        protected abstract AbstractAnimation<T> CreateNewAnimation(IAnimationConfig<T> config);
+        protected abstract AbstractAnimation<Property> CreateNewAnimation(IAnimationConfig<Property> config);
 
     }
 

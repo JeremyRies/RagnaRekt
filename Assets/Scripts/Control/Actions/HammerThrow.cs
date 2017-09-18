@@ -32,7 +32,7 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
+            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false).AddTo(this);
         }
 
         public override void TryToActivate(Direction direction)

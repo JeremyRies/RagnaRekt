@@ -25,6 +25,11 @@ namespace Control.Actions
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
             _killable = gameObject.AddComponent<Killable>();
 
+            _animation.State.Subscribe(state =>
+            {
+                Debug.Log(state == PlayerAnimationState.Attack ? "Activated" : "Deactivated");
+                _weapon.gameObject.SetActive(state == PlayerAnimationState.Attack);
+            });
             _weapon.gameObject.SetActive(false);
         }
 
@@ -38,14 +43,13 @@ namespace Control.Actions
             
             Attack();
             _cooldown.Start();
-
         }
 
         private void Attack()
         {
             SfxSound.SfxSoundInstance.PlayClip( _player.HeroType == HeroType.Thor ? ClipIdentifier.ThorAttack : ClipIdentifier.LokiAttack );
             _killable.TeamId = _player.Team.TeamId;
-            _animation.Attack().Subscribe(_weapon.gameObject.SetActive);
+            _animation.Attack();
         }
     }
 }

@@ -1,26 +1,26 @@
 using UniRx;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace Animation {
 
-    public abstract class AbstractAnimation<T>
+    public abstract class AbstractAnimation<Property>
     {
-        private readonly IAnimationConfig<T> _config;
+        private readonly IAnimationConfig<Property> _config;
 
-        protected AbstractAnimation(IAnimationConfig<T> config)
+        protected AbstractAnimation(IAnimationConfig<Property> config)
         {
             _config = config;
         }
 
-        private static IObservable<int> CreateIndices(IAnimationConfig<T> config)
+        private static IObservable<int> CreateIndices(IAnimationConfig<Property> config)
         {
-            var indices = Observable.Range(0, config.Steps.Count);
-            var timespan = TimeSpan.FromSeconds(config.SecondsUntilNext);
-            var delayed = indices.Delay(timespan);
-            return config.Loop ? delayed.Repeat() : delayed;
+            var timespan = Observable.Interval(TimeSpan.FromSeconds(config.SecondsUntilNext)).StartWith(-1);
+            var indices = timespan.Select(index => (int) (index + 1) % config.Steps.Count);
+            return config.Loop ? indices : indices.Take(config.Steps.Count + 1);
         }
 
         public IObservable<Action> AsObservable()
@@ -33,7 +33,7 @@ namespace Animation {
             return () => Apply(_config.Steps[index]);
         }
 
-        protected abstract void Apply(T step);
+        protected abstract void Apply(Property step);
 
     }
 

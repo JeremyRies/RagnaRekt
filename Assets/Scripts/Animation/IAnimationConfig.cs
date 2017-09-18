@@ -2,10 +2,10 @@
 
 namespace Animation
 {
-    public interface IAnimationConfig<A>
+    public interface IAnimationConfig<Property>
     {
         bool Loop { get; }
         double SecondsUntilNext { get; }
-        List<A> Steps { get; }
+        List<Property> Steps { get; }
     }
 }

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
-  m_Name: IdleAnimation
+  m_Name: AttackAnimation
   m_EditorClassIdentifier: 
   _secondsUntilNext: 0.3
-  _loop: 1
+  _loop: 0
   _sprites:
-  - {fileID: 21300000, guid: 113b00bf8ae91014c85dec7a0bc777b3, type: 3}
-  - {fileID: 21300000, guid: cb9b7915adc559046a924a2dcc0f42fc, type: 3}
+  - {fileID: 21300000, guid: 1348eba3e36aee34c8c698e70f32a9a5, type: 3}
+  - {fileID: 21300000, guid: ede7c35b6fc58e546830ddcb26cc5f83, type: 3}

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
-  m_Name: IdleAnimation
+  m_Name: DeathAnimation
   m_EditorClassIdentifier: 
-  _secondsUntilNext: 0.3
-  _loop: 1
+  _secondsUntilNext: 2
+  _loop: 0
   _sprites:
-  - {fileID: 21300000, guid: 113b00bf8ae91014c85dec7a0bc777b3, type: 3}
-  - {fileID: 21300000, guid: cb9b7915adc559046a924a2dcc0f42fc, type: 3}
+  - {fileID: 21300000, guid: 27ee5f71b03606f43a218d97fef1ff54, type: 3}

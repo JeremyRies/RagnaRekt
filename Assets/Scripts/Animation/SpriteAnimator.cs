@@ -5,11 +5,11 @@ using UniRx;
 
 namespace Animation {
 
-    public class SpriteAnimator<E> : AbstractAnimator<E, Sprite> {
+    public class SpriteAnimator<State> : AbstractAnimator<State, Sprite> {
 
         private readonly SpriteRenderer _renderer;
 
-        public SpriteAnimator(IAnimatorConfig<E, Sprite> config, SpriteRenderer renderer) 
+        public SpriteAnimator(IAnimatorConfig<State, Sprite> config, SpriteRenderer renderer) 
             : base(config)
         {
             _renderer = renderer;

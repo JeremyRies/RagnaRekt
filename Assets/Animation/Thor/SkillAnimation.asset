@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
-  m_Name: IdleAnimation
+  m_Name: SkillAnimation
   m_EditorClassIdentifier: 
   _secondsUntilNext: 0.3
-  _loop: 1
+  _loop: 0
   _sprites:
-  - {fileID: 21300000, guid: 113b00bf8ae91014c85dec7a0bc777b3, type: 3}
-  - {fileID: 21300000, guid: cb9b7915adc559046a924a2dcc0f42fc, type: 3}
+  - {fileID: 21300000, guid: feb8617c3ecf55e458b5339bef550a0e, type: 3}
+  - {fileID: 21300000, guid: bb67fa64d05f4564d90c7c92edbbcda1, type: 3}

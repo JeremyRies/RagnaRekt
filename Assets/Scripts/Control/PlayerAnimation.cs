@@ -39,10 +39,16 @@ namespace Control
             PlayerAnimationState.Attack, PlayerAnimationState.Skill, PlayerAnimationState.Death
         };
 
-        private void Start()
+
+
+        public IObservable<PlayerAnimationState> State;
+
+        private void Awake()
         {
             _animator = new SpriteAnimator<PlayerAnimationState>(_config, _renderer);
             _animator.PlayAnimation(PlayerAnimationState.Idle);
+
+            State = _animator.ShownAnimation;
 
             _controller.IsMoving.DistinctUntilChanged().Subscribe(UpdateWalking);
 
@@ -52,34 +58,24 @@ namespace Control
                 _animating = StatesWithAnimantion.Contains(state);
                 // Debug.Log("New state: " + state);
                 // _animator.SetInteger("State", (int) state);
+                _animator.PlayAnimation(state);
             });
         }
 
         private void UpdateWalking(bool walking)
         {
-            if (_animating) return;
+            /*if (_animating) return;
 
             if (walking && _state.Value == PlayerAnimationState.Idle)
                 _state.Value = PlayerAnimationState.Walk;
             if(!walking && _state.Value == PlayerAnimationState.Walk)
-                _state.Value = PlayerAnimationState.Idle;
+                _state.Value = PlayerAnimationState.Idle;*/
         }
 
-        private void OnAnimationFinished(int animation)
+        public void Attack()
         {
-            // Debug.Log("Animation finished: " + (PlayerAnimationState) animation);
-            _state.Value = PlayerAnimationState.Idle;
-            _animationFinished.OnNext((PlayerAnimationState) animation);
-        }
-
-        public IObservable<bool> Attack()
-        {
-            if (_animating) return Observable.Empty<bool>();
-            var subject = new Subject<bool>();
-            _state.Value = PlayerAnimationState.Attack;
-            _animationFinished.Where(anim => anim == PlayerAnimationState.Attack)
-                .Take(1).Subscribe(_ => subject.OnNext(false));
-            return Observable.Return(true).Concat(subject);
+            if (_animator.CurrentAnimation != PlayerAnimationState.Death)
+                _animator.PlayAnimation(PlayerAnimationState.Attack);
         }
 
         public void Jump()
@@ -92,17 +88,14 @@ namespace Control
 
         public void HitGround()
         {
-            if (_animating) return;
-            if (_state.Value == PlayerAnimationState.Jump)
-                _state.Value = PlayerAnimationState.Idle;
+            if (_animator.CurrentAnimation == PlayerAnimationState.Jump)
+                _animator.PlayAnimation(PlayerAnimationState.Idle);
         }
 
-        public IObservable<Unit> Die()
+        public void Die()
         {
-            _state.Value = PlayerAnimationState.Death;
-            var timer = Observable.Timer(TimeSpan.FromSeconds(_deathDuration));
-            timer.Subscribe(_ => OnAnimationFinished((int) PlayerAnimationState.Death));
-            return timer.AsUnitObservable();
+            Debug.Log("Die yo!");
+            _animator.PlayAnimation(PlayerAnimationState.Death);
         }
 
         public IObservable<Unit> UseSkill()
