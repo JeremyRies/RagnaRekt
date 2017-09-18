@@ -8,7 +8,9 @@ namespace Animation {
     public abstract class AbstractAnimator<State, Property>
     {
         private IDictionary<State, IAnimationConfig<Property>> _dictionary;
+
         private State _defaultAnimation;
+        private State _nextAnimation;
 
         private IDisposable _currentAnimation;
 
@@ -36,9 +38,6 @@ namespace Animation {
             steps.ForEach(step => result.Add(step.Name, step.Animation));
             return result;
         }
-        
-        private State _nextAnimation;
-        public State NextAnimation { set { _nextAnimation = value; } }
 
         private readonly ReactiveProperty<State> _currentAnimationState;
         public IObservable<State> ShownAnimation { get { return _currentAnimationState; } }

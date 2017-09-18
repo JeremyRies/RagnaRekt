@@ -25,11 +25,7 @@ namespace Control.Actions
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
             _killable = gameObject.AddComponent<Killable>();
 
-            _animation.State.Subscribe(state =>
-            {
-                Debug.Log(state == PlayerAnimationState.Attack ? "Activated" : "Deactivated");
-                _weapon.gameObject.SetActive(state == PlayerAnimationState.Attack);
-            });
+            _animation.State.Subscribe(state => _weapon.gameObject.SetActive(state == PlayerAnimationState.Attack));
             _weapon.gameObject.SetActive(false);
         }
 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4350feea8772d24b8ebbebe81af8bad, type: 3}
+  m_Name: Thor without Hammer Animator
+  m_EditorClassIdentifier: 
+  _animationSteps:
+  - Name: 0
+    Animation: {fileID: 11400000, guid: 0d5ee03dc4465f8448e0ba276522beda, type: 2}
+  - Name: 1
+    Animation: {fileID: 11400000, guid: ff0fae649fa04d04888495e26292afdf, type: 2}
+  - Name: 2
+    Animation: {fileID: 11400000, guid: 1fe22aedeb446c547bdf24c4a18b0dbd, type: 2}
+  - Name: 3
+    Animation: {fileID: 11400000, guid: 6e9f5bcda5f18c94c9dcd8562a35ab41, type: 2}
+  - Name: 4
+    Animation: {fileID: 11400000, guid: 55aa6de2b0aff8841848a5df1090e6b7, type: 2}
+  - Name: 5
+    Animation: {fileID: 11400000, guid: 22d80247080769c4cbaa2dc63f4db1ee, type: 2}
+  _defaultAnimation: 0
