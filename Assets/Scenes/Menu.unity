@@ -1664,6 +1664,7 @@ GameObject:
   - component: {fileID: 1513698253}
   - component: {fileID: 1513698257}
   - component: {fileID: 1513698256}
+  - component: {fileID: 1513698258}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1746,6 +1747,19 @@ MonoBehaviour:
   MainMenuPanel: {fileID: 1565930726}
   CharacterPickingPanel: {fileID: 1810360816}
   CharacterPickingHandler: {fileID: 1513698256}
+--- !u!114 &1513698258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1513698252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f2a86b8fa14d44fb7590ce531674cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterPickingHandler: {fileID: 1513698256}
+  MenuHandler: {fileID: 1513698257}
 --- !u!1 &1565930726
 GameObject:
   m_ObjectHideFlags: 0

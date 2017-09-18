@@ -1,24 +1,33 @@
-﻿using UnityEngine.SceneManagement;
+﻿using NDream.AirConsole;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LevelController
+public class LevelController : MonoBehaviour
 {
-    private static LevelController _instance = null;
+    [SerializeField]private Object MenuControllerHtml;
+    [SerializeField]private Object GameControllerHtml;
 
-    public static LevelController GetInstance()
+    private static LevelController _instance;
+
+    public static LevelController Instance
     {
-        if (_instance == null)
-            _instance = new LevelController();
+        get { return _instance; }
+    }
 
-        return _instance;
+    private void Start()
+    {
+        _instance = this;
     }
 
     public void LoadMenuScene()
     {
+        AirConsole.instance.controllerHtml = MenuControllerHtml;
         SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
     }
 
     public void LoadGameScene()
     {
+        AirConsole.instance.controllerHtml = GameControllerHtml;
         SceneManager.LoadSceneAsync("LevelNeo", LoadSceneMode.Single);
     }
 }

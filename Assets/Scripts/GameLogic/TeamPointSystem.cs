@@ -97,7 +97,7 @@ namespace GameLogic
                 Instantiate(_hatiWinPrefab, Vector3.zero, Quaternion.identity);
             }
 
-            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.GetInstance().LoadMenuScene()).AddTo(gameObject);
+            Observable.EveryUpdate().Where(_ => _inputProvider.GetButtonDown("Jump")).Subscribe(_ =>  LevelController.Instance.LoadMenuScene()).AddTo(gameObject);
         }
 
         private bool IsMatchPointsAheadOfOtherTeam(Team team, int points)

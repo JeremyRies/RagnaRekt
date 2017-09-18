@@ -117,6 +117,8 @@ GameObject:
   m_Component:
   - component: {fileID: 406974303}
   - component: {fileID: 406974304}
+  - component: {fileID: 406974305}
+  - component: {fileID: 406974306}
   m_Layer: 0
   m_Name: CrossLevelGameObject
   m_TagString: Untagged
@@ -149,6 +151,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundManager: {fileID: 1466068738}
+--- !u!114 &406974305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 406974302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37d83ebce05ad74683fd3228dde9e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  browserStartMode: 0
+  controllerHtml: {fileID: 102900000, guid: 283ec29f57beb0c4f8a1308008174588, type: 3}
+  autoScaleCanvas: 1
+--- !u!114 &406974306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 406974302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3fddcfb2cdfb9418a3266b0ba99fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MenuControllerHtml: {fileID: 102900000, guid: 283ec29f57beb0c4f8a1308008174588,
+    type: 3}
+  GameControllerHtml: {fileID: 102900000, guid: b7daf283e54bbaa429f11462c9800309,
+    type: 3}
 --- !u!1 &834045320
 GameObject:
   m_ObjectHideFlags: 0

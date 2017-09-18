@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Control;
 using Sound;
 using UniRx;
@@ -17,7 +18,7 @@ namespace UI.Menu
         public MenuHandler MenuHandler;
 
         private int _numberPlayers = 2;
-        private int[] _selectedCharacterIDs;
+        private int[] _selectedCharacterIds;
 
         private int _counter = 0;
 
@@ -40,14 +41,14 @@ namespace UI.Menu
             _counter = 0;
             UnityInputProvider = new UnityInputProvider(1);
             UpdateInput();
-            _selectedCharacterIDs = null;
+            _selectedCharacterIds = null;
         }
 
         public void SetNumberPlayers(int i)
         {
             CharacterPreview.ResetAll();
             _numberPlayers = i;
-            _selectedCharacterIDs = new int[i];
+            _selectedCharacterIds = new int[i];
             _counter = 0;
             EventSystem.current.SetSelectedGameObject(FirstCharacter);
             UpdateInput();
@@ -63,7 +64,7 @@ namespace UI.Menu
 
         public int[] GetSelectedCharacters()
         {
-            return _selectedCharacterIDs;
+            return _selectedCharacterIds;
         }
 
         public int GetCounter()
@@ -71,37 +72,53 @@ namespace UI.Menu
             return _counter;
         }
 
-        public void Select(int id)
+        public void Select(int playerId, int characterId)
         {
-            if (_counter + 1 < _numberPlayers)
+            if (playerId > 0 && playerId < _selectedCharacterIds.Length)
             {
-                _selectedCharacterIDs[_counter] = id;
-                CharacterPreview.SetCharacter(_counter, id);
-                CharacterPreview.EnablePreview(_counter, true);
-                _counter++;
-                UpdateInput();
+                _selectedCharacterIds[playerId] = characterId;
+                CharacterPreview.SetCharacter(playerId, characterId);
+                CharacterPreview.EnablePreview(playerId, true);
+
+                CheckAllCharactersSelected();
             }
-            else if (_counter + 1 == _numberPlayers)
+            
+        }
+
+        private void CheckAllCharactersSelected()
+        {
+            if (_selectedCharacterIds.Any(selectedCharacterId => selectedCharacterId == 0))
+                return;
+
+            BackgroundMusic.BackgroundMusicInstance.StopPlay();
+
+            Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_ => LevelController.Instance.LoadGameScene());
+
+
+            var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
+
+            if (crossLevelDataTransfer != null)
             {
-                _selectedCharacterIDs[_counter] = id;
-                CharacterPreview.SetCharacter(_counter, id);
-                CharacterPreview.EnablePreview(_counter, true);
-
-                BackgroundMusic.BackgroundMusicInstance.StopPlay();
-
-                Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe(_=> LevelController.GetInstance().LoadGameScene());
-
-
-                var crossLevelDataTransfer = FindObjectOfType<CrossLevelDataTransfer>();
-                if (crossLevelDataTransfer != null)
-                {
-                    crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIDs);
-                    crossLevelDataTransfer.SaveNumberPlayers(_numberPlayers);
-                }
-
-           
+                crossLevelDataTransfer.SaveSelectedCharacters(_selectedCharacterIds);
+                crossLevelDataTransfer.SaveNumberPlayers(_numberPlayers);
             }
+        }
 
+        public void Select(int characterId)
+        {
+            Select(_counter, characterId);
+            _counter++;
+            UpdateInput();
+
+        }
+
+        public void RevertSelect(int playerId)
+        {
+            if (playerId > 0 && playerId < _selectedCharacterIds.Length)
+            {
+                _selectedCharacterIds[playerId] = 0;
+                CharacterPreview.EnablePreview(playerId, false);
+            }
         }
 
         public void RevertSelect()
