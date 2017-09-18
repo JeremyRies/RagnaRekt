@@ -31,7 +31,7 @@ namespace Control.Actions
         private void Start()
         {
             _cooldown = new Cooldown(_conf.CooldownTimeInSeconds);
-            _cooldown.IsOnCoolDown.Subscribe(isOnCd => OnCooldown = isOnCd);
+            _cooldown.IsOnCoolDown.Subscribe(isOnCd => OnCooldown = isOnCd).AddTo(this);
         }
 
         private bool OnCooldown

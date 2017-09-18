@@ -48,7 +48,7 @@ namespace Control.Actions
         {
             _animation.UseSkill();
             _controller.ArrestMovement();
-            Observable.Timer(TimeSpan.FromSeconds(_dashPreparationTimeInSeconds)).Subscribe(_ => MovePlayer(direction));
+            Observable.Timer(TimeSpan.FromSeconds(_dashPreparationTimeInSeconds)).Subscribe(_ => MovePlayer(direction)).AddTo(this);
         }
 
         private void MovePlayer(Direction direction)
