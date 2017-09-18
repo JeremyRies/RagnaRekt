@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Control.Raycasts;
 using UnityEngine;
 
@@ -54,13 +56,21 @@ namespace Control
                 rayOrigin += Vector2.up*(HorizontalRaySpacing*i);
                 var hit = Physics2D.RaycastAll(rayOrigin, Vector2.right*Mathf.Sign(velocity.x), rayLength, CollisionMask);
 
-                Debug.DrawRay(rayOrigin, Vector2.right*Collisions.FaceDir*rayLength, Color.red);
+                var dir = Vector2.right*Collisions.FaceDir*rayLength;
+                Debug.DrawRay(rayOrigin, dir, Color.red);
 
-                if (hit.Length % 2 == 0) continue;
+                if (hit.Length % 2 == 0 && DoesNotGetStuckInTheWall(hit, dir)) continue;
                 
                 velocity.x = (hit[0].distance - SkinWidth) * Collisions.FaceDir;
                 rayLength = hit[0].distance;
             }
+        }
+
+        private bool DoesNotGetStuckInTheWall(ICollection<RaycastHit2D> hit, Vector2 dir)
+        {
+            if (hit.Count == 0) return true;
+            var lastHit = hit.Last().distance;
+            return Mathf.Abs(lastHit - dir.magnitude) > Collider.size.x*1.7;
         }
 
         private void VerticalCollisions(ref Vector3 velocity)
