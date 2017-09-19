@@ -27,7 +27,7 @@ namespace Control.Actions
         {
             _controller = _player.GetPlayerController();
             _cooldown = new Cooldown(_cooldownTimeInSeconds);
-            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false);
+            _cooldown.IsOnCoolDown.Where(cd => !cd).Subscribe(_ => OnCooldown = false).AddTo(this);
         }
 
         private bool OnCooldown

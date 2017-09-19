@@ -33,7 +33,7 @@ namespace Control
         private Vector3 _velocity;
         
         public ReactiveProperty<bool> IsMoving = new ReactiveProperty<bool>(false);
-        private const float MinHorizontalMovement = 0.03F;
+        private const float MinHorizontalMovement = 0.00001F;
 
         public void Initialize(IInputProvider inputProvider)
         {
@@ -47,6 +47,8 @@ namespace Control
             _gravity = -(2* _conf.MaxJumpHeight) /Mathf.Pow(_conf.TimeToJumpApex, 2);
             MaxJumpVelocity = Mathf.Abs(_gravity)* _conf.TimeToJumpApex;
             MinJumpVelocity = Mathf.Sqrt(2*Mathf.Abs(_gravity)* _conf.MinJumpHeight);
+
+            IsMoving.DistinctUntilChanged().Subscribe(_animation.UpdateWalking);
         }
 
         private Vector2 GetHorizontalInput()

@@ -15,8 +15,8 @@ namespace Control.Actions
 
         [SerializeField] private PlayerAnimation _animation;
 
-        [SerializeField] private RuntimeAnimatorController _thorWithHammer;
-        [SerializeField] private RuntimeAnimatorController _thorWithoutHammer;
+        [SerializeField] private PlayerAnimatorConfig _thorWithHammer;
+        [SerializeField] private PlayerAnimatorConfig _thorWithoutHammer;
 
         private Vector2 _dir;
         private float _distanceFromStartPoint;
@@ -110,7 +110,8 @@ namespace Control.Actions
                 if (_cooldown.IsOnCoolDown.Value == false)
                 {
                     IsInHand = true;
-                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
+                    _animation.UseSkill();
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 if (hammer.FlyBack)
@@ -128,7 +129,8 @@ namespace Control.Actions
                     SfxSound.SfxSoundInstance.Stop();
                     hammer.FlyBack = false;
                     IsInHand = true;
-                    _animation.UseSkill().Subscribe(_ => _animation.Controller = _thorWithHammer);
+                    _animation.UseSkill();
+                    _animation.Controller = _thorWithHammer;
                 }
 
                 yield return null;

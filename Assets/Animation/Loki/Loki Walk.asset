@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073c2fc7d7d71f743b8bfb697de38525, type: 3}
+  m_Name: Loki Walk
+  m_EditorClassIdentifier: 
+  _secondsUntilNext: 0.1
+  _loop: 1
+  _sprites:
+  - {fileID: 21300000, guid: 7f441e6664a2dfc4e84ce75c3688a982, type: 3}
+  - {fileID: 21300000, guid: 5c51aa9919acf494fa889e48cd5fe5ee, type: 3}
+  - {fileID: 21300000, guid: d66074e03d882e34eae94bbaf1fe2c37, type: 3}
+  - {fileID: 21300000, guid: e266af57eb11db943916a2194a6a608e, type: 3}

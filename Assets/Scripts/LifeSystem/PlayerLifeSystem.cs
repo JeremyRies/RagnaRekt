@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Control;
 using Entities;
 using Sound;
 using UnityEngine;
@@ -36,7 +37,9 @@ namespace LifeSystem
             if(Invincible) Debug.LogError("Should not be able to hit when invincible");
             //audio
             Die();
-            _player.Animation.Die().Subscribe(_ => Respawn());
+            _player.Animation.Die();
+            _player.Animation.State.Where(state => state != PlayerAnimationState.Death)
+                .Take(1).Subscribe(_ => Respawn());
         }
 
         private void Die()

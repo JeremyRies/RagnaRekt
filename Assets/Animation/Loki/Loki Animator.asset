@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4350feea8772d24b8ebbebe81af8bad, type: 3}
+  m_Name: Loki Animator
+  m_EditorClassIdentifier: 
+  _animationSteps:
+  - Name: 0
+    Animation: {fileID: 11400000, guid: 635cc3a50980fd045b19b750b2a26418, type: 2}
+  - Name: 1
+    Animation: {fileID: 11400000, guid: 0f51ca1ffff61ef439a01079555a0715, type: 2}
+  - Name: 2
+    Animation: {fileID: 11400000, guid: a1c0207322ae4174e91c332ea4fe9fd7, type: 2}
+  - Name: 3
+    Animation: {fileID: 11400000, guid: 31cabc0cc4e26e540a5421f55a9400ea, type: 2}
+  - Name: 4
+    Animation: {fileID: 11400000, guid: 4b08739a0d677cd49a71f991bc6e2605, type: 2}
+  - Name: 5
+    Animation: {fileID: 11400000, guid: 573fec1cf3968e54b8085855f52520c2, type: 2}
+  _defaultAnimation: 0
