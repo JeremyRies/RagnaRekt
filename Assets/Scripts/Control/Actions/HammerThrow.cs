@@ -129,7 +129,6 @@ namespace Control.Actions
                     SfxSound.SfxSoundInstance.Stop();
                     hammer.FlyBack = false;
                     IsInHand = true;
-                    _animation.UseSkill();
                     _animation.Controller = _thorWithHammer;
                 }
 
