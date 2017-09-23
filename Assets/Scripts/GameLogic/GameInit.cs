@@ -35,9 +35,6 @@ namespace GameLogic
                 _gameConfig.AmountOfPlayers = crossLevelDataTransfer.GetNumberPlayers();
             }
 
-            if (_gameConfig.UseAirconsole)
-                SetupAirconsole();
-
             Observable.Range(1, _gameConfig.AmountOfPlayers).Subscribe(CreatePlayer);
 
             BackgroundMusic.BackgroundMusicInstance.SetClip(ClipIdentifier.BackgroundGame);
@@ -45,13 +42,6 @@ namespace GameLogic
 
         }
 
-        private void SetupAirconsole()
-        {
-            var airconsoleObject = new GameObject("Airconsole");
-
-            airconsoleObject.AddComponent<AirConsole>();
-            airconsoleObject.AddComponent<AirConsoleConnectionService>();
-        }
 
         private void CreatePlayer(int playerId)
         {

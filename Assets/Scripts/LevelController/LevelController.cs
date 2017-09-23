@@ -1,4 +1,5 @@
-﻿using NDream.AirConsole;
+﻿using Control.Airconsole;
+using NDream.AirConsole;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,9 +21,18 @@ public class LevelController : MonoBehaviour
     }
 
     public void LoadMenuScene()
-    {
-        AirConsole.instance.controllerHtml = MenuControllerHtml;
+    {      
         SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
+        SetupAirconsole();
+        AirConsole.instance.controllerHtml = MenuControllerHtml;
+    }
+
+    private void SetupAirconsole()
+    {
+        var airconsoleObject = new GameObject("Airconsole");
+
+       // airconsoleObject.AddComponent<AirConsole>();
+        airconsoleObject.AddComponent<AirConsoleConnectionService>();
     }
 
     public void LoadGameScene()

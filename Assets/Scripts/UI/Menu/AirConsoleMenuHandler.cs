@@ -22,8 +22,9 @@ public class AirConsoleMenuHandler : MonoBehaviour
     {
         var playerNumber = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
         Debug.Log(data);
+        Debug.Log("Player number: " + playerNumber);
         if (playerNumber == 0)
-        {
+        {        
             HandleMainMenuActions(data);
         }
         HandleCharacterPickingActions(playerNumber, data);
@@ -47,14 +48,18 @@ public class AirConsoleMenuHandler : MonoBehaviour
 
     private void HandleMainMenuActions(JToken data)
     {
+        var mainMenuData = (string) data["element"];
+        Debug.Log("mainMenuData " + mainMenuData);
+
         for (int i = 1; i < 3; i++)
         {
-            var buttonString = "MainMenu-" + i;
+            var buttonString = "MainMenu-" + i;      
 
-            var mainMenuData = data[buttonString];
-            if (mainMenuData == null) return;
+            if (mainMenuData != buttonString) return;
 
-            var menuData = (string)mainMenuData["MainMenu"];
+            var menuData = (string)data["data"]["MainMenu"];
+
+            Debug.Log("Menu Data: "+ menuData);
 
             if (menuData.Equals("2player"))
                 MenuHandler.OnStartTwoPlayer();
