@@ -74,7 +74,7 @@ namespace UI.Menu
 
         public void Select(int playerId, int characterId)
         {
-            if (playerId > 0 && playerId < _selectedCharacterIds.Length)
+            if (playerId >= 0 && playerId < _selectedCharacterIds.Length)
             {
                 _selectedCharacterIds[playerId] = characterId;
                 CharacterPreview.SetCharacter(playerId, characterId);

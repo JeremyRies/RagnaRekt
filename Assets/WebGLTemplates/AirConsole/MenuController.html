@@ -17,35 +17,25 @@
   <div id="controller-container">
 
     <!-- REPLACE_HERE START -->
-<div id="view-0" class="view" style="display: none;">
+<div id="CharacterSelection" class="view" style="display: flex;">
     <div id="view-0-section-0" class="section horizontal " style="height: 100%;">
-    <div id="Characters-1" class="button-150-300 button-element element">
-  <div class="button-text">Thor</div>
+    <Button id="Characters-1" class="character-button">
+		<img src="images/Characters/thor.png" alt="Thor">
+	</Button>
+    <Button id="Characters-2" class="character-button">
+		<img src="images/Characters/loki.png" alt="loki">
+	</Button>
 </div>
-<div id="Characters-2" class="button-150-300 button-element element">
-  <div class="button-text">Loki</div>
 </div>
-</div>
-</div>
-<div id="view-1" class="view" style="display: flex;">
+<div id="MainMenu" class="view" style="display: flex;">
     <div id="view-1-section-0" class="section " style="height: 100%;">
-    <div id="MainMenu-1" class="button-300-150 button-element element">
-  <div class="button-text">1 vs 1</div>
-</div>
-<div id="MainMenu-2" class="button-300-150 button-element element">
-  <div class="button-text">2 vs 2</div>
+    <Button id="MainMenu-1" class="button-300-150"><div class="button-text">1 vs 1</div></Button>
+	<Button id="MainMenu-2" class="button-300-150"><div class="button-text">2 vs 2</div></Button>
 </div>
 </div>
 </div>
-
-
-<script type="text/javascript">
-  var ctrl_data = '{"orientation":"landscape","selected_view_id":"view-1","views":[{"id":"view-0","sections":[{"id":"view-0-section-0","elements":[{"id":"Characters-1","key":"button","name":"Button","tmpl":"button","constructor_fn":"ButtonElement","options":{"constructor_args":{},"attr_id":"view-0-section-0-element-0","css_classes":"button-150-300","view_action":{"target":null,"view_id":null},"label":"Thor","send_onrelease":false,"message_data":[{"key":"Character","value":"Thor"}]}},{"id":"Characters-2","key":"button","name":"Button","tmpl":"button","constructor_fn":"ButtonElement","options":{"constructor_args":{},"attr_id":"view-0-section-0-element-1","css_classes":"button-150-300","view_action":{"target":null,"view_id":null},"label":"Loki","send_onrelease":false,"message_data":[{"key":"Character","value":"Loki"}]}}],"classes":["horizontal"]}]},{"id":"view-1","sections":[{"id":"view-1-section-0","elements":[{"id":"MainMenu-1","key":"button","name":"Button","tmpl":"button","constructor_fn":"ButtonElement","options":{"constructor_args":{},"attr_id":"view-1-section-0-element-0","css_classes":"button-300-150","view_action":{"target":null,"view_id":null},"label":"1 vs 1","send_onrelease":false,"message_data":[{"key":"MainMenu","value":"2player"}]}},{"id":"MainMenu-2","key":"button","name":"Button","tmpl":"button","constructor_fn":"ButtonElement","options":{"constructor_args":{},"attr_id":"view-1-section-0-element-1","css_classes":"button-300-150","view_action":{"target":null,"view_id":null},"label":"2 vs 2","send_onrelease":false,"message_data":[{"key":"MainMenu","value":"4player"}]}}],"classes":[]}]}]}';
-</script>
-
     <!-- REPLACE_HERE END -->
 
-  </div>
 
   <!-- 3rd Party Libs -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -60,6 +50,52 @@
   <script type="text/javascript" src="airconsole-controls/swipe-digital/swipe-digital.js"></script>
   <!-- GENERATOR -->
   <script type="text/javascript" src="controller/js/controller_generator.js"></script>
-  <script type="text/javascript" src="controller/js/main.js"></script>
+  
+<script type="text/javascript">
+	var airconsole = new AirConsole({orientation: AirConsole.ORIENTATION_LANDSCAPE});
+	
+	
+	$("#MainMenu-1").on('click', function () {
+		var message = {
+			'MainMenu': '2player'
+			};
+
+		airconsole.message(AirConsole.SCREEN, message);
+	});
+	
+	$("#MainMenu-2").on('click', function () {
+		var message = {
+			'MainMenu': '4player'
+			};
+		airconsole.message(AirConsole.SCREEN, message);
+
+	});
+	
+	$("#Characters-1").on('click', function () {
+		var message = {
+			'Character': 'Thor'
+			};
+		airconsole.message(AirConsole.SCREEN, message);
+	});
+	
+	$("#Characters-2").on('click', function () {
+		var message = {
+			'Character': 'Loki'
+			};
+		airconsole.message(AirConsole.SCREEN, message);
+	});
+	
+	
+	airconsole.onReady = function() {
+		// Init the ViewManager
+		vm = new AirConsoleViewManager(airconsole);
+	};
+	// Listen for view changes
+	airconsole.onCustomDeviceStateChange = function(device_id, data) {
+		vm.onViewChange(data, function(view_id) {
+			// view has changed
+		});
+	};
+    </script>
 </body>
 </html>

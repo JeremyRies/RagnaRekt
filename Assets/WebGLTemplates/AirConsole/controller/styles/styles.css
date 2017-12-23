@@ -58,6 +58,13 @@ body {
   flex-basis: 100%;
 }
 
+.character-button {
+	width: 50%;
+	height: 100%;
+	
+}
+
+
 .element {
   align-items: stretch;
 /*  flex-grow: 1;
